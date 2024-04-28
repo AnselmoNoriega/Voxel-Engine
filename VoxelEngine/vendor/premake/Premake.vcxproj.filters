@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="..">
+      <UniqueIdentifier>{61705900-4DFC-870B-B6AA-880BA255880B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\NotEditor">
+      <UniqueIdentifier>{C81B1151-B47E-A0F5-5D04-D9AB49466C78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\NotVoxel">
+      <UniqueIdentifier>{2FEF4970-9BA4-C265-2499-BC3C904DB969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\NotVoxel\vendor">
+      <UniqueIdentifier>{ACBA9036-989E-518C-01FF-4BDFED013C0E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\NotVoxel\vendor\GLFW">
+      <UniqueIdentifier>{6B01C744-D738-0FDC-E042-73FF4CF935D5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\NotVoxel\vendor\glad">
+      <UniqueIdentifier>{3319D944-9F50-21DC-A85A-85FF141148D5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\NotVoxel\vendor\imgui">
+      <UniqueIdentifier>{161921E0-023E-7060-2B89-55F0170D6F7E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\NotEditor\premake5.lua">
+      <Filter>..\NotEditor</Filter>
+    </None>
+    <None Include="..\..\NotVoxel\premake5.lua">
+      <Filter>..\NotVoxel</Filter>
+    </None>
+    <None Include="..\..\NotVoxel\vendor\GLFW\premake5.lua">
+      <Filter>..\NotVoxel\vendor\GLFW</Filter>
+    </None>
+    <None Include="..\..\NotVoxel\vendor\glad\premake5.lua">
+      <Filter>..\NotVoxel\vendor\glad</Filter>
+    </None>
+    <None Include="..\..\NotVoxel\vendor\imgui\premake5.lua">
+      <Filter>..\NotVoxel\vendor\imgui</Filter>
+    </None>
+    <None Include="..\..\premake5.lua">
+      <Filter>..</Filter>
+    </None>
+    <None Include="premake5.lua" />
+  </ItemGroup>
+</Project>
