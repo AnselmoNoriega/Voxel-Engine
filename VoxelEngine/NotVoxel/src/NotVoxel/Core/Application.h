@@ -3,11 +3,11 @@
 #include "Core.h"
 
 #include "Window.h"
-#include "NotRed/Core/LayerStack.h"
+#include "NotVoxel/Core/LayerStack.h"
 
-#include "NotRed/ImGui/ImGuiLayer.h"
+#include "NotVoxel/ImGui/ImGuiLayer.h"
 
-#include "NotRed/Core/TimeStep.h"
+#include "NotVoxel/Core/TimeStep.h"
 
 namespace NR
 {
@@ -21,7 +21,7 @@ namespace NR
 
         const char* operator[](int index) const
         {
-            NR_CORE_ASSERT(index < Count, "Overflow!");
+            CORE_ASSERT(index < Count, "Overflow!");
             return Args[index];
         }
     };

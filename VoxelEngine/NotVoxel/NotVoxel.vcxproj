@@ -73,7 +73,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;VOXEL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glm;vendor\GLFW\include;vendor\Glad\include;.;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -82,6 +82,8 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,10 +142,11 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Core\Application.h" />
-    <ClInclude Include="src\Core\Core.h" />
-    <ClInclude Include="src\Core\Log.h" />
-    <ClInclude Include="src\Core\PlatformDetection.h" />
+    <ClInclude Include="src\NotVoxel\Core\Application.h" />
+    <ClInclude Include="src\NotVoxel\Core\Core.h" />
+    <ClInclude Include="src\NotVoxel\Core\Log.h" />
+    <ClInclude Include="src\NotVoxel\Core\PlatformDetection.h" />
+    <ClInclude Include="src\NotVoxel\Debug\Instrumentor.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -564,9 +567,11 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\Application.cpp" />
-    <ClCompile Include="src\Core\Log.cpp" />
-    <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\NotVoxel\Core\Application.cpp" />
+    <ClCompile Include="src\NotVoxel\Core\Log.cpp" />
+    <ClCompile Include="src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>

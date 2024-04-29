@@ -33,16 +33,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Core\Application.h">
+    <ClInclude Include="src\NotVoxel\Core\Application.h">
       <Filter>src\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Core.h">
+    <ClInclude Include="src\NotVoxel\Core\Core.h">
       <Filter>src\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Log.h">
+    <ClInclude Include="src\NotVoxel\Core\Log.h">
       <Filter>src\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\PlatformDetection.h">
+    <ClInclude Include="src\NotVoxel\Core\PlatformDetection.h">
       <Filter>src\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h">
@@ -1299,12 +1299,13 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\NotVoxel\Debug\Instrumentor.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\Application.cpp">
+    <ClCompile Include="src\NotVoxel\Core\Application.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Log.cpp">
+    <ClCompile Include="src\NotVoxel\Core\Log.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp">
