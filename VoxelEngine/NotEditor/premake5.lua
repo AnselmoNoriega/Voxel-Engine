@@ -23,23 +23,23 @@ project "NotEditor"
 
 	links
 	{
-		"NotRed"
+		"NotVoxel"
 	}
 
 	filter "system:windows"
 		systemversion "latest"
 
 	filter "configurations:Debug"
-		defines "NR_DEBUG"
+		defines "VOXEL_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
-		defines "NR_RELEASE"
+		defines "VOXEL_RELEASE"
 		runtime "Release"
 		optimize "on"
 
 	filter "configurations:Dist"
-		defines "NR_DIST"
+		defines "VOXEL_DIST"
 		runtime "Release"
 		optimize "on"

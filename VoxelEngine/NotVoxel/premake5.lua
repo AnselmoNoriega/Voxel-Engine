@@ -7,8 +7,8 @@ project "NotVoxel"
 	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
-	pchheader "nvpch.h"
-	pchsource "src/nvpch.cpp"
+	pchheader "pch.h"
+	pchsource "src/pch.cpp"
 
 	files
 	{
@@ -51,16 +51,16 @@ project "NotVoxel"
 		systemversion "latest"
 
 	filter "configurations:Debug"
-		defines "NR_DEBUG"
+		defines "VOXEL_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
-		defines "NR_RELEASE"
+		defines "VOXEL_RELEASE"
 		runtime "Release"
 		optimize "on"
 
 	filter "configurations:Dist"
-		defines "NR_DIST"
+		defines "VOXEL_DIST"
 		runtime "Release"
 		optimize "on"
