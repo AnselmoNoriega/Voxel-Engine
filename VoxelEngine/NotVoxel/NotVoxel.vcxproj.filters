@@ -4,8 +4,26 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Core">
-      <UniqueIdentifier>{A5D31CCF-91A0-77DA-BAB9-6582A6E5AC68}</UniqueIdentifier>
+    <Filter Include="src\NotVoxel">
+      <UniqueIdentifier>{7B0FA61D-6772-35C2-10F8-6D78FC390145}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\NotVoxel\Core">
+      <UniqueIdentifier>{B3182BB5-1F2F-294B-68A6-B46CD4FBF9D2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\NotVoxel\Core\Input">
+      <UniqueIdentifier>{F2421F65-5E7A-67FC-6784-CB1FD33A8EF5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\NotVoxel\Debug">
+      <UniqueIdentifier>{318A9A5A-1D6E-5BB0-86CE-550372D14532}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\NotVoxel\Renderer">
+      <UniqueIdentifier>{81ED85DE-ED59-41D9-B64D-D93622796341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform">
+      <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\Windows">
+      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
@@ -34,16 +52,37 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\NotVoxel\Core\Application.h">
-      <Filter>src\Core</Filter>
+      <Filter>src\NotVoxel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Core\Assert.h">
+      <Filter>src\NotVoxel\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\NotVoxel\Core\Core.h">
-      <Filter>src\Core</Filter>
+      <Filter>src\NotVoxel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Core\Input\Input.h">
+      <Filter>src\NotVoxel\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Core\Input\KeyCodes.h">
+      <Filter>src\NotVoxel\Core\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\NotVoxel\Core\Log.h">
-      <Filter>src\Core</Filter>
+      <Filter>src\NotVoxel\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\NotVoxel\Core\PlatformDetection.h">
-      <Filter>src\Core</Filter>
+      <Filter>src\NotVoxel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Core\Window.h">
+      <Filter>src\NotVoxel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Debug\Instrumentor.h">
+      <Filter>src\NotVoxel\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\GraphicsContext.h">
+      <Filter>src\NotVoxel\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WinWindow.h">
+      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
@@ -1299,18 +1338,26 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\NotVoxel\Debug\Instrumentor.h" />
-    <ClInclude Include="src\NotVoxel\Core\Assert.h" />
-    <ClInclude Include="src\NotVoxel\Core\Window.h" />
-    <ClInclude Include="src\Platform\Windows\WinWindow.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\NotVoxel\Core\Input\MouseCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NotVoxel\Core\Application.cpp">
-      <Filter>src\Core</Filter>
+      <Filter>src\NotVoxel\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\NotVoxel\Core\Log.cpp">
-      <Filter>src\Core</Filter>
+      <Filter>src\NotVoxel\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Core\Window.cpp">
+      <Filter>src\NotVoxel\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\GraphicsContext.cpp">
+      <Filter>src\NotVoxel\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WinInputs.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WinWindow.cpp">
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
@@ -1318,8 +1365,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\NotVoxel\Core\Window.cpp" />
-    <ClCompile Include="src\Platform\Windows\WinWindow.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\GraphicsContext.cpp" />
   </ItemGroup>
 </Project>

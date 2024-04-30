@@ -74,7 +74,7 @@ namespace VoxelForge
         bool mRunning = true;
         bool mMinimized = false;
 
-        std::unique_ptr<Window> mWindow;
+        Scope<Window> mWindow;
         
         LayerStack mLayerStack;
         ImGuiLayer* mImGuiLayer;

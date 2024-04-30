@@ -1,14 +1,13 @@
 #include "pch.h"
 #include "WinWindow.h"
 
-#include "NotVoxel/Core/Input.h"
+#include "NotVoxel/Core/Input/Input.h"
 
 #include "NotVoxel/Events/ApplicationEvent.h"
 #include "NotVoxel/Events/MouseEvent.h"
 #include "NotVoxel/Events/KeyEvent.h"
 
 #include "NotVoxel/Renderer/Renderer.h"
-
 #include "NotVoxel/OpenGL/OpenGLContext.h"
 
 namespace VoxelForge
