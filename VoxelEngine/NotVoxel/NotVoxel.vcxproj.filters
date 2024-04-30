@@ -1300,6 +1300,10 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\NotVoxel\Debug\Instrumentor.h" />
+    <ClInclude Include="src\NotVoxel\Core\Assert.h" />
+    <ClInclude Include="src\NotVoxel\Core\Window.h" />
+    <ClInclude Include="src\Platform\Windows\WinWindow.h" />
+    <ClInclude Include="src\NotVoxel\Renderer\GraphicsContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NotVoxel\Core\Application.cpp">
@@ -1314,5 +1318,8 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\NotVoxel\Core\Window.cpp" />
+    <ClCompile Include="src\Platform\Windows\WinWindow.cpp" />
+    <ClCompile Include="src\NotVoxel\Renderer\GraphicsContext.cpp" />
   </ItemGroup>
 </Project>

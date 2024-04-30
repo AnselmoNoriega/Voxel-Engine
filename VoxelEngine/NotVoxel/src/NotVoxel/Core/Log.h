@@ -4,7 +4,7 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 
-namespace NR
+namespace VoxelForge
 {
 	using loggerPtr = std::shared_ptr<spdlog::logger>;
 
@@ -22,14 +22,14 @@ namespace NR
 	};
 }
 
-#define CORE_TRACE(...) ::NR::Log::GetCoreLogger()->trace(__VA_ARGS__)
-#define CORE_INFO(...)  ::NR::Log::GetCoreLogger()->info(__VA_ARGS__)
-#define CORE_WARN(...)  ::NR::Log::GetCoreLogger()->warn(__VA_ARGS__)
-#define CORE_ERROR(...) ::NR::Log::GetCoreLogger()->error(__VA_ARGS__)
-#define CORE_FATAL(...) ::NR::Log::GetCoreLogger()->critical(__VA_ARGS__)
+#define CORE_TRACE(...) ::VoxelForge::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define CORE_INFO(...)  ::VoxelForge::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define CORE_WARN(...)  ::VoxelForge::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define CORE_ERROR(...) ::VoxelForge::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define CORE_FATAL(...) ::VoxelForge::Log::GetCoreLogger()->critical(__VA_ARGS__)
 
-#define TRACE(...)      ::NR::Log::GetClientLogger()->trace(__VA_ARGS__)
-#define INFO(...)       ::NR::Log::GetClientLogger()->info(__VA_ARGS__)
-#define WARN(...)       ::NR::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define ERROR(...)      ::NR::Log::GetClientLogger()->error(__VA_ARGS__)
-#define FATAL(...)      ::NR::Log::GetClientLogger()->critical(__VA_ARGS__)
+#define TRACE(...)      ::VoxelForge::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define INFO(...)       ::VoxelForge::Log::GetClientLogger()->info(__VA_ARGS__)
+#define WARN(...)       ::VoxelForge::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define ERROR(...)      ::VoxelForge::Log::GetClientLogger()->error(__VA_ARGS__)
+#define FATAL(...)      ::VoxelForge::Log::GetClientLogger()->critical(__VA_ARGS__)

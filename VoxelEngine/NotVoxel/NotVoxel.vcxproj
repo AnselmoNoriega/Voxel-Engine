@@ -142,7 +142,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\NotVoxel\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\NotVoxel\Core\Application.h" />
+    <ClInclude Include="src\NotVoxel\Core\Assert.h" />
     <ClInclude Include="src\NotVoxel\Core\Core.h" />
     <ClInclude Include="src\NotVoxel\Core\Log.h" />
     <ClInclude Include="src\NotVoxel\Core\PlatformDetection.h" />
@@ -565,14 +567,19 @@
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
+    <ClInclude Include="src\NotVoxel\Core\Window.h" />
+    <ClInclude Include="src\Platform\Windows\WinWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\NotVoxel\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\NotVoxel\Core\Application.cpp" />
     <ClCompile Include="src\NotVoxel\Core\Log.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\NotVoxel\Core\Window.cpp" />
+    <ClCompile Include="src\Platform\Windows\WinWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">

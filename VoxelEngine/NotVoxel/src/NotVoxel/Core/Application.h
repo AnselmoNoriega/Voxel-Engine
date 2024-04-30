@@ -9,7 +9,7 @@
 
 #include "NotVoxel/Core/TimeStep.h"
 
-namespace NR
+namespace VoxelForge
 {
     class WindowCloseEvent;
     class WindowResizeEvent; 
