@@ -1339,6 +1339,11 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\NotVoxel\Core\Input\MouseCodes.h" />
+    <ClInclude Include="src\NotVoxel\Events\AppEvent.h" />
+    <ClInclude Include="src\NotVoxel\Events\Event.h" />
+    <ClInclude Include="src\NotVoxel\Events\MouseEvent.h" />
+    <ClInclude Include="src\NotVoxel\Events\KeyEvent.h" />
+    <ClInclude Include="src\NotVoxel\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NotVoxel\Core\Application.cpp">
@@ -1365,5 +1370,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>

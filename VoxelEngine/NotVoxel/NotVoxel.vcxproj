@@ -150,7 +150,12 @@
     <ClInclude Include="src\NotVoxel\Core\PlatformDetection.h" />
     <ClInclude Include="src\NotVoxel\Core\Window.h" />
     <ClInclude Include="src\NotVoxel\Debug\Instrumentor.h" />
+    <ClInclude Include="src\NotVoxel\Events\AppEvent.h" />
+    <ClInclude Include="src\NotVoxel\Events\Event.h" />
+    <ClInclude Include="src\NotVoxel\Events\KeyEvent.h" />
+    <ClInclude Include="src\NotVoxel\Events\MouseEvent.h" />
     <ClInclude Include="src\NotVoxel\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\NotVoxel\Renderer\Renderer.h" />
     <ClInclude Include="src\Platform\Windows\WinWindow.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -576,6 +581,7 @@
     <ClCompile Include="src\NotVoxel\Core\Log.cpp" />
     <ClCompile Include="src\NotVoxel\Core\Window.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\GraphicsContext.cpp" />
+    <ClCompile Include="src\NotVoxel\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Platform\Windows\WinInputs.cpp" />
     <ClCompile Include="src\Platform\Windows\WinWindow.cpp" />
     <ClCompile Include="src\pch.cpp" />

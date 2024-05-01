@@ -3,7 +3,7 @@
 
 #include "NotVoxel/Core/Input/Input.h"
 
-#include "NotVoxel/Events/ApplicationEvent.h"
+#include "NotVoxel/Events/AppEvent.h"
 #include "NotVoxel/Events/MouseEvent.h"
 #include "NotVoxel/Events/KeyEvent.h"
 
