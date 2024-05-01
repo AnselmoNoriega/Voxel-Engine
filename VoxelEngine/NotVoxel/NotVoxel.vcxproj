@@ -140,6 +140,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\NotVoxel\Renderer\API\Shader.h" />
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLShader.h" />
     <ClInclude Include="src\NotVoxel\Core\Application.h" />
     <ClInclude Include="src\NotVoxel\Core\Assert.h" />
     <ClInclude Include="src\NotVoxel\Core\Core.h" />
@@ -156,7 +158,7 @@
     <ClInclude Include="src\NotVoxel\Events\MouseEvent.h" />
     <ClInclude Include="src\NotVoxel\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\NotVoxel\Renderer\Renderer.h" />
-    <ClInclude Include="src\Platform\Windows\WinWindow.h" />
+    <ClInclude Include="src\Platform\OperatingSystem\Windows\WinWindow.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -577,13 +579,15 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\NotVoxel\Renderer\API\Shader.cpp" />
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLShader.cpp" />
     <ClCompile Include="src\NotVoxel\Core\Application.cpp" />
     <ClCompile Include="src\NotVoxel\Core\Log.cpp" />
     <ClCompile Include="src\NotVoxel\Core\Window.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Platform\Windows\WinInputs.cpp" />
-    <ClCompile Include="src\Platform\Windows\WinWindow.cpp" />
+    <ClCompile Include="src\Platform\OperatingSystem\Windows\WinInputs.cpp" />
+    <ClCompile Include="src\Platform\OperatingSystem\Windows\WinWindow.cpp" />
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>

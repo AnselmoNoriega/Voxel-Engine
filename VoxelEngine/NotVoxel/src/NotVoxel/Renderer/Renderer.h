@@ -3,7 +3,7 @@
 #include "RenderCommand.h"
 
 #include "Camera/OrthographicCamera.h"
-#include "Shader.h"
+#include "NotVoxel/Renderer/API/Shader.h"
 
 namespace VoxelForge
 {

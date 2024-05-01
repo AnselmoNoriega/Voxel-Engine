@@ -81,7 +81,7 @@
     <ClInclude Include="src\NotVoxel\Renderer\GraphicsContext.h">
       <Filter>src\NotVoxel\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Windows\WinWindow.h">
+    <ClInclude Include="src\Platform\OperatingSystem\Windows\WinWindow.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h">
@@ -1344,6 +1344,8 @@
     <ClInclude Include="src\NotVoxel\Events\MouseEvent.h" />
     <ClInclude Include="src\NotVoxel\Events\KeyEvent.h" />
     <ClInclude Include="src\NotVoxel\Renderer\Renderer.h" />
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLShader.h" />
+    <ClInclude Include="src\NotVoxel\Renderer\API\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NotVoxel\Core\Application.cpp">
@@ -1358,10 +1360,10 @@
     <ClCompile Include="src\NotVoxel\Renderer\GraphicsContext.cpp">
       <Filter>src\NotVoxel\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\WinInputs.cpp">
+    <ClCompile Include="src\Platform\OperatingSystem\Windows\WinInputs.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\WinWindow.cpp">
+    <ClCompile Include="src\Platform\OperatingSystem\Windows\WinWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp">
@@ -1371,5 +1373,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\NotVoxel\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLShader.cpp" />
+    <ClCompile Include="src\NotVoxel\Renderer\API\Shader.cpp" />
   </ItemGroup>
 </Project>
