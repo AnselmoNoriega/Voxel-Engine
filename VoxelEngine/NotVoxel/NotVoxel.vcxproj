@@ -140,7 +140,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\NotVoxel\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLRendererAPI.h" />
     <ClInclude Include="src\NotVoxel\Renderer\API\Shader.h" />
+    <ClInclude Include="src\NotVoxel\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLShader.h" />
     <ClInclude Include="src\NotVoxel\Core\Application.h" />
     <ClInclude Include="src\NotVoxel\Core\Assert.h" />
@@ -579,7 +582,10 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\NotVoxel\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLRendererAPI.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\API\Shader.cpp" />
+    <ClCompile Include="src\NotVoxel\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLShader.cpp" />
     <ClCompile Include="src\NotVoxel\Core\Application.cpp" />
     <ClCompile Include="src\NotVoxel\Core\Log.cpp" />
