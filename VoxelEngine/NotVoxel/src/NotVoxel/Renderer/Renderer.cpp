@@ -22,9 +22,10 @@ namespace VoxelForge
         RenderCommand::SetViewport(0, 0, width, height);
     }
 
-    void Renderer::BeginScene(OrthographicCamera& camera)
+    void Renderer::BeginScene(EditorCamera& camera)
     {
-        sSceneData->ViewProjectionMatrix = camera.GetVPMatrix();
+        sSceneData->ViewProjectionMatrix = camera.GetViewProjection();
+        sData.CameraUniformBuffer->SetData(&sData.CameraBuffer, sizeof(Renderer2DStorage::CameraData));
     }
 
     void Renderer::EndScene()

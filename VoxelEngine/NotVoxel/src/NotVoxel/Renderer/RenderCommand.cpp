@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "RenderCommand.h"
 
-#include "Platform/RenderAPI/OpenGL/GLRendererAPI.h"
+#include "Platform/RendererAPI/OpenGL/GLRendererAPI.h"
 
 namespace VoxelForge
 {

@@ -2,7 +2,7 @@
 
 #include "RenderCommand.h"
 
-#include "Camera/OrthographicCamera.h"
+#include "Camera/EditorCamera.h"
 #include "NotVoxel/Renderer/API/Shader.h"
 
 namespace VoxelForge
@@ -15,7 +15,7 @@ namespace VoxelForge
 
         static void OnWindowResize(uint32_t width, uint32_t height);
 
-        static void BeginScene(OrthographicCamera& camera);
+        static void BeginScene(EditorCamera& camera);
         static void EndScene();
 
         static void Submit(
