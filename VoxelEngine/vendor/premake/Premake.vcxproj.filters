@@ -4,40 +4,40 @@
     <Filter Include="..">
       <UniqueIdentifier>{61705900-4DFC-870B-B6AA-880BA255880B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Engine">
+      <UniqueIdentifier>{C603331F-326E-E795-7BAC-983BE755C5EA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Engine\vendor">
+      <UniqueIdentifier>{63DFCF64-4FD8-EEB6-780A-D43B6462CEC2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Engine\vendor\GLFW">
+      <UniqueIdentifier>{82B0FCD6-EE1C-B8D1-B710-502F233CDA39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Engine\vendor\glad">
+      <UniqueIdentifier>{4AC80ED7-B634-CAD1-7F28-622FEB53EC39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Engine\vendor\imgui">
+      <UniqueIdentifier>{0DAB0CB9-F9A4-350B-E211-CC1BCEAA9B77}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\NotEditor">
       <UniqueIdentifier>{C81B1151-B47E-A0F5-5D04-D9AB49466C78}</UniqueIdentifier>
     </Filter>
-    <Filter Include="..\NotVoxel">
-      <UniqueIdentifier>{2FEF4970-9BA4-C265-2499-BC3C904DB969}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="..\NotVoxel\vendor">
-      <UniqueIdentifier>{ACBA9036-989E-518C-01FF-4BDFED013C0E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="..\NotVoxel\vendor\GLFW">
-      <UniqueIdentifier>{6B01C744-D738-0FDC-E042-73FF4CF935D5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="..\NotVoxel\vendor\glad">
-      <UniqueIdentifier>{3319D944-9F50-21DC-A85A-85FF141148D5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="..\NotVoxel\vendor\imgui">
-      <UniqueIdentifier>{161921E0-023E-7060-2B89-55F0170D6F7E}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Engine\premake5.lua">
+      <Filter>..\Engine</Filter>
+    </None>
+    <None Include="..\..\Engine\vendor\GLFW\premake5.lua">
+      <Filter>..\Engine\vendor\GLFW</Filter>
+    </None>
+    <None Include="..\..\Engine\vendor\glad\premake5.lua">
+      <Filter>..\Engine\vendor\glad</Filter>
+    </None>
+    <None Include="..\..\Engine\vendor\imgui\premake5.lua">
+      <Filter>..\Engine\vendor\imgui</Filter>
+    </None>
     <None Include="..\..\NotEditor\premake5.lua">
       <Filter>..\NotEditor</Filter>
-    </None>
-    <None Include="..\..\NotVoxel\premake5.lua">
-      <Filter>..\NotVoxel</Filter>
-    </None>
-    <None Include="..\..\NotVoxel\vendor\GLFW\premake5.lua">
-      <Filter>..\NotVoxel\vendor\GLFW</Filter>
-    </None>
-    <None Include="..\..\NotVoxel\vendor\glad\premake5.lua">
-      <Filter>..\NotVoxel\vendor\glad</Filter>
-    </None>
-    <None Include="..\..\NotVoxel\vendor\imgui\premake5.lua">
-      <Filter>..\NotVoxel\vendor\imgui</Filter>
     </None>
     <None Include="..\..\premake5.lua">
       <Filter>..</Filter>

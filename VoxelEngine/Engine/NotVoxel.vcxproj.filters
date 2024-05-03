@@ -75,6 +75,111 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Forge.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\Application.h">
+      <Filter>src\Forge\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\Assert.h">
+      <Filter>src\Forge\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\Core.h">
+      <Filter>src\Forge\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\EntryPoint.h">
+      <Filter>src\Forge\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\Input\Input.h">
+      <Filter>src\Forge\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\Input\KeyCodes.h">
+      <Filter>src\Forge\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\Input\MouseCodes.h">
+      <Filter>src\Forge\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\Layer.h">
+      <Filter>src\Forge\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\LayerStack.h">
+      <Filter>src\Forge\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\Log.h">
+      <Filter>src\Forge\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\PlatformDetection.h">
+      <Filter>src\Forge\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\TimeStep.h">
+      <Filter>src\Forge\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Core\Window.h">
+      <Filter>src\Forge\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Debug\Instrumentor.h">
+      <Filter>src\Forge\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Events\AppEvent.h">
+      <Filter>src\Forge\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Events\ApplicationEvent.h">
+      <Filter>src\Forge\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Events\Event.h">
+      <Filter>src\Forge\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Events\KeyEvent.h">
+      <Filter>src\Forge\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Events\MouseEvent.h">
+      <Filter>src\Forge\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\ImGui\ImGuiLayer.h">
+      <Filter>src\Forge\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\API\BufferLayout.h">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\API\IndexBuffer.h">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\API\Shader.h">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\API\Texture.h">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\API\UniformBuffer.h">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\API\VertexArray.h">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\API\VertexBuffer.h">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\Camera\Camera.h">
+      <Filter>src\Forge\Renderer\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\Camera\EditorCamera.h">
+      <Filter>src\Forge\Renderer\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\GraphicsContext.h">
+      <Filter>src\Forge\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\RenderCommand.h">
+      <Filter>src\Forge\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\Renderer.h">
+      <Filter>src\Forge\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Renderer\RendererAPI.h">
+      <Filter>src\Forge\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Forge\Utils\PlatformUtils.h">
+      <Filter>src\Forge\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OperatingSystem\Windows\WinWindow.h">
       <Filter>src\Platform\OperatingSystem\Windows</Filter>
     </ClInclude>
@@ -1356,43 +1461,65 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Forge.h" />
-    <ClInclude Include="src\Forge\Core\Application.h" />
-    <ClInclude Include="src\Forge\Core\Assert.h" />
-    <ClInclude Include="src\Forge\Core\Core.h" />
-    <ClInclude Include="src\Forge\Core\EntryPoint.h" />
-    <ClInclude Include="src\Forge\Core\Input\Input.h" />
-    <ClInclude Include="src\Forge\Core\Input\KeyCodes.h" />
-    <ClInclude Include="src\Forge\Core\Input\MouseCodes.h" />
-    <ClInclude Include="src\Forge\Core\Layer.h" />
-    <ClInclude Include="src\Forge\Core\LayerStack.h" />
-    <ClInclude Include="src\Forge\Core\Log.h" />
-    <ClInclude Include="src\Forge\Core\PlatformDetection.h" />
-    <ClInclude Include="src\Forge\Core\TimeStep.h" />
-    <ClInclude Include="src\Forge\Core\Window.h" />
-    <ClInclude Include="src\Forge\Debug\Instrumentor.h" />
-    <ClInclude Include="src\Forge\Events\AppEvent.h" />
-    <ClInclude Include="src\Forge\Events\ApplicationEvent.h" />
-    <ClInclude Include="src\Forge\Events\Event.h" />
-    <ClInclude Include="src\Forge\Events\KeyEvent.h" />
-    <ClInclude Include="src\Forge\Events\MouseEvent.h" />
-    <ClInclude Include="src\Forge\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Forge\Renderer\API\BufferLayout.h" />
-    <ClInclude Include="src\Forge\Renderer\API\IndexBuffer.h" />
-    <ClInclude Include="src\Forge\Renderer\API\Shader.h" />
-    <ClInclude Include="src\Forge\Renderer\API\Texture.h" />
-    <ClInclude Include="src\Forge\Renderer\API\UniformBuffer.h" />
-    <ClInclude Include="src\Forge\Renderer\API\VertexArray.h" />
-    <ClInclude Include="src\Forge\Renderer\API\VertexBuffer.h" />
-    <ClInclude Include="src\Forge\Renderer\Camera\Camera.h" />
-    <ClInclude Include="src\Forge\Renderer\Camera\EditorCamera.h" />
-    <ClInclude Include="src\Forge\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\Forge\Renderer\RenderCommand.h" />
-    <ClInclude Include="src\Forge\Renderer\Renderer.h" />
-    <ClInclude Include="src\Forge\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\Forge\Utils\PlatformUtils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Forge\Core\Application.cpp">
+      <Filter>src\Forge\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Core\Layer.cpp">
+      <Filter>src\Forge\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Core\LayerStack.cpp">
+      <Filter>src\Forge\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Core\Log.cpp">
+      <Filter>src\Forge\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Core\Window.cpp">
+      <Filter>src\Forge\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\ImGui\ImGuiBuild.cpp">
+      <Filter>src\Forge\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\ImGui\ImGuiLayer.cpp">
+      <Filter>src\Forge\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Renderer\API\BufferLayout.cpp">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Renderer\API\IndexBuffer.cpp">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Renderer\API\Shader.cpp">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Renderer\API\Texture.cpp">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Renderer\API\UniformBuffer.cpp">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Renderer\API\VertexArray.cpp">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Renderer\API\VertexBuffer.cpp">
+      <Filter>src\Forge\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Renderer\Camera\EditorCamera.cpp">
+      <Filter>src\Forge\Renderer\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Renderer\GraphicsContext.cpp">
+      <Filter>src\Forge\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Renderer\RenderCommand.cpp">
+      <Filter>src\Forge\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Renderer\Renderer.cpp">
+      <Filter>src\Forge\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Forge\Renderer\RendererAPI.cpp">
+      <Filter>src\Forge\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WinInputs.cpp">
       <Filter>src\Platform\OperatingSystem\Windows</Filter>
     </ClCompile>
@@ -1432,24 +1559,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Forge\Core\Application.cpp" />
-    <ClCompile Include="src\Forge\Core\Layer.cpp" />
-    <ClCompile Include="src\Forge\Core\LayerStack.cpp" />
-    <ClCompile Include="src\Forge\Core\Log.cpp" />
-    <ClCompile Include="src\Forge\Core\Window.cpp" />
-    <ClCompile Include="src\Forge\ImGui\ImGuiBuild.cpp" />
-    <ClCompile Include="src\Forge\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Forge\Renderer\API\BufferLayout.cpp" />
-    <ClCompile Include="src\Forge\Renderer\API\IndexBuffer.cpp" />
-    <ClCompile Include="src\Forge\Renderer\API\Shader.cpp" />
-    <ClCompile Include="src\Forge\Renderer\API\Texture.cpp" />
-    <ClCompile Include="src\Forge\Renderer\API\UniformBuffer.cpp" />
-    <ClCompile Include="src\Forge\Renderer\API\VertexArray.cpp" />
-    <ClCompile Include="src\Forge\Renderer\API\VertexBuffer.cpp" />
-    <ClCompile Include="src\Forge\Renderer\Camera\EditorCamera.cpp" />
-    <ClCompile Include="src\Forge\Renderer\GraphicsContext.cpp" />
-    <ClCompile Include="src\Forge\Renderer\RenderCommand.cpp" />
-    <ClCompile Include="src\Forge\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Forge\Renderer\RendererAPI.cpp" />
   </ItemGroup>
 </Project>

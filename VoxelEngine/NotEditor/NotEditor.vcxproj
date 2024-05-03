@@ -78,8 +78,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VOXEL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\NotVoxel\vendor\spdlog\include;..\NotVoxel\src;..\NotVoxel\vendor;..\NotVoxel\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ENGINE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Engine\vendor\spdlog\include;..\Engine\src;..\Engine\vendor;..\Engine\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -95,8 +95,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VOXEL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\NotVoxel\vendor\spdlog\include;..\NotVoxel\src;..\NotVoxel\vendor;..\NotVoxel\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ENGINE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Engine\vendor\spdlog\include;..\Engine\src;..\Engine\vendor;..\Engine\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -116,8 +116,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>VOXEL_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\NotVoxel\vendor\spdlog\include;..\NotVoxel\src;..\NotVoxel\vendor;..\NotVoxel\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ENGINE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Engine\vendor\spdlog\include;..\Engine\src;..\Engine\vendor;..\Engine\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -141,8 +141,8 @@
     <ClCompile Include="src\EditorLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NotVoxel\NotVoxel.vcxproj">
-      <Project>{840C2CED-70D9-86F8-99F2-74A0851EBC86}</Project>
+    <ProjectReference Include="..\Engine\Engine.vcxproj">
+      <Project>{DBC7D3B0-C769-FE86-B024-12DB9C6585D7}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

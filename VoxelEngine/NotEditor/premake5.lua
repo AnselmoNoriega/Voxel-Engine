@@ -15,31 +15,31 @@ project "NotEditor"
 
 	includedirs
 	{
-		"%{wks.location}/NotVoxel/vendor/spdlog/include",
-		"%{wks.location}/NotVoxel/src",
-		"%{wks.location}/NotVoxel/vendor",
+		"%{wks.location}/Engine/vendor/spdlog/include",
+		"%{wks.location}/Engine/src",
+		"%{wks.location}/Engine/vendor",
 		"%{IncludeDir.Glm}"
 	}
 
 	links
 	{
-		"NotVoxel"
+		"Engine"
 	}
 
 	filter "system:windows"
 		systemversion "latest"
 
 	filter "configurations:Debug"
-		defines "VOXEL_DEBUG"
+		defines "ENGINE_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
-		defines "VOXEL_RELEASE"
+		defines "ENGINE_RELEASE"
 		runtime "Release"
 		optimize "on"
 
 	filter "configurations:Dist"
-		defines "VOXEL_DIST"
+		defines "ENGINE_DIST"
 		runtime "Release"
 		optimize "on"

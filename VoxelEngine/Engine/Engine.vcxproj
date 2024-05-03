@@ -15,12 +15,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{840C2CED-70D9-86F8-99F2-74A0851EBC86}</ProjectGuid>
+    <ProjectGuid>{DBC7D3B0-C769-FE86-B024-12DB9C6585D7}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>NotVoxel</RootNamespace>
+    <RootNamespace>Engine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Engine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -55,28 +54,28 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>..\bin\Debug-windows-x86_64\NotVoxel\</OutDir>
-    <IntDir>..\bin-int\Debug-windows-x86_64\NotVoxel\</IntDir>
-    <TargetName>NotVoxel</TargetName>
+    <OutDir>..\bin\Debug-windows-x86_64\Engine\</OutDir>
+    <IntDir>..\bin-int\Debug-windows-x86_64\Engine\</IntDir>
+    <TargetName>Engine</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\bin\Release-windows-x86_64\NotVoxel\</OutDir>
-    <IntDir>..\bin-int\Release-windows-x86_64\NotVoxel\</IntDir>
-    <TargetName>NotVoxel</TargetName>
+    <OutDir>..\bin\Release-windows-x86_64\Engine\</OutDir>
+    <IntDir>..\bin-int\Release-windows-x86_64\Engine\</IntDir>
+    <TargetName>Engine</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <OutDir>..\bin\Dist-windows-x86_64\NotVoxel\</OutDir>
-    <IntDir>..\bin-int\Dist-windows-x86_64\NotVoxel\</IntDir>
-    <TargetName>NotVoxel</TargetName>
+    <OutDir>..\bin\Dist-windows-x86_64\Engine\</OutDir>
+    <IntDir>..\bin-int\Dist-windows-x86_64\Engine\</IntDir>
+    <TargetName>Engine</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;VOXEL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;ENGINE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glm;vendor\GLFW\include;vendor\Glad\include;vendor\ImGui;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -96,7 +95,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;VOXEL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;ENGINE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glm;vendor\GLFW\include;vendor\Glad\include;vendor\ImGui;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -120,7 +119,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;VOXEL_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;ENGINE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glm;vendor\GLFW\include;vendor\Glad\include;vendor\ImGui;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>

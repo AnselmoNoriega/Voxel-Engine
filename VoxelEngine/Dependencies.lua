@@ -1,12 +1,12 @@
 
--- Not Voxel Dependencies
+-- Not ENGINE Dependencies
 
 IncludeDir = {}
-IncludeDir["ImGui"] = "%{wks.location}/NotVoxel/vendor/ImGui"
-IncludeDir["GLFW"] = "%{wks.location}/NotVoxel/vendor/GLFW/include"
-IncludeDir["Glad"] = "%{wks.location}/NotVoxel/vendor/Glad/include"
-IncludeDir["Glm"] = "%{wks.location}/NotVoxel/vendor/glm"
-IncludeDir["Stb"] = "%{wks.location}/NotVoxel/vendor/stb_image"
+IncludeDir["ImGui"] = "%{wks.location}/Engine/vendor/ImGui"
+IncludeDir["GLFW"] = "%{wks.location}/Engine/vendor/GLFW/include"
+IncludeDir["Glad"] = "%{wks.location}/Engine/vendor/Glad/include"
+IncludeDir["Glm"] = "%{wks.location}/Engine/vendor/glm"
+IncludeDir["Stb"] = "%{wks.location}/Engine/vendor/stb_image"
 
 Library = {}
 Library["WinSock"] = "Ws2_32.lib"

@@ -1,5 +1,5 @@
-#include <NotVoxel.h>
-#include <NotVoxel/Core/EntryPoint.h>
+#include <Forge.h>
+#include <Forge/Core/EntryPoint.h>
 
 #include "EditorLayer.h"
 

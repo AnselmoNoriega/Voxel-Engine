@@ -1,8 +1,8 @@
 #pragma once
 
-#include <NotVoxel.h>
+#include <Forge.h>
 
-#include "NotVoxel/Renderer/Camera/EditorCamera.h"
+#include "Forge/Renderer/Camera/EditorCamera.h"
 
 namespace Forge
 {

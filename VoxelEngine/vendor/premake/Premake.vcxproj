@@ -77,11 +77,11 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\..\Engine\premake5.lua" />
+    <None Include="..\..\Engine\vendor\GLFW\premake5.lua" />
+    <None Include="..\..\Engine\vendor\glad\premake5.lua" />
+    <None Include="..\..\Engine\vendor\imgui\premake5.lua" />
     <None Include="..\..\NotEditor\premake5.lua" />
-    <None Include="..\..\NotVoxel\premake5.lua" />
-    <None Include="..\..\NotVoxel\vendor\GLFW\premake5.lua" />
-    <None Include="..\..\NotVoxel\vendor\glad\premake5.lua" />
-    <None Include="..\..\NotVoxel\vendor\imgui\premake5.lua" />
     <None Include="..\..\premake5.lua" />
     <None Include="premake5.lua" />
   </ItemGroup>

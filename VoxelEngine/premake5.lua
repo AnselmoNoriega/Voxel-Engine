@@ -15,13 +15,13 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 group "Dependencies"
 	include "vendor/premake"
-	include "NotVoxel/vendor/GLFW"
-	include "NotVoxel/vendor/glad"
-	include "NotVoxel/vendor/imgui"
+	include "Engine/vendor/GLFW"
+	include "Engine/vendor/glad"
+	include "Engine/vendor/imgui"
 group ""
 
 group "Core"
-	include "NotVoxel"
+	include "Engine"
 group ""
 
 group "Tools"
