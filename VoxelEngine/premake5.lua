@@ -1,6 +1,6 @@
 include "Dependencies.lua"
 
-workspace "VoxelEngine"
+workspace "GenesisFramework"
 	architecture "x86_64"
 	startproject "NotEditor"
 
