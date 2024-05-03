@@ -88,7 +88,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;Ws2_32.lib;Winmm.lib;Version.lib;Bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -112,7 +112,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;Ws2_32.lib;Winmm.lib;Version.lib;Bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -136,7 +136,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;Ws2_32.lib;Winmm.lib;Version.lib;Bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -623,9 +623,9 @@
     <ClCompile Include="src\NotVoxel\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\Renderer.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\RendererAPI.cpp" />
-    <ClCompile Include="src\Platform\OperatingSystem\Windows\WindowsUtils.cpp" />
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WinInputs.cpp" />
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WinWindow.cpp" />
+    <ClCompile Include="src\Platform\OperatingSystem\Windows\WindowsUtils.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLContext.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLIndexBuffer.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLRendererAPI.cpp" />

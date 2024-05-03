@@ -50,6 +50,14 @@ project "NotVoxel"
 	filter "system:windows"
 		systemversion "latest"
 
+		links
+		{
+			"%{Library.WinSock}",
+			"%{Library.WinMM}",
+			"%{Library.WinVersion}",
+			"%{Library.BCrypt}",
+		}
+
 	filter "configurations:Debug"
 		defines "VOXEL_DEBUG"
 		runtime "Debug"
