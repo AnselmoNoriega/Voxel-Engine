@@ -7,7 +7,6 @@ namespace VoxelForge
     class Texture;
     class Camera;
     class TextComponent;
-    struct SpriteRendererComponent;
 
     class Renderer
     {
@@ -20,8 +19,8 @@ namespace VoxelForge
 
         static void Flush();
 
-        static void DrawSprite(const glm::mat4& transform, SpriteRendererComponent& src, int entityID);
-        static void DrawLine(const glm::vec3& p0, glm::vec3& p1, const glm::vec4& color);
+        static void DrawCube(const glm::mat4& transform, float textureIndex, const glm::vec4& color);
+
         static void DrawRect(const glm::mat4& transform, const glm::vec4& color);
 
         static void SetLineWidth(float width);
@@ -37,9 +36,10 @@ namespace VoxelForge
         static void ResetStats();
         static Statistics GetStats();
 
+        inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
     private:
-        static void DrawQuad(const glm::mat4& transform, float textureIndex, const glm::vec4& color, int entityID = -1);
+        static void DrawLine(const glm::vec3& p0, glm::vec3& p1, const glm::vec4& color);
 
         static float GetTextureIndex(const Ref<Texture>& texture);
 

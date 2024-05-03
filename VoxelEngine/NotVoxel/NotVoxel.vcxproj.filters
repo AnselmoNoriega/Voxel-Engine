@@ -1360,6 +1360,9 @@
     <ClInclude Include="src\NotVoxel\Renderer\Camera\Camera.h" />
     <ClInclude Include="src\NotVoxel\Renderer\API\Texture.h" />
     <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLTexture.h" />
+    <ClInclude Include="src\NotVoxel\Renderer\API\UniformBuffer.h" />
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLUniformBuffer.h" />
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NotVoxel\Core\Application.cpp">
@@ -1402,5 +1405,8 @@
     <ClCompile Include="src\NotVoxel\Renderer\Camera\EditorCamera.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\API\Texture.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLTexture.cpp" />
+    <ClCompile Include="src\NotVoxel\Renderer\API\UniformBuffer.cpp" />
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLUniformBuffer.cpp" />
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLContext.cpp" />
   </ItemGroup>
 </Project>

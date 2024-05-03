@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "Texture.h"
 
+#include "NotVoxel/Renderer/RendererAPI.h"
 #include "NotVoxel/Renderer/Renderer.h"
+
 #include "Platform/RendererAPI/OpenGL/GLTexture.h"
 
 namespace VoxelForge

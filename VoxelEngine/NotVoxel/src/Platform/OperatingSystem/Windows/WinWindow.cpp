@@ -8,7 +8,7 @@
 #include "NotVoxel/Events/KeyEvent.h"
 
 #include "NotVoxel/Renderer/Renderer.h"
-#include "NotVoxel/OpenGL/OpenGLContext.h"
+#include "NotVoxel/Renderer/RendererAPI.h"
 
 namespace VoxelForge
 {

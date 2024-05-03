@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "Shader.h"
 
+#include "NotVoxel/Renderer/RendererAPI.h"
 #include "NotVoxel/Renderer/Renderer.h"
+
 #include "Platform/RendererAPI/OpenGL/GLShader.h"
 
 namespace VoxelForge

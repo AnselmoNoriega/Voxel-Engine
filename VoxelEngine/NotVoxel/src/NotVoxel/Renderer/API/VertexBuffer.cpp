@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "VertexBuffer.h"
 
+#include "NotVoxel/Renderer/RendererAPI.h"
 #include "NotVoxel/Renderer/Renderer.h"
 
 #include "Platform/RendererAPI/OpenGL/GLVertexBuffer.h"

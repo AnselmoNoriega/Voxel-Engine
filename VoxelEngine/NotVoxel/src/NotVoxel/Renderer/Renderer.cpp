@@ -20,8 +20,6 @@ namespace VoxelForge
         glm::vec2 TexCoord = { 0.0f, 0.0f };
         glm::vec4 Color = { 0.0f, 0.0f, 0.0f, 0.0f };
         float TexIndex = 0.0f;
-
-        int EntityID = -1;
     };
 
     struct LineVertex
@@ -84,6 +82,8 @@ namespace VoxelForge
     {
         PROFILE_FUNCTION();
 
+        RenderCommand::Init();
+
         {
             sData.QuadVertexArray = VertexArray::Create();
 
@@ -100,20 +100,6 @@ namespace VoxelForge
             sData.VertexBufferBase = new QuadVertex[sData.MaxVertices];
         }
         {
-            sData.CircleVertexArray = VertexArray::Create();
-
-            sData.CircleVertexBuffer = VertexBuffer::Create(sData.MaxVertices * sizeof(CircleVertex));
-            sData.CircleVertexBuffer->SetLayout({
-               { ShaderDataType::Float3, "aWorldPosition" },
-               { ShaderDataType::Float3, "aLocalPosition" },
-               { ShaderDataType::Float4, "aColor"         },
-               { ShaderDataType::Float,  "aThickness"     },
-               { ShaderDataType::Int,    "aEntityID"      }
-                });
-            sData.CircleVertexArray->AddVertexBuffer(sData.CircleVertexBuffer);
-            sData.CircleVertexBufferBase = new CircleVertex[sData.MaxVertices];
-        }
-        {
             sData.LineVertexArray = VertexArray::Create();
 
             sData.LineVertexBuffer = VertexBuffer::Create(sData.MaxVertices * sizeof(LineVertex));
@@ -123,19 +109,6 @@ namespace VoxelForge
                 });
             sData.LineVertexArray->AddVertexBuffer(sData.LineVertexBuffer);
             sData.LineVertexBufferBase = new LineVertex[sData.MaxVertices];
-        }
-        {
-            sData.TextVertexArray = VertexArray::Create();
-
-            sData.TextVertexBuffer = VertexBuffer::Create(sData.MaxVertices * sizeof(TextVertex));
-            sData.TextVertexBuffer->SetLayout({
-                { ShaderDataType::Float3, "aPosition"     },
-                { ShaderDataType::Float4, "aColor"        },
-                { ShaderDataType::Float2, "aTexCoord"     },
-                { ShaderDataType::Int,    "aEntityID"     }
-                });
-            sData.TextVertexArray->AddVertexBuffer(sData.TextVertexBuffer);
-            sData.TextVertexBufferBase = new TextVertex[sData.MaxVertices];
         }
         {
             uint32_t* indices = new uint32_t[sData.MaxIndices];
@@ -156,19 +129,15 @@ namespace VoxelForge
 
             Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(indices, sData.MaxIndices);
             sData.QuadVertexArray->SetIndexBuffer(indexBuffer);
-            sData.CircleVertexArray->SetIndexBuffer(indexBuffer);
-            sData.TextVertexArray->SetIndexBuffer(indexBuffer);
             delete[] indices;
 
-            sData.EmptyTexture = Texture2D::Create(TextureSpecification());
+            sData.EmptyTexture = Texture::Create(TextureSpecification());
             uint32_t emptyTextureData = 0xffffffff;
             sData.EmptyTexture->SetData(&emptyTextureData, sizeof(uint32_t));
         }
 
         sData.ObjShader = Shader::Create("Assets/Shaders/Base");
         sData.LineShader = Shader::Create("assets/shaders/Color");
-        sData.CircleShader = Shader::Create("assets/shaders/Circle");
-        sData.TextShader = Shader::Create("assets/shaders/Text");
 
         sData.TextureSlots[0] = sData.EmptyTexture;
 
@@ -182,32 +151,12 @@ namespace VoxelForge
         delete[] sData.VertexBufferBase;
     }
 
-    void Renderer::BeginScene(const Camera& camera, glm::mat4 transform)
-    {
-        PROFILE_FUNCTION();
-
-        sData.CameraBuffer.ViewProjection = camera.GetProjection() * glm::inverse(transform);
-        sData.CameraUniformBuffer->SetData(&sData.CameraBuffer, sizeof(RendererStorage::CameraData));
-
-        StartBatch();
-    }
-
     void Renderer::BeginScene(const EditorCamera& camera)
     {
         PROFILE_FUNCTION();
 
         sData.CameraBuffer.ViewProjection = camera.GetViewProjection();
         sData.CameraUniformBuffer->SetData(&sData.CameraBuffer, sizeof(RendererStorage::CameraData));
-
-        StartBatch();
-    }
-
-    void Renderer::BeginScene(const OrthographicCamera& camera)
-    {
-        PROFILE_FUNCTION();
-
-        sData.ObjShader->Bind();
-        sData.ObjShader->SetMat4("uViewProjection", camera.GetVPMatrix());
 
         StartBatch();
     }
@@ -236,16 +185,6 @@ namespace VoxelForge
             ++sData.Stats.DrawCalls;
         }
 
-        if (sData.CircleIndexCount)
-        {
-            uint32_t dataSize = (uint32_t)((uint8_t*)sData.CircleVertexBufferPtr - (uint8_t*)sData.CircleVertexBufferBase);
-            sData.CircleVertexBuffer->SetData(sData.CircleVertexBufferBase, dataSize);
-
-            sData.CircleShader->Bind();
-            RenderCommand::DrawIndexed(sData.CircleVertexArray, sData.CircleIndexCount);
-            ++sData.Stats.DrawCalls;
-        }
-
         if (sData.LineVertexCount)
         {
             uint32_t dataSize = (uint32_t)((uint8_t*)sData.LineVertexBufferPtr - (uint8_t*)sData.LineVertexBufferBase);
@@ -254,18 +193,6 @@ namespace VoxelForge
             sData.LineShader->Bind();
             RenderCommand::SetLineWidth(sData.LineWidth);
             RenderCommand::DrawLines(sData.LineVertexArray, sData.LineVertexCount);
-            ++sData.Stats.DrawCalls;
-        }
-
-        if (sData.TextIndexCount)
-        {
-            uint32_t dataSize = (uint32_t)((uint8_t*)sData.TextVertexBufferPtr - (uint8_t*)sData.TextVertexBufferBase);
-            sData.TextVertexBuffer->SetData(sData.TextVertexBufferBase, dataSize);
-
-            sData.FontTextureAtlas->Bind();
-
-            sData.TextShader->Bind();
-            RenderCommand::DrawIndexed(sData.TextVertexArray, sData.TextIndexCount);
             ++sData.Stats.DrawCalls;
         }
     }
@@ -277,14 +204,8 @@ namespace VoxelForge
         sData.IndexCount = 0;
         sData.VertexBufferPtr = sData.VertexBufferBase;
 
-        sData.CircleIndexCount = 0;
-        sData.CircleVertexBufferPtr = sData.CircleVertexBufferBase;
-
         sData.LineVertexCount = 0;
         sData.LineVertexBufferPtr = sData.LineVertexBufferBase;
-
-        sData.TextIndexCount = 0;
-        sData.TextVertexBufferPtr = sData.TextVertexBufferBase;
 
         sData.TextureSlotIndex = 1;
     }
@@ -295,7 +216,7 @@ namespace VoxelForge
         StartBatch();
     }
 
-    void Renderer::DrawQuad(const glm::mat4& transform, float textureIndex, const glm::vec4& color, int entityID)
+    void Renderer::DrawCube(const glm::mat4& transform, float textureIndex, const glm::vec4& color)
     {
         PROFILE_FUNCTION();
 
@@ -312,35 +233,10 @@ namespace VoxelForge
             sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i];
             sData.VertexBufferPtr->Color = color;
             sData.VertexBufferPtr->TexIndex = textureIndex;
-            sData.VertexBufferPtr->EntityID = entityID;
             ++sData.VertexBufferPtr;
         }
 
         sData.IndexCount += 6;
-
-        ++sData.Stats.QuadCount;
-    }
-
-    void Renderer::DrawCircle(const glm::mat4& transform, const glm::vec4& color, float thickness, int entityID)
-    {
-        PROFILE_FUNCTION();
-
-        if (sData.CircleIndexCount >= RendererStorage::MaxIndices)
-        {
-            NextBatch();
-        }
-
-        for (size_t i = 0; i < 4; i++)
-        {
-            sData.CircleVertexBufferPtr->WorldPosition = transform * sData.VertexPositions[i];
-            sData.CircleVertexBufferPtr->LocalPosition = sData.VertexPositions[i] * 2.0f;
-            sData.CircleVertexBufferPtr->Color = color;
-            sData.CircleVertexBufferPtr->Thickness = thickness;
-            sData.CircleVertexBufferPtr->EntityID = entityID;
-            ++sData.CircleVertexBufferPtr;
-        }
-
-        sData.CircleIndexCount += 6;
 
         ++sData.Stats.QuadCount;
     }
@@ -358,109 +254,6 @@ namespace VoxelForge
         sData.LineVertexCount += 2;
     }
 
-    void Renderer::DrawString(const glm::mat4& transform, Ref<Font> font, const glm::vec4& color, const std::string& string, float lineSpacing, int entityID)
-    {
-        const auto& fontGeometry = font->GetMSDFData()->FontGeometry;
-        const auto& metrics = fontGeometry.getMetrics();
-        Ref<Texture2D> fontAtlas = font->GetTextureAtlas();
-
-        sData.FontTextureAtlas = fontAtlas;
-
-        double x = 0.0;
-        double y = 0.0;
-        double fsScale = 1.0 / (metrics.ascenderY - metrics.descenderY);
-
-        const float spaceGlyphAdvance = fontGeometry.getGlyph(' ')->getAdvance();
-
-        for (size_t i = 0; i < string.size(); i++)
-        {
-            char character = string[i];
-            if (character == '\r')
-            {
-                continue;
-            }
-
-            if (character == '\n')
-            {
-                x = 0;
-                y -= fsScale * metrics.lineHeight + lineSpacing;
-                continue;
-            }
-
-            if (character == '\t')
-            {
-                x += 4.0f * fsScale * spaceGlyphAdvance;
-                continue;
-            }
-
-            auto glyph = fontGeometry.getGlyph(character);
-            if (!glyph)
-            {
-                glyph = fontGeometry.getGlyph('?');
-                if (!glyph)
-                {
-                    return;
-                }
-            }
-
-            double left, buttom, right, top;
-
-            glyph->getQuadAtlasBounds(left, buttom, right, top);
-            glm::vec2 texCoordMin((float)left, (float)buttom);
-            glm::vec2 texCoordMax((float)right, (float)top);
-
-            glyph->getQuadPlaneBounds(left, buttom, right, top);
-            glm::vec2 quadMin((float)left, (float)buttom);
-            glm::vec2 quadMax((float)right, (float)top);
-
-            quadMin *= fsScale;
-            quadMax *= fsScale;
-            quadMin += glm::vec2(x, y);
-            quadMax += glm::vec2(x, y);
-
-            float texWidth = 1.0f / fontAtlas->GetWidth();
-            float texHeight = 1.0f / fontAtlas->GetHeight();
-            texCoordMin *= glm::vec2(texWidth, texHeight);
-            texCoordMax *= glm::vec2(texWidth, texHeight);
-
-            sData.TextVertexBufferPtr->Position = transform * glm::vec4(quadMin.x, quadMin.y, 0.0f, 1.0f);
-            sData.TextVertexBufferPtr->Color = color;
-            sData.TextVertexBufferPtr->TexCoord = { texCoordMin.x, texCoordMin.y };
-            sData.TextVertexBufferPtr->EntityID = entityID;
-            ++sData.TextVertexBufferPtr;
-
-            sData.TextVertexBufferPtr->Position = transform * glm::vec4(quadMax.x, quadMin.y, 0.0f, 1.0f);
-            sData.TextVertexBufferPtr->Color = color;
-            sData.TextVertexBufferPtr->TexCoord = { texCoordMax.x, texCoordMin.y };
-            sData.TextVertexBufferPtr->EntityID = entityID;
-            ++sData.TextVertexBufferPtr;
-
-            sData.TextVertexBufferPtr->Position = transform * glm::vec4(quadMax.x, quadMax.y, 0.0f, 1.0f);
-            sData.TextVertexBufferPtr->Color = color;
-            sData.TextVertexBufferPtr->TexCoord = { texCoordMax.x, texCoordMax.y };
-            sData.TextVertexBufferPtr->EntityID = entityID;
-            ++sData.TextVertexBufferPtr;
-
-            sData.TextVertexBufferPtr->Position = transform * glm::vec4(quadMin.x, quadMax.y, 0.0f, 1.0f);
-            sData.TextVertexBufferPtr->Color = color;
-            sData.TextVertexBufferPtr->TexCoord = { texCoordMin.x, texCoordMax.y };
-            sData.TextVertexBufferPtr->EntityID = entityID;
-            ++sData.TextVertexBufferPtr;
-
-            sData.TextIndexCount += 6;
-            ++sData.Stats.QuadCount;
-
-            if (i < string.size() - 1)
-            {
-                double advance = glyph->getAdvance();
-                char nextCharacter = string[i + 1];
-                fontGeometry.getAdvance(advance, character, nextCharacter);
-
-                x += fsScale * advance;
-            }
-        }
-    }
-
     void Renderer::DrawRect(const glm::mat4& transform, const glm::vec4& color)
     {
         glm::vec3 lineVertices[4];
@@ -475,7 +268,7 @@ namespace VoxelForge
         DrawLine(lineVertices[3], lineVertices[0], color);
     }
 
-    float Renderer::GetTextureIndex(const Ref<Texture2D>& texture)
+    float Renderer::GetTextureIndex(const Ref<Texture>& texture)
     {
         if (!texture)
         {
@@ -505,16 +298,6 @@ namespace VoxelForge
         }
 
         return textureIndex;
-    }
-
-    void Renderer::DrawSprite(const glm::mat4& transform, SpriteRendererComponent& src, int entityID)
-    {
-        DrawQuad(transform, GetTextureIndex(src.Texture), src.Color, entityID);
-    }
-
-    void Renderer::DrawString(const glm::mat4& transform, TextComponent& tc, int entityID)
-    {
-        DrawString(transform, tc.TextFont, tc.Color, tc.TextString, tc.LineSpacing, entityID);
     }
 
     void Renderer::SetLineWidth(float width)

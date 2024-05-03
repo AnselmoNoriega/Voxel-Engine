@@ -140,6 +140,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLContext.h" />
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLUniformBuffer.h" />
     <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLTexture.h" />
     <ClInclude Include="src\NotVoxel\Renderer\Camera\Camera.h" />
     <ClInclude Include="src\NotVoxel\Renderer\Camera\EditorCamera.h" />
@@ -171,6 +173,7 @@
     <ClInclude Include="src\Platform\OperatingSystem\Windows\WinWindow.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\NotVoxel\Renderer\API\Texture.h" />
+    <ClInclude Include="src\NotVoxel\Renderer\API\UniformBuffer.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_fixes.hpp" />
@@ -593,6 +596,8 @@
     <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLVertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLContext.cpp" />
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLUniformBuffer.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLTexture.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\Camera\EditorCamera.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLIndexBuffer.cpp" />
@@ -613,6 +618,7 @@
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WinWindow.cpp" />
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\API\Texture.cpp" />
+    <ClCompile Include="src\NotVoxel\Renderer\API\UniformBuffer.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\API\VertexArray.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\API\VertexBuffer.cpp" />
