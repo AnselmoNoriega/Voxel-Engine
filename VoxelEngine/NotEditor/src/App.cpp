@@ -18,7 +18,7 @@ namespace VoxelForge
     Application* CreateApplication(AppCommandLineArgs args)
     {
         ApplicationSpecification spec;
-        spec.Name = "NotRed";
+        spec.Name = "Engine";
         spec.CommandLineArgs = args;
 
         return new NotEditor(spec);

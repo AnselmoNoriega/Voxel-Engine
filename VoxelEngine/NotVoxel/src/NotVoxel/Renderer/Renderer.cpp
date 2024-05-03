@@ -137,7 +137,7 @@ namespace VoxelForge
         }
 
         sData.ObjShader = Shader::Create("Assets/Shaders/Base");
-        sData.LineShader = Shader::Create("assets/shaders/Color");
+        sData.LineShader = Shader::Create("Assets/shaders/Color");
 
         sData.TextureSlots[0] = sData.EmptyTexture;
 
