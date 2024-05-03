@@ -5,7 +5,7 @@
 
 #include "Platform/RendererAPI/OpenGL/GLUniformBuffer.h"
 
-namespace VoxelForge
+namespace Forge
 {
 
 	Ref<UniformBuffer> UniformBuffer::Create(uint32_t size, uint32_t binding)

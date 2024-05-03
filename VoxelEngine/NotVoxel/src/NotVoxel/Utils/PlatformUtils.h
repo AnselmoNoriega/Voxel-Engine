@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace VoxelForge
+namespace Forge
 {
     class FileDialogs
     {

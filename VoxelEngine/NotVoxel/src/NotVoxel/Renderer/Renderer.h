@@ -2,7 +2,7 @@
 
 #include "Camera/EditorCamera.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class Texture;
     class Camera;

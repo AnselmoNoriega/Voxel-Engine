@@ -2,7 +2,7 @@
 
 #include "NotVoxel/Renderer/API/UniformBuffer.h"
 
-namespace VoxelForge
+namespace Forge
 {
 	class GLUniformBuffer : public UniformBuffer
 	{

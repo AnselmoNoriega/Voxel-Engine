@@ -2,7 +2,7 @@
 
 #include "Event.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class  KeyEvent : public Event
     {

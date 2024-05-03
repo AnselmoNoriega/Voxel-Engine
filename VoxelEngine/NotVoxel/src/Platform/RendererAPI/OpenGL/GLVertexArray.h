@@ -2,7 +2,7 @@
 
 #include "NotVoxel/Renderer/API/VertexArray.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class GLVertexArray : public VertexArray
     {

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace VoxelForge
+namespace Forge
 {
     enum class ShaderDataType : int8_t
     {

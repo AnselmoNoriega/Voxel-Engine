@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace VoxelForge
+namespace Forge
 {
     typedef enum class KeyCode : uint16_t
     {

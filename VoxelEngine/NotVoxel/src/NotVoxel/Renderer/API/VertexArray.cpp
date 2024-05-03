@@ -5,7 +5,7 @@
 
 #include "Platform/RendererAPI/OpenGL/GLVertexArray.h"
 
-namespace VoxelForge
+namespace Forge
 {
     Ref<VertexArray> VertexArray::Create()
     {

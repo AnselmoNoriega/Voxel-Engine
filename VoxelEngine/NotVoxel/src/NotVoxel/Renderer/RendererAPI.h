@@ -4,7 +4,7 @@
 
 #include "NotVoxel/Renderer/API/VertexArray.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class RendererAPI
     {

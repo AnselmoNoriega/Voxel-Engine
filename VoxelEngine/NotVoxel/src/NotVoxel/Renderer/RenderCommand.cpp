@@ -3,7 +3,7 @@
 
 #include "Platform/RendererAPI/OpenGL/GLRendererAPI.h"
 
-namespace VoxelForge
+namespace Forge
 {
     Scope<RendererAPI> RenderCommand::sRendererAPI = CreateScope<GLRendererAPI>();
 }

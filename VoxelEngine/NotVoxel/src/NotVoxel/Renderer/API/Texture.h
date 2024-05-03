@@ -4,7 +4,7 @@
 
 #include "NotVoxel/Core/Core.h"
 
-namespace VoxelForge
+namespace Forge
 {
     enum class ImageFormat
     {

@@ -5,7 +5,7 @@
 #include <glad/glad.h>
 #include <gl/GL.h>
 
-namespace VoxelForge
+namespace Forge
 {
     GLContext::GLContext(GLFWwindow* windowHandle)
         : mWindowHandle(windowHandle)

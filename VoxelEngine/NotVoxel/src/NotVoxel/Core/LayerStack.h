@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace VoxelForge
+namespace Forge
 {
     class  LayerStack
     {

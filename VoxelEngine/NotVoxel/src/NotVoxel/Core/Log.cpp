@@ -3,7 +3,7 @@
 
 #include "spdlog/sinks/stdout_color_sinks.h"
 
-namespace VoxelForge
+namespace Forge
 {
 	loggerPtr Log::sCoreLogger;
 	loggerPtr Log::sClientLogger;

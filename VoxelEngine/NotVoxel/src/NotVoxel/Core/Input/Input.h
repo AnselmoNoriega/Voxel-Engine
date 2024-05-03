@@ -4,7 +4,7 @@
 #include "NotVoxel/Core/Input/KeyCodes.h"
 #include "NotVoxel/Core/Input/MouseCodes.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class  Input
     {

@@ -2,7 +2,7 @@
 
 #include "NotVoxel/Renderer/API/Texture.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class GLTexture : public Texture
     {

@@ -5,7 +5,7 @@
 
 #include "Platform/RendererAPI/OpenGL/GLContext.h"
 
-namespace VoxelForge
+namespace Forge
 {
 	Scope<GraphicsContext> GraphicsContext::Create(void* window)
 	{

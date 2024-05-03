@@ -2,7 +2,7 @@
 #include "Layer.h"
 
 
-namespace VoxelForge
+namespace Forge
 {
     Layer::Layer(const std::string& name)
         : mDebugName(name)

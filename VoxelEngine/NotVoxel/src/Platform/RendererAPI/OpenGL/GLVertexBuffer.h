@@ -2,7 +2,7 @@
 
 #include "NotVoxel/Renderer/API/VertexBuffer.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class GLVertexBuffer : public VertexBuffer
     {

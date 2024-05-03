@@ -2,7 +2,7 @@
 
 #include "imgui/imgui.h"
 
-namespace VoxelForge
+namespace Forge
 {
     EditorLayer::EditorLayer() 
         :Layer("EditorLayer")

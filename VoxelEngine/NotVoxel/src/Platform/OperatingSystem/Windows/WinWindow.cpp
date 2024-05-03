@@ -9,7 +9,7 @@
 
 #include "NotVoxel/Renderer/RendererAPI.h"
 
-namespace VoxelForge
+namespace Forge
 {
 	static uint8_t s_GLFWWindowCount = 0;
 

@@ -6,7 +6,7 @@
 #include "NotVoxel/Events/Event.h"
 #include "NotVoxel/Events/MouseEvent.h"
 
-namespace VoxelForge
+namespace Forge
 {
 	class EditorCamera : public Camera
 	{

@@ -2,7 +2,7 @@
 
 #include "NotVoxel/Core/Layer.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class  ImGuiLayer : public Layer
     {

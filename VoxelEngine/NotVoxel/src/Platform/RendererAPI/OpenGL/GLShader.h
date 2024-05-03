@@ -2,7 +2,7 @@
 
 #include "NotVoxel/Renderer/API/Shader.h"
 
-namespace VoxelForge
+namespace Forge
 {
     using ShaderInfo = std::pair<uint32_t, std::string>;
 

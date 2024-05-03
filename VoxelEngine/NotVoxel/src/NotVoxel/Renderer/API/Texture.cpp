@@ -5,7 +5,7 @@
 
 #include "Platform/RendererAPI/OpenGL/GLTexture.h"
 
-namespace VoxelForge
+namespace Forge
 {
     Ref<Texture> Texture::Create(const TextureSpecification& specification)
     {

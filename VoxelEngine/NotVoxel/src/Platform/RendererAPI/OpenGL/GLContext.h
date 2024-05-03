@@ -4,7 +4,7 @@
 
 struct GLFWwindow;
 
-namespace VoxelForge
+namespace Forge
 {
     class GLContext : public GraphicsContext
     {

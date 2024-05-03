@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-namespace VoxelForge
+namespace Forge
 {
 	GLUniformBuffer::GLUniformBuffer(uint32_t size, uint32_t binding)
 	{

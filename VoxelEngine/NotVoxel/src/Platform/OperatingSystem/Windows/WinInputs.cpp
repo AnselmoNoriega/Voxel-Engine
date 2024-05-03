@@ -5,7 +5,7 @@
 
 #include "NotVoxel/Core/Application.h"
 
-namespace VoxelForge
+namespace Forge
 {
     bool Input::IsKeyPressed(KeyCode keycode)
     {

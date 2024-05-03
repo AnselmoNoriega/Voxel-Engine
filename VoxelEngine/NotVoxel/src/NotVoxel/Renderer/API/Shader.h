@@ -5,7 +5,7 @@
 
 #include <glm/glm.hpp>
 
-namespace VoxelForge
+namespace Forge
 {
     class Shader
     {

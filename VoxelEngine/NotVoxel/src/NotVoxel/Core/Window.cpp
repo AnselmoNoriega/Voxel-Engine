@@ -5,7 +5,7 @@
 	#include "Platform/OperatingSystem/Windows/WinWindow.h"
 #endif
 
-namespace VoxelForge
+namespace Forge
 {
 	Scope<Window> Window::Create(const WindowProps& props)
 	{

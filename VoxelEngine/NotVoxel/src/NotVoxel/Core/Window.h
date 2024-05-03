@@ -5,7 +5,7 @@
 
 #include <sstream>
 
-namespace VoxelForge
+namespace Forge
 {
 	struct WindowProps
 	{

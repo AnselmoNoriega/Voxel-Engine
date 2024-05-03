@@ -5,7 +5,7 @@
 
 #include "Platform/RendererAPI/OpenGL/GLShader.h"
 
-namespace VoxelForge
+namespace Forge
 {
     Ref<Shader> Shader::Create(const std::string& filepath)
     {

@@ -4,7 +4,7 @@
 
 #include "NotVoxel/Renderer/Camera/EditorCamera.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class EditorLayer : public Layer
     {

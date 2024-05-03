@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "LayerStack.h"
 
-namespace VoxelForge
+namespace Forge
 {
     LayerStack::LayerStack()
     {

@@ -3,7 +3,7 @@
 #include "NotVoxel/Core/Core.h"
 #include "NotVoxel/Events/Event.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class Layer
     {

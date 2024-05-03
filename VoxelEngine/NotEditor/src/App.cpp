@@ -3,7 +3,7 @@
 
 #include "EditorLayer.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class NotEditor : public Application
     {

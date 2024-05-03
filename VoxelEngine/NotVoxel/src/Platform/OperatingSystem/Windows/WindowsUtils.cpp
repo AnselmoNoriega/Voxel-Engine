@@ -9,7 +9,7 @@
 
 #include "NotVoxel/Core/Application.h"
 
-namespace VoxelForge
+namespace Forge
 {
     float Time::GetTime()
     {

@@ -2,7 +2,7 @@
 
 #include "NotVoxel/Renderer/API/BufferLayout.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class VertexBuffer
     {

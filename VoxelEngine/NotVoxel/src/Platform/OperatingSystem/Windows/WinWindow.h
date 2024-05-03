@@ -5,7 +5,7 @@
 
 #include <GLFW/glfw3.h>
 
-namespace VoxelForge
+namespace Forge
 {
     class WinWindow : public Window
     {

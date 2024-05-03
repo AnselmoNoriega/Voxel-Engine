@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-namespace VoxelForge
+namespace Forge
 {
     void GLMessageCallback(
         unsigned source,

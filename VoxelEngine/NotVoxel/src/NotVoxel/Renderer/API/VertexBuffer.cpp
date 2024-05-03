@@ -5,7 +5,7 @@
 
 #include "Platform/RendererAPI/OpenGL/GLVertexBuffer.h"
 
-namespace VoxelForge
+namespace Forge
 {
     Ref<VertexBuffer> VertexBuffer::Create(uint32_t size)
     {

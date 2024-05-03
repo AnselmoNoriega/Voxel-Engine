@@ -2,7 +2,7 @@
 
 #include "NotVoxel/Renderer/API/IndexBuffer.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class GLIndexBuffer : public IndexBuffer
     {

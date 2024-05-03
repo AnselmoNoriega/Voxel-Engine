@@ -12,7 +12,7 @@
 #include <GLFW/glfw3.h>
 #include <filesystem>
 
-namespace VoxelForge
+namespace Forge
 {
 #define BIND_EVENT_FN(x) [this](auto&&... args)-> decltype(auto) { return this->x(std::forward<decltype(args)>(args)...); }
 

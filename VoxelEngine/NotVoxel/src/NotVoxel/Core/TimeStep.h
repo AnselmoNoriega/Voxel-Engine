@@ -1,6 +1,6 @@
 #pragma once
 
-namespace VoxelForge
+namespace Forge
 {
     class TimeStep
     {

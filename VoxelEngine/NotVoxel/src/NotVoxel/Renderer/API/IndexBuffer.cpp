@@ -5,7 +5,7 @@
 
 #include "Platform/RendererAPI/OpenGL/GLIndexBuffer.h"
 
-namespace VoxelForge
+namespace Forge
 {
     Ref<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t count)
     {

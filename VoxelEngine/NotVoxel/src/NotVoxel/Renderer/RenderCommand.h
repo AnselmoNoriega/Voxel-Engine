@@ -2,7 +2,7 @@
 
 #include "RendererAPI.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class RenderCommand
     {

@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-namespace VoxelForge
+namespace Forge
 {
     GLVertexBuffer::GLVertexBuffer(uint32_t size)
     {

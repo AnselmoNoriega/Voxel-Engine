@@ -2,7 +2,7 @@
 
 #include "NotVoxel/Renderer/RendererAPI.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class GLRendererAPI : public RendererAPI
     {

@@ -12,7 +12,7 @@
 
 #include "RenderCommand.h"
 
-namespace VoxelForge
+namespace Forge
 {
     struct QuadVertex
     {

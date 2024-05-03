@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-namespace VoxelForge
+namespace Forge
 {
     GLIndexBuffer::GLIndexBuffer(uint32_t* indices, uint32_t count)
         : mCount(count)

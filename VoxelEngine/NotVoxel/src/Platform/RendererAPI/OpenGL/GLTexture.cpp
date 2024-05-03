@@ -5,7 +5,7 @@
 
 #include "stb_image.h"
 
-namespace VoxelForge
+namespace Forge
 {
     namespace Utils
     {

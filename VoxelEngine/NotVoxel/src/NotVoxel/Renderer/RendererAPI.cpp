@@ -3,7 +3,7 @@
 
 #include "Platform/RendererAPI/OpenGL/GLRendererAPI.h"
 
-namespace VoxelForge
+namespace Forge
 {
     RendererAPI::API RendererAPI::sAPI = RendererAPI::API::OpenGL;
 

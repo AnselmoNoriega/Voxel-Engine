@@ -3,7 +3,7 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 
-namespace VoxelForge
+namespace Forge
 {
     class VertexArray
     {

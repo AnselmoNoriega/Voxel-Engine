@@ -2,7 +2,7 @@
 #include <cstdint>
 
 // From glfw3.h
-namespace VoxelForge
+namespace Forge
 {
     typedef enum class MouseCode : uint16_t
     {
