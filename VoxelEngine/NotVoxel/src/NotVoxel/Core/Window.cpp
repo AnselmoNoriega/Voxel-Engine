@@ -2,7 +2,7 @@
 #include "Window.h"
 
 #ifdef VOXEL_PLATFORM_WINDOWS
-	#include "Platform/Windows/WinWindow.h"
+	#include "Platform/OperatingSystem/Windows/WinWindow.h"
 #endif
 
 namespace VoxelForge

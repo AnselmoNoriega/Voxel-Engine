@@ -1448,6 +1448,8 @@
     </ClInclude>
     <ClInclude Include="src\NotVoxel\Events\ApplicationEvent.h" />
     <ClInclude Include="src\NotVoxel\Utils\PlatformUtils.h" />
+    <ClInclude Include="src\NotVoxel.h" />
+    <ClInclude Include="src\NotVoxel\Core\EntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NotVoxel\Core\Application.cpp">

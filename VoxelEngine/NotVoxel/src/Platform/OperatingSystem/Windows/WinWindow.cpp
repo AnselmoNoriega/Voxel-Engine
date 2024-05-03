@@ -7,7 +7,6 @@
 #include "NotVoxel/Events/MouseEvent.h"
 #include "NotVoxel/Events/KeyEvent.h"
 
-#include "NotVoxel/Renderer/Renderer.h"
 #include "NotVoxel/Renderer/RendererAPI.h"
 
 namespace VoxelForge
@@ -56,7 +55,7 @@ namespace VoxelForge
 			PROFILE_SCOPE("glfwCreateWindow");
 
 #if defined(VOXEL_DEBUG)
-			if (Renderer::GetAPI() == RendererAPI::API::OpenGL)
+			if (RendererAPI::GetAPI() == RendererAPI::API::OpenGL)
 			{
 				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 			}
@@ -175,7 +174,7 @@ namespace VoxelForge
 		}
 	}
 
-	void WinWindow::OnUpdate()
+	void WinWindow::Update()
 	{
 		PROFILE_FUNCTION();
 

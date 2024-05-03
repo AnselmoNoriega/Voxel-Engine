@@ -140,9 +140,11 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\NotVoxel.h" />
     <ClInclude Include="src\NotVoxel\Core\Application.h" />
     <ClInclude Include="src\NotVoxel\Core\Assert.h" />
     <ClInclude Include="src\NotVoxel\Core\Core.h" />
+    <ClInclude Include="src\NotVoxel\Core\EntryPoint.h" />
     <ClInclude Include="src\NotVoxel\Core\Input\Input.h" />
     <ClInclude Include="src\NotVoxel\Core\Input\KeyCodes.h" />
     <ClInclude Include="src\NotVoxel\Core\Input\MouseCodes.h" />

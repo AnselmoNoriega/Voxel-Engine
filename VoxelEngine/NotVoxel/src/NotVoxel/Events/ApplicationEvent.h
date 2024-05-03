@@ -43,28 +43,4 @@ namespace VoxelForge
             EVENT_CLASS_CATEGORY(EVENTCATEGORYAPPLICATION)
     };
 
-    class  AppTickEvent : public Event
-    {
-        AppTickEvent() {}
-
-        EVENT_CLASS_TYPE(AppTick)
-            EVENT_CLASS_CATEGORY(EVENTCATEGORYAPPLICATION)
-    };
-
-    class  AppUpdateEvent : public Event
-    {
-        AppUpdateEvent() {}
-
-        EVENT_CLASS_TYPE(AppUpdate)
-            EVENT_CLASS_CATEGORY(EVENTCATEGORYAPPLICATION)
-    };
-
-    class  AppRenderEvent : public Event
-    {
-        AppRenderEvent() {}
-
-        EVENT_CLASS_TYPE(AppRender)
-            EVENT_CLASS_CATEGORY(EVENTCATEGORYAPPLICATION)
-    };
-
 }

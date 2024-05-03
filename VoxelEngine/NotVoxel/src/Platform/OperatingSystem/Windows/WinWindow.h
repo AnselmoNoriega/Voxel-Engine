@@ -13,7 +13,7 @@ namespace VoxelForge
 		WinWindow(const WindowProps& props);
 		~WinWindow() override;
 
-		void OnUpdate() override;
+		void Update() override;
 
 		unsigned int GetWidth() const override { return mData.Width; }
 		unsigned int GetHeight() const override { return mData.Height; }
