@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NotVoxel/Renderer/BufferLayout.h"
+#include "NotVoxel/Renderer/API/BufferLayout.h"
 
 namespace VoxelForge
 {

@@ -3,7 +3,6 @@
 #include <glm/glm.hpp>
 
 #include "Camera.h"
-#include "NotVoxel/Core/Timestep.h"
 #include "NotVoxel/Events/Event.h"
 #include "NotVoxel/Events/MouseEvent.h"
 
@@ -16,7 +15,7 @@ namespace VoxelForge
 		EditorCamera(float fov, float aspectRatio, float nearClip, float farClip);
 		~EditorCamera() override = default;
 
-		void Update(float dt, bool is2DSpace = false);
+		void Update(float dt);
 		void OnEvent(Event& e);
 
 		inline float GetDistance() const { return mDistance; }

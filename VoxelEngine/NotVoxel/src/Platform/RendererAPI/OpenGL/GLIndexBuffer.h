@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NotVoxel/Renderer/IndexBuffer.h"
+#include "NotVoxel/Renderer/API/IndexBuffer.h"
 
 namespace VoxelForge
 {

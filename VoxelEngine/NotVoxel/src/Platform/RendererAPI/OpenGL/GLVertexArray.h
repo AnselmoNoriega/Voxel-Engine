@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NotVoxel/Renderer/VertexArray.h"
+#include "NotVoxel/Renderer/API/VertexArray.h"
 
 namespace VoxelForge
 {

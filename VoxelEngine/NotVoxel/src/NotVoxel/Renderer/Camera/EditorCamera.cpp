@@ -55,7 +55,7 @@ namespace VoxelForge
         return speed;
     }
 
-    void EditorCamera::Update(float dt, bool is2DSpace)
+    void EditorCamera::Update(float dt)
     {
         const glm::vec2& mouse{ Input::GetMousePosition().first, Input::GetMousePosition().second };
         glm::vec2 delta = (mouse - mInitialMousePosition) * 0.003f;
@@ -65,7 +65,7 @@ namespace VoxelForge
         {
             MousePan(delta);
         }
-        else if (!is2DSpace && Input::IsMouseButtonPressed(MouseCode::ButtonLeft))
+        else if (Input::IsMouseButtonPressed(MouseCode::ButtonLeft))
         {
             MouseRotate(delta);
         }

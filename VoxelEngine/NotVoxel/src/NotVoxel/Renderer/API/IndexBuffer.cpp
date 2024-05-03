@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "IndexBuffer.h"
 
-#include "Renderer.h"
+#include "NotVoxel/Renderer/Renderer.h"
 
 #include "Platform/RendererAPI/OpenGL/GLIndexBuffer.h"
 

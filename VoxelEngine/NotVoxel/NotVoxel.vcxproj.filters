@@ -1349,15 +1349,17 @@
     <ClInclude Include="src\NotVoxel\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLRendererAPI.h" />
     <ClInclude Include="src\NotVoxel\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\VertexArray.h" />
+    <ClInclude Include="src\NotVoxel\Renderer\API\VertexArray.h" />
     <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLVertexArray.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\VertexBuffer.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\BufferLayout.h" />
+    <ClInclude Include="src\NotVoxel\Renderer\API\VertexBuffer.h" />
+    <ClInclude Include="src\NotVoxel\Renderer\API\BufferLayout.h" />
     <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLVertexBuffer.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\IndexBuffer.h" />
+    <ClInclude Include="src\NotVoxel\Renderer\API\IndexBuffer.h" />
     <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLIndexBuffer.h" />
     <ClInclude Include="src\NotVoxel\Renderer\Camera\EditorCamera.h" />
     <ClInclude Include="src\NotVoxel\Renderer\Camera\Camera.h" />
+    <ClInclude Include="src\NotVoxel\Renderer\API\Texture.h" />
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NotVoxel\Core\Application.cpp">
@@ -1390,13 +1392,15 @@
     <ClCompile Include="src\NotVoxel\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLRendererAPI.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\RendererAPI.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\NotVoxel\Renderer\API\VertexArray.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLVertexArray.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\VertexBuffer.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\BufferLayout.cpp" />
+    <ClCompile Include="src\NotVoxel\Renderer\API\VertexBuffer.cpp" />
+    <ClCompile Include="src\NotVoxel\Renderer\API\BufferLayout.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLVertexBuffer.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="src\NotVoxel\Renderer\API\IndexBuffer.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLIndexBuffer.cpp" />
     <ClCompile Include="src\NotVoxel\Renderer\Camera\EditorCamera.cpp" />
+    <ClCompile Include="src\NotVoxel\Renderer\API\Texture.cpp" />
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLTexture.cpp" />
   </ItemGroup>
 </Project>

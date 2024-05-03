@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "VertexArray.h"
+#include "NotVoxel/Renderer/API/VertexArray.h"
 
 namespace VoxelForge
 {
