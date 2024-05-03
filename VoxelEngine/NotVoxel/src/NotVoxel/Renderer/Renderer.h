@@ -14,6 +14,8 @@ namespace VoxelForge
         static void Init();
         static void Shutdown();
 
+        static void ResizeWindow(uint32_t width, uint32_t height);
+
         static void BeginScene(const EditorCamera& camera);
         static void EndScene();
 
@@ -35,8 +37,6 @@ namespace VoxelForge
         };
         static void ResetStats();
         static Statistics GetStats();
-
-        inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
     private:
         static void DrawLine(const glm::vec3& p0, glm::vec3& p1, const glm::vec4& color);

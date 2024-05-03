@@ -16,14 +16,35 @@
     <Filter Include="src\NotVoxel\Debug">
       <UniqueIdentifier>{318A9A5A-1D6E-5BB0-86CE-550372D14532}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\NotVoxel\Events">
+      <UniqueIdentifier>{FF2276B1-6B84-53BF-F4F1-997160528A7E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\NotVoxel\ImGui">
+      <UniqueIdentifier>{E5F4F85A-D1D8-B9B0-3A39-B403263CA432}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\NotVoxel\Renderer">
       <UniqueIdentifier>{81ED85DE-ED59-41D9-B64D-D93622796341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\NotVoxel\Renderer\API">
+      <UniqueIdentifier>{EAAAED62-566D-21ED-9F1D-B0790B1FFACA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\NotVoxel\Renderer\Camera">
+      <UniqueIdentifier>{D926797B-C5E1-6827-6E99-E1715A33B3B7}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Platform\Windows">
-      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
+    <Filter Include="src\Platform\OperatingSystem">
+      <UniqueIdentifier>{7ECA8898-6A85-7844-133D-F18EFFD6C2D4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\OperatingSystem\Windows">
+      <UniqueIdentifier>{B81200AD-A4F9-C1A4-4D4A-28C239103B0B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RendererAPI">
+      <UniqueIdentifier>{A18C86C4-8DB1-D544-B6FC-BAD4A280D462}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Platform\RendererAPI\OpenGL">
+      <UniqueIdentifier>{B596F429-217A-036A-2A7D-31A696DFC9BA}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
@@ -66,10 +87,22 @@
     <ClInclude Include="src\NotVoxel\Core\Input\KeyCodes.h">
       <Filter>src\NotVoxel\Core\Input</Filter>
     </ClInclude>
+    <ClInclude Include="src\NotVoxel\Core\Input\MouseCodes.h">
+      <Filter>src\NotVoxel\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Core\Layer.h">
+      <Filter>src\NotVoxel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Core\LayerStack.h">
+      <Filter>src\NotVoxel\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\NotVoxel\Core\Log.h">
       <Filter>src\NotVoxel\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\NotVoxel\Core\PlatformDetection.h">
+      <Filter>src\NotVoxel\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Core\TimeStep.h">
       <Filter>src\NotVoxel\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\NotVoxel\Core\Window.h">
@@ -78,11 +111,86 @@
     <ClInclude Include="src\NotVoxel\Debug\Instrumentor.h">
       <Filter>src\NotVoxel\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="src\NotVoxel\Events\AppEvent.h">
+      <Filter>src\NotVoxel\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Events\Event.h">
+      <Filter>src\NotVoxel\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Events\KeyEvent.h">
+      <Filter>src\NotVoxel\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Events\MouseEvent.h">
+      <Filter>src\NotVoxel\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\ImGui\ImGuiLayer.h">
+      <Filter>src\NotVoxel\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\API\BufferLayout.h">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\API\IndexBuffer.h">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\API\Shader.h">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\API\Texture.h">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\API\UniformBuffer.h">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\API\VertexArray.h">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\API\VertexBuffer.h">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\Camera\Camera.h">
+      <Filter>src\NotVoxel\Renderer\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\Camera\EditorCamera.h">
+      <Filter>src\NotVoxel\Renderer\Camera</Filter>
+    </ClInclude>
     <ClInclude Include="src\NotVoxel\Renderer\GraphicsContext.h">
       <Filter>src\NotVoxel\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\RenderCommand.h">
+      <Filter>src\NotVoxel\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\Renderer.h">
+      <Filter>src\NotVoxel\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NotVoxel\Renderer\RendererAPI.h">
+      <Filter>src\NotVoxel\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OperatingSystem\Windows\WinWindow.h">
-      <Filter>src\Platform\Windows</Filter>
+      <Filter>src\Platform\OperatingSystem\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLContext.h">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLIndexBuffer.h">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLRendererAPI.h">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLShader.h">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLTexture.h">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLUniformBuffer.h">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLVertexArray.h">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLVertexBuffer.h">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\pch.h">
       <Filter>src</Filter>
@@ -1338,34 +1446,17 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\NotVoxel\Core\Input\MouseCodes.h" />
-    <ClInclude Include="src\NotVoxel\Events\AppEvent.h" />
-    <ClInclude Include="src\NotVoxel\Events\Event.h" />
-    <ClInclude Include="src\NotVoxel\Events\MouseEvent.h" />
-    <ClInclude Include="src\NotVoxel\Events\KeyEvent.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\Renderer.h" />
-    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLShader.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\API\Shader.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\RenderCommand.h" />
-    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLRendererAPI.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\API\VertexArray.h" />
-    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLVertexArray.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\API\VertexBuffer.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\API\BufferLayout.h" />
-    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLVertexBuffer.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\API\IndexBuffer.h" />
-    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLIndexBuffer.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\Camera\EditorCamera.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\Camera\Camera.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\API\Texture.h" />
-    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLTexture.h" />
-    <ClInclude Include="src\NotVoxel\Renderer\API\UniformBuffer.h" />
-    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLUniformBuffer.h" />
-    <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLContext.h" />
+    <ClInclude Include="src\NotVoxel\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\NotVoxel\Utils\PlatformUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NotVoxel\Core\Application.cpp">
+      <Filter>src\NotVoxel\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Core\Layer.cpp">
+      <Filter>src\NotVoxel\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Core\LayerStack.cpp">
       <Filter>src\NotVoxel\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\NotVoxel\Core\Log.cpp">
@@ -1374,14 +1465,77 @@
     <ClCompile Include="src\NotVoxel\Core\Window.cpp">
       <Filter>src\NotVoxel\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\NotVoxel\ImGui\ImGuiBuild.cpp">
+      <Filter>src\NotVoxel\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\ImGui\ImGuiLayer.cpp">
+      <Filter>src\NotVoxel\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\API\BufferLayout.cpp">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\API\IndexBuffer.cpp">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\API\Shader.cpp">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\API\Texture.cpp">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\API\UniformBuffer.cpp">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\API\VertexArray.cpp">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\API\VertexBuffer.cpp">
+      <Filter>src\NotVoxel\Renderer\API</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\Camera\EditorCamera.cpp">
+      <Filter>src\NotVoxel\Renderer\Camera</Filter>
+    </ClCompile>
     <ClCompile Include="src\NotVoxel\Renderer\GraphicsContext.cpp">
       <Filter>src\NotVoxel\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\RenderCommand.cpp">
+      <Filter>src\NotVoxel\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\Renderer.cpp">
+      <Filter>src\NotVoxel\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NotVoxel\Renderer\RendererAPI.cpp">
+      <Filter>src\NotVoxel\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WinInputs.cpp">
-      <Filter>src\Platform\Windows</Filter>
+      <Filter>src\Platform\OperatingSystem\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WinWindow.cpp">
-      <Filter>src\Platform\Windows</Filter>
+      <Filter>src\Platform\OperatingSystem\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLContext.cpp">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLIndexBuffer.cpp">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLRendererAPI.cpp">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLShader.cpp">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLTexture.cpp">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLUniformBuffer.cpp">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLVertexArray.cpp">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLVertexBuffer.cpp">
+      <Filter>src\Platform\RendererAPI\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp">
       <Filter>src</Filter>
@@ -1389,24 +1543,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\NotVoxel\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLShader.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\API\Shader.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\RenderCommand.cpp" />
-    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLRendererAPI.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\RendererAPI.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\API\VertexArray.cpp" />
-    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLVertexArray.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\API\VertexBuffer.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\API\BufferLayout.cpp" />
-    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLVertexBuffer.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\API\IndexBuffer.cpp" />
-    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLIndexBuffer.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\Camera\EditorCamera.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\API\Texture.cpp" />
-    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLTexture.cpp" />
-    <ClCompile Include="src\NotVoxel\Renderer\API\UniformBuffer.cpp" />
-    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLUniformBuffer.cpp" />
-    <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLContext.cpp" />
+    <ClCompile Include="src\Platform\OperatingSystem\Windows\WindowsUtils.cpp" />
   </ItemGroup>
 </Project>

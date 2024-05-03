@@ -3,8 +3,8 @@
 #include "Core.h"
 
 #include "Window.h"
-#include "NotVoxel/Core/LayerStack.h"
 
+#include "NotVoxel/Core/LayerStack.h"
 #include "NotVoxel/ImGui/ImGuiLayer.h"
 
 #include "NotVoxel/Core/TimeStep.h"
@@ -50,9 +50,6 @@ namespace VoxelForge
         inline static Application& Get() { return *sInstance; }
 
         const ApplicationSpecification& GetSpecification() const { return mSpecification; }
-
-        void SubmitToMainThread(const std::function<void()>& function);
-
         ImGuiLayer* GetImGuiLayer() { return mImGuiLayer; }
 
         inline void Close() { mRunning = false; }
@@ -61,15 +58,10 @@ namespace VoxelForge
         bool OnWindowClose(WindowCloseEvent& e);
         bool OnWindowResize(WindowResizeEvent& e);
 
-        void ExecuteQueuedFunctions();
-
     private:
         static Application* sInstance;
 
         ApplicationSpecification mSpecification;
-
-        std::vector<std::function<void()>> mQueuedFunctions;
-        std::mutex mMainThreadQueueMutex;
 
         bool mRunning = true;
         bool mMinimized = false;

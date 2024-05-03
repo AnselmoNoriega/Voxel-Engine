@@ -2,7 +2,6 @@
 #include "Shader.h"
 
 #include "NotVoxel/Renderer/RendererAPI.h"
-#include "NotVoxel/Renderer/Renderer.h"
 
 #include "Platform/RendererAPI/OpenGL/GLShader.h"
 
@@ -10,7 +9,7 @@ namespace VoxelForge
 {
     Ref<Shader> Shader::Create(const std::string& filepath)
     {
-        switch (Renderer::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
         case RendererAPI::API::None:   CORE_ASSERT(false, "Renderer API \"None\" is currently not supported!");
         case RendererAPI::API::OpenGL: return std::make_shared<GLShader>(filepath);
@@ -26,7 +25,7 @@ namespace VoxelForge
 
     Ref<Shader> Shader::Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
     {
-        switch (Renderer::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
         case RendererAPI::API::None:   CORE_ASSERT(false, "Renderer API \"None\" is currently not supported!");
         case RendererAPI::API::OpenGL: return std::make_shared<GLShader>(name, vertexSrc, fragmentSrc);

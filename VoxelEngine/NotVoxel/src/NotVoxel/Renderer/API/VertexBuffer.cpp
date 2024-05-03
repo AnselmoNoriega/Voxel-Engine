@@ -2,7 +2,6 @@
 #include "VertexBuffer.h"
 
 #include "NotVoxel/Renderer/RendererAPI.h"
-#include "NotVoxel/Renderer/Renderer.h"
 
 #include "Platform/RendererAPI/OpenGL/GLVertexBuffer.h"
 
@@ -10,7 +9,7 @@ namespace VoxelForge
 {
     Ref<VertexBuffer> VertexBuffer::Create(uint32_t size)
     {
-        switch (Renderer::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
         case RendererAPI::API::None: CORE_ASSERT(false, "RendererAPI \"None\" is currently not supported!");
         case RendererAPI::API::OpenGL: return CreateRef<GLVertexBuffer>(size);
@@ -26,7 +25,7 @@ namespace VoxelForge
 
     Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
     {
-        switch (Renderer::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
         case RendererAPI::API::None: CORE_ASSERT(false, "RendererAPI \"None\" is currently not supported!");
         case RendererAPI::API::OpenGL: return CreateRef<GLVertexBuffer>(vertices, size);
