@@ -12,7 +12,7 @@ namespace Forge
 	{
 	public:
 		EditorCamera() = default;
-		EditorCamera(float fov, float aspectRatio, float nearClip, float farClip);
+		EditorCamera(float fov, float viewportWidth, float viewportHeight, float nearClip, float farClip);
 		~EditorCamera() override = default;
 
 		void Update(float dt);

@@ -18,8 +18,7 @@ namespace Forge
     void EditorLayer::Attach()
     {
         auto [width, height] = WindowInfo::GetWindowSize();
-        mCamera = EditorCamera(30.0f, width / height, 0.1f, 1000.0f);
-        mCamera.SetViewportSize(width, height);
+        mCamera = EditorCamera(30.0f, width, height, 0.1f, 1000.0f);
     }
 
     void EditorLayer::Detach()

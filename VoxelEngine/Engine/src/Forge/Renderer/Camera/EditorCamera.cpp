@@ -9,10 +9,13 @@
 
 namespace Forge
 {
-    EditorCamera::EditorCamera(float fov, float aspectRatio, float nearClip, float farClip)
-        : mFOV(fov), mAspectRatio(aspectRatio), mNearClip(nearClip), mFarClip(farClip), Camera(glm::perspective(glm::radians(fov), aspectRatio, nearClip, farClip))
+    EditorCamera::EditorCamera(float fov, float viewportWidth, float viewportHeight, float nearClip, float farClip)
+        : mFOV(fov), 
+        mViewportWidth(viewportWidth), mViewportHeight(viewportHeight),
+        mNearClip(nearClip), mFarClip(farClip)
     {
         UpdateView();
+        UpdateProjection();
     }
 
     void EditorCamera::UpdateProjection()

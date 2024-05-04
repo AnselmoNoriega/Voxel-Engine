@@ -8,8 +8,6 @@ namespace Forge
     {
     public:
         Camera() = default;
-        Camera(const glm::mat4& projection)
-            : mProjection(projection) {}
 
         virtual ~Camera() = default;
 
