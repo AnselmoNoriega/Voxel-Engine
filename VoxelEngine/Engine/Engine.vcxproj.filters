@@ -1462,6 +1462,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Forge\Core\WindowInfo.h" />
+    <ClInclude Include="src\Forge\Renderer\Voxels\Voxel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Forge\Core\Application.cpp">
