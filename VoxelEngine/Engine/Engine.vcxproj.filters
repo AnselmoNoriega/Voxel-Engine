@@ -1463,6 +1463,7 @@
     </ClInclude>
     <ClInclude Include="src\Forge\Core\WindowInfo.h" />
     <ClInclude Include="src\Forge\Renderer\Voxels\Voxel.h" />
+    <ClInclude Include="src\Forge\Renderer\Voxels\Chunk.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Forge\Core\Application.cpp">
@@ -1562,5 +1563,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WinWindowInfo.cpp" />
+    <ClCompile Include="src\Forge\Renderer\Voxels\Chunk.cpp" />
   </ItemGroup>
 </Project>

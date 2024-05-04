@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Forge\Renderer\Voxels\Chunk.h" />
     <ClInclude Include="src\Forge.h" />
     <ClInclude Include="src\Forge\Core\Application.h" />
     <ClInclude Include="src\Forge\Core\Assert.h" />
@@ -606,6 +607,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Forge\Renderer\Voxels\Chunk.cpp" />
     <ClCompile Include="src\Forge\Core\Application.cpp" />
     <ClCompile Include="src\Forge\Core\Layer.cpp" />
     <ClCompile Include="src\Forge\Core\LayerStack.cpp" />
