@@ -30,17 +30,6 @@ namespace Forge
         mViewMatrix = glm::inverse(mViewMatrix);
     }
 
-    std::pair<float, float> EditorCamera::PanSpeed() const
-    {
-        float x = std::min(mViewportWidth / 1000.0f, 2.4f);
-        float xFactor = 0.0366f * (x * x) - 0.1778f * x + 0.3021f;
-
-        float y = std::min(mViewportHeight / 1000.0f, 2.4f);
-        float yFactor = 0.0366f * (y * y) - 0.1778f * y + 0.3021f;
-
-        return { xFactor, yFactor };
-    }
-
     float EditorCamera::RotationSpeed() const
     {
         return 0.8f;
@@ -61,13 +50,34 @@ namespace Forge
         glm::vec2 delta = (mouse - mInitialMousePosition) * 0.003f;
         mInitialMousePosition = mouse;
 
-        if (Input::IsMouseButtonPressed(MouseCode::ButtonMiddle))
-        {
-            MousePan(delta);
-        }
-        else if (Input::IsMouseButtonPressed(MouseCode::ButtonLeft))
+        if (Input::IsMouseButtonPressed(MouseCode::ButtonLeft))
         {
             MouseRotate(delta);
+        }
+
+        glm::vec2 moveDir = { 0.0f, 0.0f };
+
+        if (Input::IsKeyPressed(KeyCode::W))
+        {
+            moveDir.y += 1.0f;
+        }
+        if (Input::IsKeyPressed(KeyCode::A))
+        {
+            moveDir.x += 1.0f;
+        }
+        if (Input::IsKeyPressed(KeyCode::S))
+        {
+            moveDir.y -= 1.0f;
+        }
+        if (Input::IsKeyPressed(KeyCode::D))
+        {
+            moveDir.x -= 1.0f;
+        }
+
+        if (moveDir != glm::vec2(0.0f, 0.0f))
+        {
+            moveDir = glm::normalize(moveDir) * mSpeed * dt;
+            MovePosition(moveDir);
         }
 
         UpdateView();
@@ -87,11 +97,10 @@ namespace Forge
         return false;
     }
 
-    void EditorCamera::MousePan(const glm::vec2& delta)
+    void EditorCamera::MovePosition(const glm::vec2& delta)
     {
-        auto [xSpeed, ySpeed] = PanSpeed();
-        mFocalPoint += -GetRightDirection() * delta.x * xSpeed * mDistance;
-        mFocalPoint += GetUpDirection() * delta.y * ySpeed * mDistance;
+        mFocalPoint += -GetRightDirection() * delta.x * mDistance;
+        mFocalPoint += GetForwardDirection() * delta.y * mDistance;
     }
 
     void EditorCamera::MouseRotate(const glm::vec2& delta)

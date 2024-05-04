@@ -21,6 +21,7 @@ namespace Forge
 		inline float GetDistance() const { return mDistance; }
 		inline void SetDistance(float distance) { mDistance = distance; }
 
+		inline std::pair<int, int> GetViewportSize() { return { (int)mViewportWidth, (int)mViewportHeight }; }
 		inline void SetViewportSize(float width, float height) { mViewportWidth = width; mViewportHeight = height; UpdateProjection(); }
 
 		const glm::mat4& GetViewMatrix() const { return mViewMatrix; }
@@ -41,13 +42,12 @@ namespace Forge
 
 		bool OnMouseScroll(MouseScrolledEvent& e);
 
-		void MousePan(const glm::vec2& delta);
+		void MovePosition(const glm::vec2& delta);
 		void MouseRotate(const glm::vec2& delta);
 		void MouseZoom(float delta);
 
 		glm::vec3 CalculatePosition() const;
 
-		std::pair<float, float> PanSpeed() const;
 		float RotationSpeed() const;
 		float ZoomSpeed() const;
 
@@ -67,5 +67,7 @@ namespace Forge
 		float mPitch = 0.0f, mYaw = 0.0f;
 
 		float mViewportWidth = 1600, mViewportHeight = 900;
+
+		float mSpeed = 1.0f;
 	};
 }

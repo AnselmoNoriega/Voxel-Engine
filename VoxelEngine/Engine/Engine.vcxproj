@@ -154,6 +154,7 @@
     <ClInclude Include="src\Forge\Core\PlatformDetection.h" />
     <ClInclude Include="src\Forge\Core\TimeStep.h" />
     <ClInclude Include="src\Forge\Core\Window.h" />
+    <ClInclude Include="src\Forge\Core\WindowInfo.h" />
     <ClInclude Include="src\Forge\Debug\Instrumentor.h" />
     <ClInclude Include="src\Forge\Events\AppEvent.h" />
     <ClInclude Include="src\Forge\Events\ApplicationEvent.h" />
@@ -626,6 +627,7 @@
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WinInputs.cpp" />
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WinWindow.cpp" />
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WindowsUtils.cpp" />
+    <ClCompile Include="src\Platform\OperatingSystem\Windows\WinWindowInfo.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLContext.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLIndexBuffer.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLRendererAPI.cpp" />

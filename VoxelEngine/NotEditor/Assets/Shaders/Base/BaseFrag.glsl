@@ -1,7 +1,6 @@
 #version 450 core
 
 layout(location = 0) out vec4 oColor;
-layout(location = 1) out int oEntityID;
 
 layout (binding = 0) uniform sampler2D uTextures[32];
 
@@ -12,8 +11,7 @@ struct VertexOutput
 };
 
 layout (location = 0) in VertexOutput Input;
-layout (location = 3) in flat float vTexIndex;
-layout (location = 4) in flat int vEntityID;
+layout (location = 2) in flat float vTexIndex;
 
 void main()
 {
@@ -61,5 +59,4 @@ void main()
 	}
 
 	oColor = texColor;
-    oEntityID = vEntityID;
 }

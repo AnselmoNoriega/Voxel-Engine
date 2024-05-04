@@ -10,6 +10,8 @@
 //-------------System--------------------------
 #include "Forge/Events/KeyEvent.h"
 
+#include "Forge/Core/WindowInfo.h"
+
 #include "Forge/Core/TimeStep.h"
 
 #include "Forge/Renderer/Camera/EditorCamera.h"

@@ -93,8 +93,7 @@ namespace Forge
                     {ShaderDataType::Float3, "aPosition"},
                     {ShaderDataType::Float2, "aTexCoord"},
                     {ShaderDataType::Float4, "aColor"   },
-                    {ShaderDataType::Float,  "aTexIndex"},
-                    {ShaderDataType::Int,    "aEntityID"}
+                    {ShaderDataType::Float,  "aTexIndex"}
                 });
             sData.QuadVertexArray->AddVertexBuffer(sData.QuadVertexBuffer);
             sData.VertexBufferBase = new QuadVertex[sData.MaxVertices];
@@ -216,18 +215,19 @@ namespace Forge
         StartBatch();
     }
 
-    void Renderer::DrawCube(const glm::mat4& transform, float textureIndex, const glm::vec4& color)
+    void Renderer::DrawCube(const glm::mat4& transform, const Ref<Texture>& texture, const glm::vec4& color)
     {
         PROFILE_FUNCTION();
 
         size_t quadVertexCount = 4;
+        float textureIndex = GetTextureIndex(texture);
 
         if (sData.IndexCount >= RendererStorage::MaxIndices)
         {
             NextBatch();
         }
 
-        for (size_t i = 0; i < quadVertexCount; i++)
+        for (size_t i = 0; i < quadVertexCount; ++i)
         {
             sData.VertexBufferPtr->Position = transform * sData.VertexPositions[i];
             sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i];

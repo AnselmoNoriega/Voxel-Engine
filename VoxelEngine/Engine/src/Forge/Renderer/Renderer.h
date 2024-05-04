@@ -21,7 +21,7 @@ namespace Forge
 
         static void Flush();
 
-        static void DrawCube(const glm::mat4& transform, float textureIndex, const glm::vec4& color);
+        static void DrawCube(const glm::mat4& transform, const Ref<Texture>& texture, const glm::vec4& color);
 
         static void DrawRect(const glm::mat4& transform, const glm::vec4& color);
 

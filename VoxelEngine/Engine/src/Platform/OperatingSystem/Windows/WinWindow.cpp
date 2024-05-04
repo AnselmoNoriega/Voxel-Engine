@@ -159,6 +159,14 @@ namespace Forge
 				MouseMovedEvent event((float)xPos, (float)yPos);
 				data.EventCallback(event);
 			});
+
+		glfwSetWindowSizeCallback(mWindow, [](GLFWwindow* window, int width, int height)
+			{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+				WindowResizeEvent event(width, height);
+				data.EventCallback(event);
+			});
 	}
 
 	void WinWindow::Shutdown()
