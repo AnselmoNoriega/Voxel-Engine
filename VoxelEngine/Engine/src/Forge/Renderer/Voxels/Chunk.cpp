@@ -5,7 +5,8 @@
 
 namespace Forge
 {
-    static const int ChunkSize = 16 * 16;
+    static const int ChunkSize = 16 * 256 * 16;
+    static const int RowNum = 16;
 
     static int ChunkHeights[ChunkSize] = {
          7,  6,  5,  7, -5,  6, -4, -4, -3,  1,  4,  6, -7,  3,  1,  0,
@@ -28,34 +29,39 @@ namespace Forge
 
     void Chunk::GenerateChunk()
     {
-        Voxel voxelsGrid[ChunkSize];
-        uint8_t rowNum = glm::sqrt(ChunkSize);
+        mVoxels.clear();
+        mVoxels.resize(ChunkSize);
+        const uint32_t areaSize = (RowNum * RowNum);
 
-        int idx = 0;
-        for (auto hight : ChunkHeights)
+        for (int idx = 0; idx < areaSize; ++idx)
         {
-            //Ignore right side
-            if (idx % 15 != 0 || idx == 0)
+            const uint32_t maxHeight = 40 + ChunkHeights[idx];
+            for (int column = 0; column <= maxHeight; ++column)
             {
+                const uint32_t voxelIndex = (idx * 256) + column;
+                mVoxels[voxelIndex].Type = (uint8_t)VoxelType::Dirt;
 
+                //Ignore empty right side
+                if ((idx % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] >= ChunkHeights[idx])
+                {
+                    mVoxels[voxelIndex].Colliders |= (1 << 1);
+                }
+                //Ignore empty left side
+                if ((idx % 16 != 0) && ChunkHeights[idx - 1] >= ChunkHeights[idx])
+                {
+                    mVoxels[voxelIndex].Colliders |= (1 << 3);
+                }
+                //Ignore empty top side
+                if ((idx > 15) && ChunkHeights[idx - 16] >= ChunkHeights[idx])
+                {
+                    mVoxels[voxelIndex].Colliders |= (1 << 0);
+                }
+                //Ignore empty bottom side
+                if ((idx < areaSize - RowNum) && ChunkHeights[idx + 16] >= ChunkHeights[idx])
+                {
+                    mVoxels[voxelIndex].Colliders |= (1 << 2);
+                }
             }
-            //Ignore left side
-            if (idx % 16 != 0)
-            {
-
-            }
-            //Ignore top side
-            if (idx >= 16)
-            {
-
-            }
-            //Ignore bottom side
-            if (idx < ChunkSize - rowNum)
-            {
-
-            }
-
-            ++idx;
         }
     }
 }

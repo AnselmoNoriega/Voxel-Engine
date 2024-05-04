@@ -3,7 +3,7 @@
 
 namespace Forge
 {
-    enum class VoxelType
+    enum class VoxelType : uint8_t
     {
         None,
         Dirt
@@ -11,7 +11,7 @@ namespace Forge
 
     struct Voxel
     {
-        VoxelType Type = VoxelType::None;
-        uint8_t CollidersHeights[4];
+        uint8_t Type = 0;
+        uint8_t Colliders = 0;
     };
 }
