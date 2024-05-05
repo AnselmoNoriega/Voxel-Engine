@@ -33,6 +33,9 @@ namespace Forge
         mVoxels.resize(ChunkSize);
         const uint32_t areaSize = (RowNum * RowNum);
 
+        glm::vec3 currentPos = glm::vec3(0, ChunkHeights[0], 0);
+        std::pair<glm::vec3, glm::vec3> topQuad = { currentPos, currentPos };
+
         for (int idx = 0; idx < areaSize; ++idx)
         {
             const uint32_t maxHeight = 40 + ChunkHeights[idx];
@@ -60,6 +63,27 @@ namespace Forge
                 if ((idx < areaSize - RowNum) && ChunkHeights[idx + 16] >= ChunkHeights[idx])
                 {
                     mVoxels[voxelIndex].Colliders |= (1 << 2);
+                }
+            }
+
+            //Ignore empty right side
+            if ((idx % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
+            {
+                topQuad.second.x += 1;
+            }
+            else if (false)
+            {
+
+            }
+            else
+            {
+                auto key = std::make_pair(glm::vec2(topQuad.first.x, topQuad.first.y), glm::vec2(topQuad.second.x, topQuad.second.y));
+                mRenderQuadsTop.insert({ key, topQuad });
+                if (idx < areaSize - 1)
+                {
+                    int zValue = (idx - (idx % 16)) / 16;
+                    glm::vec3 newPos = glm::vec3(idx % 16, ChunkHeights[idx], zValue);
+                    std::pair<glm::vec3, glm::vec3> topQuad = { newPos, newPos };
                 }
             }
         }

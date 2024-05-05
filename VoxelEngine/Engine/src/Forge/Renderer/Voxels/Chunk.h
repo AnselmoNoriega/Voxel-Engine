@@ -12,7 +12,13 @@ namespace Forge
         void GenerateChunk();
 
     private:
-        std::vector<glm::vec3> mRenderQuads;
+        std::unordered_map<std::pair<glm::vec2, glm::vec2>, std::pair<glm::vec3, glm::vec3>> mRenderQuadsTop;
+        std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsFront;
+        std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsRSide;
+        std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsBack;
+        std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsLSide;
+        std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsBottom;
+
         std::vector<Voxel> mVoxels;
     };
 }
