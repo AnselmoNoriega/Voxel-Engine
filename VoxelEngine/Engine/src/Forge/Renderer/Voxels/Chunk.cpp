@@ -71,13 +71,24 @@ namespace Forge
             {
                 topQuad.second.x += 1;
             }
-            else if (false)
+            else if (idx > 15)
             {
+                auto it = mRenderQuadsTop.find({ topQuad.first.x, glm::vec2(topQuad.second.x, topQuad.second.z - 1) });
+                if (it != mRenderQuadsTop.end() && it->second.second.z == topQuad.second.z)
+                {
+                    it->second.second = topQuad.second;
+                }
 
+                if (idx < areaSize - 1)
+                {
+                    int zValue = (idx - (idx % 16)) / 16;
+                    glm::vec3 newPos = glm::vec3(idx % 16, ChunkHeights[idx], zValue);
+                    std::pair<glm::vec3, glm::vec3> topQuad = { newPos, newPos };
+                }
             }
             else
             {
-                auto key = std::make_pair(glm::vec2(topQuad.first.x, topQuad.first.y), glm::vec2(topQuad.second.x, topQuad.second.y));
+                auto key = std::make_pair((int)topQuad.first.x, glm::vec2(topQuad.second.x, topQuad.second.z));
                 mRenderQuadsTop.insert({ key, topQuad });
                 if (idx < areaSize - 1)
                 {
