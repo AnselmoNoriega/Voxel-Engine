@@ -35,6 +35,7 @@ namespace Forge
 
         glm::vec3 currentPos = glm::vec3(0, ChunkHeights[0], 0);
         std::pair<glm::vec3, glm::vec3> topQuad = { currentPos, currentPos };
+        std::shared_ptr<std::pair<glm::vec3, glm::vec3>> frontQuad = nullptr;
 
         for (int idx = 0; idx < areaSize; ++idx)
         {
@@ -58,6 +59,24 @@ namespace Forge
                 if ((idx > 15) && ChunkHeights[idx - 16] >= ChunkHeights[idx])
                 {
                     mVoxels[voxelIndex].Colliders |= (1 << 0);
+
+                    if (frontQuad)
+                    {
+                        auto key = std::make_pair((int)frontQuad->first.z, glm::vec2(frontQuad->second.z, frontQuad->second.y));
+                        mRenderQuadsTop.insert({ key, *frontQuad });
+                        frontQuad = nullptr;
+                    }
+                }
+                else if (!frontQuad)
+                {
+                    int zValue = (idx - (idx % 16)) / 16;
+                    glm::vec3 newPos = glm::vec3(idx % 16, column - 40, zValue);
+                    std::pair<glm::vec3, glm::vec3> topQuad = { newPos, newPos };
+                    frontQuad = std::make_unique<std::pair<glm::vec3, glm::vec3>>(topQuad);
+                }
+                else
+                {
+                    ++frontQuad->second.y;
                 }
                 //Ignore empty bottom side
                 if ((idx < areaSize - RowNum) && ChunkHeights[idx + 16] >= ChunkHeights[idx])
@@ -66,10 +85,12 @@ namespace Forge
                 }
             }
 
+            frontQuad = nullptr;
+
             //Ignore empty right side
             if ((idx % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
             {
-                topQuad.second.x += 1;
+                ++topQuad.second.x;
             }
             else if (idx > 15)
             {
