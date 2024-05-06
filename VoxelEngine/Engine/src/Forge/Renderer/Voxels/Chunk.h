@@ -13,7 +13,7 @@ namespace Forge
 
     private:
         std::unordered_map<std::pair<int, glm::vec2>, std::pair<glm::vec3, glm::vec3>> mRenderQuadsTop;
-        std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsFront;
+        std::unordered_map<std::pair<int, glm::vec2>, std::pair<glm::vec3, glm::vec3>> mRenderQuadsFront;
         std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsRSide;
         std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsBack;
         std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsLSide;

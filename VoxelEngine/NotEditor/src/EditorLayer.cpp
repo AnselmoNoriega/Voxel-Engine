@@ -19,6 +19,11 @@ namespace Forge
     {
         auto [width, height] = WindowInfo::GetWindowSize();
         mCamera = EditorCamera(30.0f, width, height, 0.1f, 1000.0f);
+
+        mChunk.GenerateChunk();
+
+        auto topVertices = mChunk.GetTopVertices();
+        auto frontVertices = mChunk.GetFrontVertices();
     }
 
     void EditorLayer::Detach()
@@ -46,7 +51,9 @@ namespace Forge
             }
 
             Renderer::BeginScene(mCamera);
-            Renderer::DrawCube(GetTransform(), nullptr, { 1.0f, 0.0f, 0.0f, 1.0f });
+
+            Renderer::DrawChunk(GetTransform(), nullptr, { 1.0f, 0.0f, 0.0f, 1.0f });
+
             Renderer::EndScene();
         }
     }
@@ -57,7 +64,7 @@ namespace Forge
 
     void EditorLayer::ImGuiRender()
     {
-        ImGui::DragFloat3("Position", &Translation.x, 0.01, -10.0f, 10.0f);
+        //ImGui::DragFloat3("Position", &Translation.x, 0.01, -10.0f, 10.0f);
     }
 
     bool EditorLayer::KeyPressed(KeyPressedEvent& e)
@@ -68,14 +75,5 @@ namespace Forge
     bool EditorLayer::MouseButtonPressed(MouseButtonPressedEvent& e)
     {
         return false;
-    }
-
-    glm::mat4 EditorLayer::GetTransform() const
-    {
-        glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
-
-        return glm::translate(glm::mat4(1.0f), Translation)
-            * rotation
-            * glm::scale(glm::mat4(1.0f), Scale);
     }
 }

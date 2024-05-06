@@ -62,8 +62,16 @@ namespace Forge
 
                     if (frontQuad)
                     {
-                        auto key = std::make_pair((int)frontQuad->first.z, glm::vec2(frontQuad->second.z, frontQuad->second.y));
-                        mRenderQuadsTop.insert({ key, *frontQuad });
+                        auto key = std::make_pair((int)frontQuad->first.y, glm::vec2(frontQuad->second.z, frontQuad->second.y));
+                        auto it = mRenderQuadsFront.find(key);
+                        if (it != mRenderQuadsTop.end() && it->second.second.x == topQuad.second.x - 1)
+                        {
+                            it->second.second = topQuad.second;
+                        }
+                        else
+                        {
+                            mRenderQuadsTop.insert({ key, *frontQuad });
+                        }
                         frontQuad = nullptr;
                     }
                 }
@@ -85,7 +93,20 @@ namespace Forge
                 }
             }
 
-            frontQuad = nullptr;
+            if (frontQuad)
+            {
+                auto key = std::make_pair((int)frontQuad->first.y, glm::vec2(frontQuad->second.z, frontQuad->second.y));
+                auto it = mRenderQuadsFront.find(key);
+                if (it != mRenderQuadsTop.end() && it->second.second.x == topQuad.second.x - 1)
+                {
+                    it->second.second = topQuad.second;
+                }
+                else
+                {
+                    mRenderQuadsTop.insert({ key, *frontQuad });
+                }
+                frontQuad = nullptr;
+            }
 
             //Ignore empty right side
             if ((idx % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
@@ -94,27 +115,34 @@ namespace Forge
             }
             else if (idx > 15)
             {
-                auto it = mRenderQuadsTop.find({ topQuad.first.x, glm::vec2(topQuad.second.x, topQuad.second.z - 1) });
-                if (it != mRenderQuadsTop.end() && it->second.second.z == topQuad.second.z)
+                auto key = std::make_pair((int)topQuad.first.x, glm::vec2(topQuad.second.x, topQuad.second.y));
+                auto it = mRenderQuadsTop.find(key);
+                if (it != mRenderQuadsTop.end() && it->second.second.z == topQuad.second.z - 1)
                 {
                     it->second.second = topQuad.second;
+                }
+                else
+                {
+                    mRenderQuadsTop.insert({ key, topQuad });
                 }
 
                 if (idx < areaSize - 1)
                 {
-                    int zValue = (idx - (idx % 16)) / 16;
-                    glm::vec3 newPos = glm::vec3(idx % 16, ChunkHeights[idx], zValue);
+                    int nextBlock = idx + 1;
+                    int zValue = (nextBlock - (nextBlock % 16)) / 16;
+                    glm::vec3 newPos = glm::vec3(nextBlock % 16, ChunkHeights[nextBlock], zValue);
                     std::pair<glm::vec3, glm::vec3> topQuad = { newPos, newPos };
                 }
             }
             else
             {
-                auto key = std::make_pair((int)topQuad.first.x, glm::vec2(topQuad.second.x, topQuad.second.z));
+                auto key = std::make_pair((int)topQuad.first.x, glm::vec2(topQuad.second.x, topQuad.second.y));
                 mRenderQuadsTop.insert({ key, topQuad });
                 if (idx < areaSize - 1)
                 {
-                    int zValue = (idx - (idx % 16)) / 16;
-                    glm::vec3 newPos = glm::vec3(idx % 16, ChunkHeights[idx], zValue);
+                    int nextBlock = idx + 1;
+                    int zValue = (nextBlock - (nextBlock % 16)) / 16;
+                    glm::vec3 newPos = glm::vec3(nextBlock % 16, ChunkHeights[nextBlock], zValue);
                     std::pair<glm::vec3, glm::vec3> topQuad = { newPos, newPos };
                 }
             }
