@@ -29,6 +29,6 @@ namespace Forge
 
         Chunk mChunk;
 
-        std::vector<glm::vec3[4]> mTopQuads;
+        std::vector<QuadSpecs> mTopQuads;
     };
 }

@@ -148,17 +148,38 @@ namespace Forge
             }
         }
     }
-    inline QuadVector Chunk::GetTopVertices() const
+
+    std::vector<QuadSpecs> Chunk::GetTopVertices()
     {
+        /*std::vector<glm::vec3[4]> vector;
+
         for (auto& topVertex : mRenderQuadsTop)
         {
-            int xDistance = topVertex.second.second.x - topVertex.second.first.x;
-            int zDistance = topVertex.second.second.z - topVertex.second.first.z;
-
             glm::vec3 vertices[4] = {
-
+                {topVertex.second.first.x, topVertex.second.first.y, topVertex.second.second.z},
+                {topVertex.second.second.x, topVertex.second.first.y, topVertex.second.second.z},
+                {topVertex.second.second.x, topVertex.second.first.y, topVertex.second.first.z},
+                {topVertex.second.first.x, topVertex.second.first.y, topVertex.second.first.z}
             };
-            mTopQuads.push_back(topVertex.);
+
+            vector.push_back(vertices);
+        }*/
+
+        std::vector<QuadSpecs> vertices;
+
+        for (auto& topVertex : mRenderQuadsTop)
+        {
+            int DistanceX = topVertex.second.second.x - topVertex.second.first.x;
+            int DistanceY = 0;
+            int DistanceZ = topVertex.second.second.z - topVertex.second.first.z;
+
+            glm::vec3 center = { topVertex.second.first.x + (DistanceX / 2), 
+                                 topVertex.second.first.y,
+                                 topVertex.second.first.z + (DistanceZ / 2) };
+
+            vertices.push_back({ DistanceX , DistanceY, DistanceZ, center });
         }
+
+        return vertices;
     }
 }

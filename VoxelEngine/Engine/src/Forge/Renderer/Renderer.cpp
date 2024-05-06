@@ -241,7 +241,7 @@ namespace Forge
         ++sData.Stats.QuadCount;
     }
 
-    void Renderer::DrawChunk(const glm::mat4& transform, const Ref<Texture>& texture, const glm::vec4& color)
+    void Renderer::DrawFace(const QuadSpecs& specs, const Ref<Texture>& texture, const glm::vec4& color)
     {
         PROFILE_FUNCTION();
 

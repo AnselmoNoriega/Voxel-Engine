@@ -8,12 +8,21 @@ namespace Forge
 
     struct Voxel;
 
+    struct QuadSpecs
+    {
+        int DistanceX = 0;
+        int DistanceY = 0;
+        int DistanceZ = 0;
+
+        glm::mat4 Center;
+    };
+
     class Chunk
     {
     public:
         void GenerateChunk();
 
-        inline QuadVector GetTopVertices() const;
+        std::vector<QuadSpecs> GetTopVertices();
         inline QuadVector GetFrontVertices() const { return mRenderQuadsFront; }
 
     private:

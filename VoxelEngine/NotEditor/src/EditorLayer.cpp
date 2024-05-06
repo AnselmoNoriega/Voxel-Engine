@@ -22,15 +22,7 @@ namespace Forge
 
         mChunk.GenerateChunk();
 
-        auto topVertices = mChunk.GetTopVertices();
-
-        for (auto& topVertex : topVertices)
-        {
-            glm::vec3 vertices[4] = {
-
-            };
-            mTopQuads.push_back(topVertex.);
-        }
+        mTopQuads = mChunk.GetTopVertices();
 
         auto frontVertices = mChunk.GetFrontVertices();
     }
