@@ -148,4 +148,17 @@ namespace Forge
             }
         }
     }
+    inline QuadVector Chunk::GetTopVertices() const
+    {
+        for (auto& topVertex : mRenderQuadsTop)
+        {
+            int xDistance = topVertex.second.second.x - topVertex.second.first.x;
+            int zDistance = topVertex.second.second.z - topVertex.second.first.z;
+
+            glm::vec3 vertices[4] = {
+
+            };
+            mTopQuads.push_back(topVertex.);
+        }
+    }
 }

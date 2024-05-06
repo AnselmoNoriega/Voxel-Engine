@@ -3,6 +3,7 @@
 #include <Forge.h>
 
 #include "Forge/Renderer/Camera/EditorCamera.h"
+#include "Forge/Renderer/Voxels/Chunk.h"
 
 namespace Forge
 {
@@ -23,12 +24,11 @@ namespace Forge
         bool KeyPressed(KeyPressedEvent& e);
         bool MouseButtonPressed(MouseButtonPressedEvent& e);
 
-        glm::mat4 GetTransform() const;
-
     private:
         EditorCamera mCamera;
-        glm::vec3 Translation = { 0.0f, 0.0f, 0.0f };
-        glm::vec3 Rotation = { 0.0f, 0.0f, 0.0f };
-        glm::vec3 Scale = { 1.0f, 1.0f, 1.0f };
+
+        Chunk mChunk;
+
+        std::vector<glm::vec3[4]> mTopQuads;
     };
 }

@@ -241,6 +241,32 @@ namespace Forge
         ++sData.Stats.QuadCount;
     }
 
+    void Renderer::DrawChunk(const glm::mat4& transform, const Ref<Texture>& texture, const glm::vec4& color)
+    {
+        PROFILE_FUNCTION();
+
+        size_t quadVertexCount = 4;
+        float textureIndex = GetTextureIndex(texture);
+
+        if (sData.IndexCount >= RendererStorage::MaxIndices)
+        {
+            NextBatch();
+        }
+
+        for (size_t i = 0; i < quadVertexCount; ++i)
+        {
+            sData.VertexBufferPtr->Position = transform * sData.VertexPositions[i];
+            sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i];
+            sData.VertexBufferPtr->Color = color;
+            sData.VertexBufferPtr->TexIndex = textureIndex;
+            ++sData.VertexBufferPtr;
+        }
+
+        sData.IndexCount += 6;
+
+        ++sData.Stats.QuadCount;
+    }
+
     void Renderer::DrawLine(const glm::vec3& p0, glm::vec3& p1, const glm::vec4& color)
     {
         sData.LineVertexBufferPtr->Position = p0;
