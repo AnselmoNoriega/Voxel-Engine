@@ -120,11 +120,11 @@ namespace Forge
             }
 
             //Ignore empty right side
-            if ((idx % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
+            if ((idx % 16 != 0 || idx == 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
             {
                 ++topQuad.EndPos.x;
             }
-            else if (idx > 15)
+            else if (idx > 16)
             {
                 QuadKey key = { (int)topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z - 1) };
                 auto it = mRenderQuadsTop.find(key);
@@ -143,8 +143,8 @@ namespace Forge
                 if (idx < areaSize - 1)
                 {
                     int nextBlock = idx + 1;
-                    int zValue = (nextBlock - (nextBlock % 16)) / 16;
-                    glm::vec3 newPos = glm::vec3(nextBlock % 16, ChunkHeights[nextBlock], zValue);
+                    int zValue = (nextBlock - (nextBlock % 17)) / 17;
+                    glm::vec3 newPos = glm::vec3(nextBlock % 17, ChunkHeights[nextBlock], zValue);
                     topQuad = { newPos + addOffsetTL, newPos + addOffsetBR };
                 }
             }
@@ -155,8 +155,8 @@ namespace Forge
                 if (idx < areaSize - 1)
                 {
                     int nextBlock = idx + 1;
-                    int zValue = (nextBlock - (nextBlock % 16)) / 16;
-                    glm::vec3 newPos = glm::vec3(nextBlock % 16, ChunkHeights[nextBlock], zValue);
+                    int zValue = (nextBlock - (nextBlock % 17)) / 17;
+                    glm::vec3 newPos = glm::vec3(nextBlock % 17, ChunkHeights[nextBlock], zValue);
                     topQuad = { newPos + addOffsetTL, newPos + addOffsetBR };
                 }
             }

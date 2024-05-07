@@ -22,13 +22,23 @@ namespace Forge
     struct QuadKey
     {
         int StartPos;
-        glm::vec2 EndPos;
+        glm::vec3 EndPos;
 
         bool operator<(const QuadKey& other) const
         {
             if (StartPos != other.StartPos)
+            {
                 return StartPos < other.StartPos;
-            return EndPos.x < other.EndPos.x || (EndPos.x == other.EndPos.x && EndPos.y < other.EndPos.y);
+            }
+            if (EndPos.x != other.EndPos.x)
+            {
+                return EndPos.x < other.EndPos.x;
+            }
+            if (EndPos.y != other.EndPos.y)
+            {
+                return EndPos.y < other.EndPos.y;
+            }
+            return EndPos.z < other.EndPos.z;
         }
     };
 
