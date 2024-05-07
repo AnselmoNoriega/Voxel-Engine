@@ -50,8 +50,9 @@ namespace Forge
             }
 
             Renderer::BeginScene(mCamera);
-
-            for (auto quad : mTopQuads)
+            
+            Renderer::DrawCube(GetTransform(), nullptr, { 1.0f, 0.0f, 0.0f, 1.0f });
+            for (const auto& quad : mTopQuads)
             {
                 Renderer::DrawFace(quad, nullptr, { 1.0f, 1.0f, 1.0f, 1.0f });
             }
@@ -77,5 +78,14 @@ namespace Forge
     bool EditorLayer::MouseButtonPressed(MouseButtonPressedEvent& e)
     {
         return false;
+    }
+    
+    glm::mat4 EditorLayer::GetTransform() const
+    {
+        glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
+
+        return glm::translate(glm::mat4(1.0f), Translation)
+            * rotation
+            * glm::scale(glm::mat4(1.0f), Scale);
     }
 }

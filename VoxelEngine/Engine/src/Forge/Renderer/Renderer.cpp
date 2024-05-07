@@ -69,10 +69,10 @@ namespace Forge
                                          {  0.5, 0.0,  0.5 },
                                          { -0.5, 0.0,  0.5 } };
 
-        glm::vec3 Vertex3DPositions[4] = { { -0.5, 1.0, -0.5 },
-                                         {    0.5, 1.0, -0.5 },
-                                         {    0.5, 1.0,  0.5 },
-                                         {   -0.5, 1.0,  0.5 } };
+        glm::vec3 Vertex3DPositions[4] = { {   -0.5, 1.0,  0.5 },
+                                           {    0.5, 1.0,  0.5 },
+                                           {    0.5, 1.0, -0.5 },
+                                           { -0.5, 1.0, -0.5 } };
 
         glm::vec2 TextureCoords[4] = { { 0.0f, 0.0f }, { 1.0f, 0.0f },
                                        { 1.0f, 1.0f }, { 0.0f, 1.0f } };
@@ -267,7 +267,7 @@ namespace Forge
 
         for (size_t i = 0; i < quadVertexCount; ++i)
         {
-            sData.VertexBufferPtr->Position = specs.Center + sData.Vertex3DCorners[i] + (sData.Vertex3DPositions[i] * specs.Distance);
+            sData.VertexBufferPtr->Position = specs.Center + (specs.Distance * sData.Vertex3DPositions[i]);
             sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i];
             sData.VertexBufferPtr->Color = color;
             sData.VertexBufferPtr->TexIndex = textureIndex;

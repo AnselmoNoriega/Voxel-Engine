@@ -24,11 +24,16 @@ namespace Forge
         bool KeyPressed(KeyPressedEvent& e);
         bool MouseButtonPressed(MouseButtonPressedEvent& e);
 
+        glm::mat4 GetTransform() const;
+
     private:
         EditorCamera mCamera;
 
         Chunk mChunk;
 
         std::vector<QuadSpecs> mTopQuads;
+        glm::vec3 Translation = { 0.0f, 0.0f, 0.0f };
+        glm::vec3 Rotation = { 0.0f, 0.0f, 0.0f };
+        glm::vec3 Scale = { 1.0f, 1.0f, 1.0f };
     };
 }

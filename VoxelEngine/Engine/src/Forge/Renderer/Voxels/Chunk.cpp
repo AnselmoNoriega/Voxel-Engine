@@ -32,8 +32,8 @@ namespace Forge
         const uint32_t areaSize = (RowNum * RowNum);
 
         glm::vec3 currentPos = glm::vec3(0, ChunkHeights[0], 0);
-        glm::vec3 addOffsetTL = glm::vec3(0.5f, 0.0f, -0.5f);
-        glm::vec3 addOffsetBR = glm::vec3(-0.5f, 0.0f, 0.5f);
+        glm::vec3 addOffsetTL = glm::vec3(-0.5f, 0.0f, -0.5f);
+        glm::vec3 addOffsetBR = glm::vec3( 0.5f, 0.0f, 0.5f);
 
         QuadSpace topQuad = { currentPos + addOffsetTL, currentPos + addOffsetBR };
         std::shared_ptr<QuadSpace> frontQuad = nullptr;
@@ -98,13 +98,20 @@ namespace Forge
             {
                 QuadKey key = { (int)frontQuad->StartPos.y, glm::vec2(frontQuad->EndPos.z, frontQuad->EndPos.y) };
                 auto it = mRenderQuadsFront.find(key);
-                if (it != mRenderQuadsTop.end() && it->second.EndPos.x == topQuad.EndPos.x - 1)
+                if (it != mRenderQuadsFront.end())
                 {
+                    if (it->second.EndPos.x == topQuad.EndPos.x - 1)
+                    {
                     //it->second.EndPos = topQuad.EndPos;
+                    }
+                    else
+                    {
+                        //mRenderQuadsTop.insert({ key, *frontQuad });
+                    }
                 }
                 else
                 {
-                    mRenderQuadsTop.insert({ key, *frontQuad });
+                    //mRenderQuadsTop.insert({ key, *frontQuad });
                 }
                 frontQuad = nullptr;
             }
@@ -118,9 +125,16 @@ namespace Forge
             {
                 QuadKey key = { (int)topQuad.StartPos.x, glm::vec2(topQuad.EndPos.x, topQuad.EndPos.y) };
                 auto it = mRenderQuadsTop.find(key);
-                if (it != mRenderQuadsTop.end() && it->second.EndPos.z == topQuad.EndPos.z - 1)
+                if (it != mRenderQuadsTop.end())
                 {
-                    it->second.EndPos = topQuad.EndPos;
+                    if (it->second.EndPos.z == topQuad.EndPos.z - 1)
+                    {
+                        it->second.EndPos = topQuad.EndPos;
+                    }
+                    else
+                    {
+                        mRenderQuadsTop.insert({ key, topQuad });
+                    }
                 }
                 else
                 {
@@ -132,7 +146,7 @@ namespace Forge
                     int nextBlock = idx + 1;
                     int zValue = (nextBlock - (nextBlock % 16)) / 16;
                     glm::vec3 newPos = glm::vec3(nextBlock % 16, ChunkHeights[nextBlock], zValue);
-                    QuadSpace topQuad = { newPos + addOffsetTL, newPos + addOffsetBR };
+                    topQuad = { newPos + addOffsetTL, newPos + addOffsetBR };
                 }
             }
             else
@@ -144,7 +158,7 @@ namespace Forge
                     int nextBlock = idx + 1;
                     int zValue = (nextBlock - (nextBlock % 16)) / 16;
                     glm::vec3 newPos = glm::vec3(nextBlock % 16, ChunkHeights[nextBlock], zValue);
-                    QuadSpace topQuad = { newPos + addOffsetTL, newPos + addOffsetBR };
+                    topQuad = { newPos + addOffsetTL, newPos + addOffsetBR };
                 }
             }
         }

@@ -24,9 +24,9 @@ namespace Forge
         int StartPos;
         glm::vec2 EndPos;
 
-        bool operator<(const QuadKey& other) const {
-            std::cout << "Ruuun";
-            return true;
+        bool operator<(const QuadKey& other) const
+        {
+            return StartPos < other.StartPos && EndPos.x < other.EndPos.x && EndPos.y < other.EndPos.y;
         }
     };
 
@@ -38,7 +38,7 @@ namespace Forge
         void GenerateChunk();
 
         std::vector<QuadSpecs> GetTopVertices();
-        inline QuadVector GetFrontVertices() const { return mRenderQuadsFront; }
+        //inline QuadVector GetFrontVertices() const { return mRenderQuadsFront; }
 
     private:
         QuadVector mRenderQuadsTop;
