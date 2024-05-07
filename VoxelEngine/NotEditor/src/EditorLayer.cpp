@@ -63,6 +63,7 @@ namespace Forge
 
     void EditorLayer::OnEvent(Event& myEvent)
     {
+        mCamera.OnEvent(myEvent);
     }
 
     void EditorLayer::ImGuiRender()

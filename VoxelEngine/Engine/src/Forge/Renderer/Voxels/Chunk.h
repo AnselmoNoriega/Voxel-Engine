@@ -26,7 +26,9 @@ namespace Forge
 
         bool operator<(const QuadKey& other) const
         {
-            return StartPos < other.StartPos && EndPos.x < other.EndPos.x && EndPos.y < other.EndPos.y;
+            if (StartPos != other.StartPos)
+                return StartPos < other.StartPos;
+            return EndPos.x < other.EndPos.x || (EndPos.x == other.EndPos.x && EndPos.y < other.EndPos.y);
         }
     };
 
