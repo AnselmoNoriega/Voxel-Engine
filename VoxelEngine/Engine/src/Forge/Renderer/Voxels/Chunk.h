@@ -2,20 +2,35 @@
 
 #include <glm/glm.hpp>
 
+#include "Voxel.h"
+
 namespace Forge
 {
-    using QuadVector = std::unordered_map<std::pair<int, glm::vec2>, std::pair<glm::vec3, glm::vec3>>;
-
-    struct Voxel;
 
     struct QuadSpecs
     {
-        int DistanceX = 0;
-        int DistanceY = 0;
-        int DistanceZ = 0;
-
-        glm::mat4 Center;
+        glm::vec3 Distance;
+        glm::vec3 Center;
     };
+
+    struct QuadSpace
+    {
+        glm::vec3 StartPos;
+        glm::vec3 EndPos;
+    };
+
+    struct QuadKey
+    {
+        int StartPos;
+        glm::vec2 EndPos;
+
+        bool operator<(const QuadKey& other) const {
+            std::cout << "Ruuun";
+            return true;
+        }
+    };
+
+    using QuadVector = std::map<QuadKey, QuadSpace>;
 
     class Chunk
     {
@@ -28,10 +43,10 @@ namespace Forge
     private:
         QuadVector mRenderQuadsTop;
         QuadVector mRenderQuadsFront;
-        std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsRSide;
-        std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsBack;
-        std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsLSide;
-        std::vector<std::pair<glm::vec3, glm::vec3>> mRenderQuadsBottom;
+        QuadVector mRenderQuadsRSide;
+        QuadVector mRenderQuadsBack;
+        QuadVector mRenderQuadsLSide;
+        QuadVector mRenderQuadsBottom;
 
         std::vector<Voxel> mVoxels;
     };

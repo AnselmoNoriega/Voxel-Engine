@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "Chunk.h"
 
-#include "Voxel.h"
-
 namespace Forge
 {
     static const int ChunkSize = 16 * 256 * 16;
@@ -34,8 +32,11 @@ namespace Forge
         const uint32_t areaSize = (RowNum * RowNum);
 
         glm::vec3 currentPos = glm::vec3(0, ChunkHeights[0], 0);
-        std::pair<glm::vec3, glm::vec3> topQuad = { currentPos, currentPos };
-        std::shared_ptr<std::pair<glm::vec3, glm::vec3>> frontQuad = nullptr;
+        glm::vec3 addOffsetTL = glm::vec3(0.5f, 0.0f, -0.5f);
+        glm::vec3 addOffsetBR = glm::vec3(-0.5f, 0.0f, 0.5f);
+
+        QuadSpace topQuad = { currentPos + addOffsetTL, currentPos + addOffsetBR };
+        std::shared_ptr<QuadSpace> frontQuad = nullptr;
 
         for (int idx = 0; idx < areaSize; ++idx)
         {
@@ -62,15 +63,15 @@ namespace Forge
 
                     if (frontQuad)
                     {
-                        auto key = std::make_pair((int)frontQuad->first.y, glm::vec2(frontQuad->second.z, frontQuad->second.y));
+                        QuadKey key = { (int)frontQuad->StartPos.y, glm::vec2(frontQuad->EndPos.z, frontQuad->EndPos.y) };
                         auto it = mRenderQuadsFront.find(key);
-                        if (it != mRenderQuadsTop.end() && it->second.second.x == topQuad.second.x - 1)
+                        if (it != mRenderQuadsFront.end() && it->second.EndPos.x == frontQuad->EndPos.x - 1)
                         {
-                            it->second.second = topQuad.second;
+                            //it->second.EndPos = topQuad.EndPos;
                         }
                         else
                         {
-                            mRenderQuadsTop.insert({ key, *frontQuad });
+                            mRenderQuadsFront.insert({ key, *frontQuad });
                         }
                         frontQuad = nullptr;
                     }
@@ -79,12 +80,12 @@ namespace Forge
                 {
                     int zValue = (idx - (idx % 16)) / 16;
                     glm::vec3 newPos = glm::vec3(idx % 16, column - 40, zValue);
-                    std::pair<glm::vec3, glm::vec3> topQuad = { newPos, newPos };
-                    frontQuad = std::make_unique<std::pair<glm::vec3, glm::vec3>>(topQuad);
+                    QuadSpace newFrontQuad = { newPos, newPos };
+                    frontQuad = std::make_unique<QuadSpace>(newFrontQuad);
                 }
                 else
                 {
-                    ++frontQuad->second.y;
+                    ++frontQuad->EndPos.y;
                 }
                 //Ignore empty bottom side
                 if ((idx < areaSize - RowNum) && ChunkHeights[idx + 16] >= ChunkHeights[idx])
@@ -95,11 +96,11 @@ namespace Forge
 
             if (frontQuad)
             {
-                auto key = std::make_pair((int)frontQuad->first.y, glm::vec2(frontQuad->second.z, frontQuad->second.y));
+                QuadKey key = { (int)frontQuad->StartPos.y, glm::vec2(frontQuad->EndPos.z, frontQuad->EndPos.y) };
                 auto it = mRenderQuadsFront.find(key);
-                if (it != mRenderQuadsTop.end() && it->second.second.x == topQuad.second.x - 1)
+                if (it != mRenderQuadsTop.end() && it->second.EndPos.x == topQuad.EndPos.x - 1)
                 {
-                    it->second.second = topQuad.second;
+                    //it->second.EndPos = topQuad.EndPos;
                 }
                 else
                 {
@@ -111,15 +112,15 @@ namespace Forge
             //Ignore empty right side
             if ((idx % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
             {
-                ++topQuad.second.x;
+                ++topQuad.EndPos.x;
             }
             else if (idx > 15)
             {
-                auto key = std::make_pair((int)topQuad.first.x, glm::vec2(topQuad.second.x, topQuad.second.y));
+                QuadKey key = { (int)topQuad.StartPos.x, glm::vec2(topQuad.EndPos.x, topQuad.EndPos.y) };
                 auto it = mRenderQuadsTop.find(key);
-                if (it != mRenderQuadsTop.end() && it->second.second.z == topQuad.second.z - 1)
+                if (it != mRenderQuadsTop.end() && it->second.EndPos.z == topQuad.EndPos.z - 1)
                 {
-                    it->second.second = topQuad.second;
+                    it->second.EndPos = topQuad.EndPos;
                 }
                 else
                 {
@@ -131,19 +132,19 @@ namespace Forge
                     int nextBlock = idx + 1;
                     int zValue = (nextBlock - (nextBlock % 16)) / 16;
                     glm::vec3 newPos = glm::vec3(nextBlock % 16, ChunkHeights[nextBlock], zValue);
-                    std::pair<glm::vec3, glm::vec3> topQuad = { newPos, newPos };
+                    QuadSpace topQuad = { newPos + addOffsetTL, newPos + addOffsetBR };
                 }
             }
             else
             {
-                auto key = std::make_pair((int)topQuad.first.x, glm::vec2(topQuad.second.x, topQuad.second.y));
+                QuadKey key = { (int)topQuad.StartPos.x, glm::vec2(topQuad.EndPos.x, topQuad.EndPos.y) };
                 mRenderQuadsTop.insert({ key, topQuad });
                 if (idx < areaSize - 1)
                 {
                     int nextBlock = idx + 1;
                     int zValue = (nextBlock - (nextBlock % 16)) / 16;
                     glm::vec3 newPos = glm::vec3(nextBlock % 16, ChunkHeights[nextBlock], zValue);
-                    std::pair<glm::vec3, glm::vec3> topQuad = { newPos, newPos };
+                    QuadSpace topQuad = { newPos + addOffsetTL, newPos + addOffsetBR };
                 }
             }
         }
@@ -156,10 +157,10 @@ namespace Forge
         for (auto& topVertex : mRenderQuadsTop)
         {
             glm::vec3 vertices[4] = {
-                {topVertex.second.first.x, topVertex.second.first.y, topVertex.second.second.z},
-                {topVertex.second.second.x, topVertex.second.first.y, topVertex.second.second.z},
-                {topVertex.second.second.x, topVertex.second.first.y, topVertex.second.first.z},
-                {topVertex.second.first.x, topVertex.second.first.y, topVertex.second.first.z}
+                {topVertex.EndPos.StartPos.x, topVertex.EndPos.StartPos.y, topVertex.EndPos.EndPos.z},
+                {topVertex.EndPos.EndPos.x, topVertex.EndPos.StartPos.y, topVertex.EndPos.EndPos.z},
+                {topVertex.EndPos.EndPos.x, topVertex.EndPos.StartPos.y, topVertex.EndPos.StartPos.z},
+                {topVertex.EndPos.StartPos.x, topVertex.EndPos.StartPos.y, topVertex.EndPos.StartPos.z}
             };
 
             vector.push_back(vertices);
@@ -169,15 +170,17 @@ namespace Forge
 
         for (auto& topVertex : mRenderQuadsTop)
         {
-            int DistanceX = topVertex.second.second.x - topVertex.second.first.x;
-            int DistanceY = 0;
-            int DistanceZ = topVertex.second.second.z - topVertex.second.first.z;
+            glm::vec3 distance = { topVertex.second.EndPos.x - topVertex.second.StartPos.x,
+                                   0,
+                                   topVertex.second.EndPos.z - topVertex.second.StartPos.z };
 
-            glm::vec3 center = { topVertex.second.first.x + (DistanceX / 2), 
-                                 topVertex.second.first.y,
-                                 topVertex.second.first.z + (DistanceZ / 2) };
+            glm::vec3 center = { topVertex.second.StartPos.x + (distance.x / 2),
+                                 topVertex.second.StartPos.y,
+                                 topVertex.second.StartPos.z + (distance.z / 2) };
 
-            vertices.push_back({ DistanceX , DistanceY, DistanceZ, center });
+            //glm::mat4 matrix =  glm::translate(glm::mat4(1.0f), center);
+
+            vertices.push_back({ distance, center });
         }
 
         return vertices;

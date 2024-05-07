@@ -23,8 +23,6 @@ namespace Forge
         mChunk.GenerateChunk();
 
         mTopQuads = mChunk.GetTopVertices();
-
-        auto frontVertices = mChunk.GetFrontVertices();
     }
 
     void EditorLayer::Detach()
@@ -53,7 +51,10 @@ namespace Forge
 
             Renderer::BeginScene(mCamera);
 
-            Renderer::DrawChunk(GetTransform(), nullptr, { 1.0f, 0.0f, 0.0f, 1.0f });
+            for (auto quad : mTopQuads)
+            {
+                Renderer::DrawFace(quad, nullptr, { 1.0f, 1.0f, 1.0f, 1.0f });
+            }
 
             Renderer::EndScene();
         }
