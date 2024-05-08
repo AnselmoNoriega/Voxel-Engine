@@ -64,10 +64,11 @@ namespace Forge
                                          {  0.5,  0.5, 0.0, 1.0f },
                                          { -0.5,  0.5, 0.0, 1.0f } };
 
-        glm::vec3 Vertex3DPositions[4] = { {   -0.5, 1.0,  0.5 },
-                                           {    0.5, 1.0,  0.5 },
-                                           {    0.5, 1.0, -0.5 },
-                                           { -0.5, 1.0, -0.5 } };
+        glm::vec3 Vertex3DPositions[5] = { { -0.5, 1.0,  0.5 },
+                                           {  0.5, 1.0,  0.5 },
+                                           {  0.5, 1.0, -0.5 },
+                                           { -0.5, 1.0, -0.5 },
+                                           { -0.5, 1.0,  0.5 } };
 
         glm::vec2 TextureCoords[4] = { { 0.0f, 0.0f }, { 1.0f, 0.0f },
                                        { 1.0f, 1.0f }, { 0.0f, 1.0f } };
@@ -263,7 +264,7 @@ namespace Forge
         for (size_t i = 0; i < quadVertexCount; ++i)
         {
             sData.VertexBufferPtr->Position = specs.Center + (specs.Distance * sData.Vertex3DPositions[i]);
-            sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i];
+            sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i] * glm::vec2(specs.Distance.x, specs.Distance.z);
             sData.VertexBufferPtr->Color = color;
             sData.VertexBufferPtr->TexIndex = textureIndex;
             ++sData.VertexBufferPtr;
@@ -299,6 +300,21 @@ namespace Forge
         DrawLine(lineVertices[1], lineVertices[2], color);
         DrawLine(lineVertices[2], lineVertices[3], color);
         DrawLine(lineVertices[3], lineVertices[0], color);
+    }
+
+    void Renderer::DrawRectFaces(const QuadSpecs& specs, const glm::vec4& color)
+    {
+        glm::vec3 lineVertices[5];
+        for (size_t i = 0; i < 5; ++i)
+        {
+            lineVertices[i] = specs.Center + (specs.Distance * sData.Vertex3DPositions[i]);
+        }
+
+        DrawLine(lineVertices[0], lineVertices[1], color);
+        DrawLine(lineVertices[1], lineVertices[2], color);
+        DrawLine(lineVertices[2], lineVertices[3], color);
+        DrawLine(lineVertices[3], lineVertices[0], color);
+        DrawLine(lineVertices[4], lineVertices[2], color);
     }
 
     float Renderer::GetTextureIndex(const Ref<Texture>& texture)

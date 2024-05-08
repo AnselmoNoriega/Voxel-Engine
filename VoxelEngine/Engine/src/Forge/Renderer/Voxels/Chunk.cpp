@@ -120,7 +120,10 @@ namespace Forge
                 frontQuad = nullptr;
             }
 
-
+            if (idx == 79)
+            {
+                idx = 79;
+            }
             //Ignore empty right side
             if ((linedIndex % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
             {
@@ -139,6 +142,7 @@ namespace Forge
                 }
                 else
                 {
+                    key = { (int)topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z) };
                     mRenderQuadsTop.insert({ key, topQuad });
                 }
 

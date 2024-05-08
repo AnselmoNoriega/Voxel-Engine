@@ -57,6 +57,11 @@ namespace Forge
                 Renderer::DrawFace(quad, mTopTexture, { 0.1f, 0.8f, 0.1f, 1.0f });
             }
 
+            /*for (const auto& quad : mTopQuads)
+            {
+                Renderer::DrawRectFaces(quad, { 0.1f, 0.8f, 0.1f, 1.0f });
+            }*/
+
             Renderer::EndScene();
         }
     }
