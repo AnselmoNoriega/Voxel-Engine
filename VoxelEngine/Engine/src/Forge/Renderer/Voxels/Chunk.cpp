@@ -4,11 +4,11 @@
 namespace Forge
 {
     static const int ChunkSize = 16 * 256 * 16;
-    static const int ChunkArea = 16 * 16 + 1;
+    static const int ChunkArea = 16 * 16;
     static const int RowNum = 16;
 
     static int ChunkHeights[ChunkArea] = {
-     0,  7,  6,  5,  7, -5,  6, -4, -4, -3,  1,  4,  6, -7,  3,  1,  0,
+         7,  6,  5,  7, -5,  6, -4, -4, -3,  1,  4,  6, -7,  3,  1,  0,
          3,  5,  7,  2,  8,  0,  2,  3, -8, -6,  7,  5,  1,  0,  4,  7,
         -1, -5,  0, -6, -1, -5, -1,  4, -8, -3,  2,  2, -9,  6,  3, -8,
          7,  6,  4,  8, -2,  2,  8, -6,  7,  2, -9, -5, -2, -8, -4,  4,
@@ -39,8 +39,9 @@ namespace Forge
         QuadSpace topQuad = { currentPos + addOffsetTL, currentPos + addOffsetBR };
         std::shared_ptr<QuadSpace> frontQuad = nullptr;
 
-        for (int idx = 1; idx < areaSize; ++idx)
+        for (int idx = 0; idx < areaSize; ++idx)
         {
+            int linedIndex = (idx + 1);
             const uint32_t maxHeight = 40 + ChunkHeights[idx];
             for (int column = 0; column <= maxHeight; ++column)
             {
@@ -48,17 +49,17 @@ namespace Forge
                 mVoxels[voxelIndex].Type = (uint8_t)VoxelType::Dirt;
 
                 //Ignore empty right side
-                if ((idx % 16 != 0 || idx == 0) && ChunkHeights[idx + 1] >= ChunkHeights[idx])
+                if ((linedIndex % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] >= ChunkHeights[idx])
                 {
                     mVoxels[voxelIndex].Colliders |= (1 << 1);
                 }
                 //Ignore empty left side
-                if ((idx % 17 != 0) && ChunkHeights[idx - 1] >= ChunkHeights[idx])
+                if ((linedIndex % 16 != 0) && ChunkHeights[idx - 1] >= ChunkHeights[idx])
                 {
                     mVoxels[voxelIndex].Colliders |= (1 << 3);
                 }
                 //Ignore empty top side
-                if ((idx > 16) && ChunkHeights[idx - 16] >= ChunkHeights[idx])
+                if ((linedIndex > 15) && ChunkHeights[idx - 16] >= ChunkHeights[idx])
                 {
                     mVoxels[voxelIndex].Colliders |= (1 << 0);
 
@@ -119,8 +120,9 @@ namespace Forge
                 frontQuad = nullptr;
             }
 
+
             //Ignore empty right side
-            if ((idx % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
+            if ((linedIndex % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
             {
                 ++topQuad.EndPos.x;
             }
