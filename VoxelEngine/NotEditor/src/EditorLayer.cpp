@@ -23,6 +23,7 @@ namespace Forge
         mChunk.GenerateChunk();
 
         mTopQuads = mChunk.GetTopVertices();
+        mTopTexture = Texture::Create("Assets/Textures/grass_block_top.png");
     }
 
     void EditorLayer::Detach()
@@ -51,10 +52,9 @@ namespace Forge
 
             Renderer::BeginScene(mCamera);
             
-            Renderer::DrawCube(GetTransform(), nullptr, { 1.0f, 0.0f, 0.0f, 1.0f });
             for (const auto& quad : mTopQuads)
             {
-                Renderer::DrawFace(quad, nullptr, { 1.0f, 1.0f, 1.0f, 1.0f });
+                Renderer::DrawFace(quad, mTopTexture, { 0.1f, 0.8f, 0.1f, 1.0f });
             }
 
             Renderer::EndScene();
@@ -79,14 +79,5 @@ namespace Forge
     bool EditorLayer::MouseButtonPressed(MouseButtonPressedEvent& e)
     {
         return false;
-    }
-    
-    glm::mat4 EditorLayer::GetTransform() const
-    {
-        glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
-
-        return glm::translate(glm::mat4(1.0f), Translation)
-            * rotation
-            * glm::scale(glm::mat4(1.0f), Scale);
     }
 }
