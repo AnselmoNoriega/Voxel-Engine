@@ -50,7 +50,7 @@ namespace Forge
         void GenerateChunk();
 
         std::vector<QuadSpecs> GetTopVertices();
-        //inline QuadVector GetFrontVertices() const { return mRenderQuadsFront; }
+        std::vector<QuadSpecs> GetFrontVertices();
 
     private:
         QuadVector mRenderQuadsTop;

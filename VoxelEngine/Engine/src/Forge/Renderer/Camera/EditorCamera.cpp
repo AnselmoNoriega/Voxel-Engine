@@ -20,7 +20,7 @@ namespace Forge
 
     void EditorCamera::UpdateProjection()
     {
-        /*mAspectRatio = mViewportWidth / mViewportHeight;
+        mAspectRatio = mViewportWidth / mViewportHeight;
         mFOV = 30.0f;
         mNearClip = -1.0f;
         mFarClip = 100.0f;
@@ -28,9 +28,9 @@ namespace Forge
         float orthoRight = mFOV * mAspectRatio * 0.5f;
         float orthoBottom = -mFOV * 0.5f;
         float orthoTop = mFOV * 0.5f;
-        mProjection = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, mNearClip, mFarClip);*/
+        mProjection = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, mNearClip, mFarClip);
 
-        mProjection = glm::perspective(glm::radians(mFOV), mAspectRatio, mNearClip, mFarClip);
+        /*mProjection = glm::perspective(glm::radians(mFOV), mAspectRatio, mNearClip, mFarClip);*/
     }
 
     void EditorCamera::UpdateView()
