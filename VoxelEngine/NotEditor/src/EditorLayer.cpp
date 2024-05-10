@@ -23,11 +23,21 @@ namespace Forge
         mChunk.GenerateChunk();
 
         mTopQuads = mChunk.GetTopVertices();
+        mFrontQuads = mChunk.GetFrontVertices();
         mTopTexture = Texture::Create("Assets/Textures/grass_block_top.png");
     }
 
     void EditorLayer::Detach()
     {
+    }
+
+    glm::mat4 GetTransform()
+    {
+        glm::mat4 rotation = glm::toMat4(glm::quat({ 0.0f, 0.0f, 0.0f }));
+
+        return glm::translate(glm::mat4(1.0f), { 0.0f, 0.0f, 0.0f })
+            * rotation
+            * glm::scale(glm::mat4(1.0f), { 1.0f, 1.0f, 1.0f });
     }
 
     void EditorLayer::Update(float deltaTime)
@@ -51,11 +61,16 @@ namespace Forge
             }
 
             Renderer::BeginScene(mCamera);
-            
+
             for (const auto& quad : mTopQuads)
             {
                 Renderer::DrawFace(quad, mTopTexture, { 0.1f, 0.8f, 0.1f, 1.0f });
             }
+            for (const auto& quad : mFrontQuads)
+            {
+                Renderer::DrawFace(quad, nullptr, { 0.3f, 0.1f, 0.1f, 1.0f });
+            }
+            Renderer::DrawCube(GetTransform(), nullptr, { 0.0f, 0.0f, 0.0f, 1.0f });
 
             /*for (const auto& quad : mTopQuads)
             {

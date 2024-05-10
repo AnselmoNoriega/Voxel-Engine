@@ -59,16 +59,11 @@ namespace Forge
         std::array<Ref<Texture>, MaxTextureSlots> TextureSlots;
         uint32_t TextureSlotIndex = 1;
 
-        glm::vec4 VertexPositions[4] = { { -0.5, -0.5, 0.0, 1.0f },
+        glm::vec4 VertexPositions[5] = { { -0.5, -0.5, 0.0, 1.0f },
                                          {  0.5, -0.5, 0.0, 1.0f },
                                          {  0.5,  0.5, 0.0, 1.0f },
-                                         { -0.5,  0.5, 0.0, 1.0f } };
-
-        glm::vec3 Vertex3DPositions[5] = { { -0.5, 1.0,  0.5 },
-                                           {  0.5, 1.0,  0.5 },
-                                           {  0.5, 1.0, -0.5 },
-                                           { -0.5, 1.0, -0.5 },
-                                           { -0.5, 1.0,  0.5 } };
+                                         { -0.5,  0.5, 0.0, 1.0f }, 
+                                         { -0.5, -0.5, 0.0, 1.0f } };
 
         glm::vec2 TextureCoords[4] = { { 0.0f, 0.0f }, { 1.0f, 0.0f },
                                        { 1.0f, 1.0f }, { 0.0f, 1.0f } };
@@ -91,7 +86,6 @@ namespace Forge
         PROFILE_FUNCTION();
 
         RenderCommand::Init();
-
         {
             sData.QuadVertexArray = VertexArray::Create();
 
@@ -263,8 +257,8 @@ namespace Forge
 
         for (size_t i = 0; i < quadVertexCount; ++i)
         {
-            sData.VertexBufferPtr->Position = specs.Center + (specs.Distance * sData.Vertex3DPositions[i]);
-            sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i] * glm::vec2(specs.Distance.x, specs.Distance.z);
+            sData.VertexBufferPtr->Position = specs.Center * (specs.Distance * sData.VertexPositions[i]);
+            sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i] * glm::vec2(specs.Distance.x, specs.Distance.y);
             sData.VertexBufferPtr->Color = color;
             sData.VertexBufferPtr->TexIndex = textureIndex;
             ++sData.VertexBufferPtr;
@@ -307,7 +301,7 @@ namespace Forge
         glm::vec3 lineVertices[5];
         for (size_t i = 0; i < 5; ++i)
         {
-            lineVertices[i] = specs.Center + (specs.Distance * sData.Vertex3DPositions[i]);
+           lineVertices[i] = specs.Center * (specs.Distance * sData.VertexPositions[i]);
         }
 
         DrawLine(lineVertices[0], lineVertices[1], color);

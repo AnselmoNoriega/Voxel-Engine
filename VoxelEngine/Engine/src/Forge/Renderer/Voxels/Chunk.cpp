@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "Chunk.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/quaternion.hpp>
+
 namespace Forge
 {
     static const int ChunkSize = 16 * 256 * 16;
@@ -33,13 +37,15 @@ namespace Forge
         const uint32_t areaSize = (RowNum * RowNum);
 
         glm::vec3 currentPos = glm::vec3(0, ChunkHeights[0], 0);
-        glm::vec3 addOffsetTL = glm::vec3(-0.5f, 0.0f, -0.5f);
-        glm::vec3 addOffsetBR = glm::vec3(0.5f, 0.0f, 0.5f);
+        glm::vec3 frontLOffset = glm::vec3(-0.5f, 0.0f, -0.5f);
+        glm::vec3 backROffset = glm::vec3(0.5f, 0.0f, 0.5f);
+        glm::vec3 topLOffset = glm::vec3(-0.5f, 0.0f, 0.0f);
+        glm::vec3 buttomROffset = glm::vec3(0.5f, 1.0f, 0.0f);
 
-        QuadSpace topQuad = { currentPos + addOffsetTL, currentPos + addOffsetBR };
+        QuadSpace topQuad = { currentPos + frontLOffset, currentPos + backROffset };
         std::shared_ptr<QuadSpace> frontQuad = nullptr;
-
-        for (int idx = 0; idx < areaSize; ++idx)
+        //areaSize
+        for (int idx = 0; idx < 16; ++idx)
         {
             int linedIndex = (idx + 1);
             const uint32_t maxHeight = 40 + ChunkHeights[idx];
@@ -88,7 +94,7 @@ namespace Forge
                 {
                     int zValue = (idx - (idx % 16)) / 16;
                     glm::vec3 newPos = glm::vec3(idx % 16, column - 40, zValue);
-                    QuadSpace newFrontQuad = { newPos, newPos };
+                    QuadSpace newFrontQuad = { newPos + buttomROffset, newPos + topLOffset };
                     frontQuad = std::make_unique<QuadSpace>(newFrontQuad);
                 }
                 else
@@ -109,9 +115,8 @@ namespace Forge
                 auto it = mRenderQuadsFront.find(key);
                 if (it != mRenderQuadsFront.end())
                 {
-                    it->second.EndPos = topQuad.EndPos;
                     QuadKey newKey = { (int)frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x, frontQuad->EndPos.y, frontQuad->EndPos.z) };
-                    QuadSpace newQuad = { it->second.StartPos, frontQuad->EndPos };
+                    QuadSpace newQuad = { frontQuad->StartPos, it->second.EndPos };
                     mRenderQuadsFront.insert({ newKey, newQuad });
                     mRenderQuadsFront.erase(key);
                 }
@@ -151,7 +156,7 @@ namespace Forge
                     int nextBlock = idx + 1;
                     int zValue = (nextBlock - (nextBlock % 16)) / 16;
                     glm::vec3 newPos = glm::vec3(nextBlock % 16, ChunkHeights[nextBlock], zValue);
-                    topQuad = { newPos + addOffsetTL, newPos + addOffsetBR };
+                    topQuad = { newPos + frontLOffset, newPos + backROffset };
                 }
             }
             else
@@ -163,7 +168,7 @@ namespace Forge
                     int nextBlock = idx + 1;
                     int zValue = (nextBlock - (nextBlock % 16)) / 16;
                     glm::vec3 newPos = glm::vec3(nextBlock % 16, ChunkHeights[nextBlock], zValue);
-                    topQuad = { newPos + addOffsetTL, newPos + addOffsetBR };
+                    topQuad = { newPos + frontLOffset, newPos + backROffset };
                 }
             }
         }
@@ -175,15 +180,17 @@ namespace Forge
 
         for (auto& topVertex : mRenderQuadsTop)
         {
-            glm::vec3 distance = { topVertex.second.EndPos.x - topVertex.second.StartPos.x,
-                                   0,
-                                   topVertex.second.EndPos.z - topVertex.second.StartPos.z };
+            glm::vec4 distance = { topVertex.second.EndPos.x - topVertex.second.StartPos.x,
+                                   topVertex.second.EndPos.z - topVertex.second.StartPos.z,
+                                   0.0f,
+                                   1.0f };
 
             glm::vec3 center = { topVertex.second.StartPos.x + (distance.x / 2),
                                  topVertex.second.StartPos.y,
                                  topVertex.second.StartPos.z + (distance.z / 2) };
 
-            vertices.push_back({ distance, center });
+            glm::mat4 rotation = glm::toMat4(glm::quat({glm::radians(270.0f), 0.0f, 0.0f}));
+            vertices.push_back({ distance, glm::translate(glm::mat4(1.0f), center) * rotation });
         }
 
         return vertices;
@@ -195,15 +202,17 @@ namespace Forge
 
         for (auto& frontVertex : mRenderQuadsFront)
         {
-            glm::vec3 distance = { frontVertex.second.EndPos.x - frontVertex.second.StartPos.x,
+            glm::vec4 distance = { frontVertex.second.EndPos.x - frontVertex.second.StartPos.x,
                                    frontVertex.second.EndPos.y - frontVertex.second.StartPos.y,
-                                   0 };
+                                   0.0f, 
+                                   1.0f};
 
             glm::vec3 center = { frontVertex.second.StartPos.x + (distance.x / 2),
                                  frontVertex.second.StartPos.y + (distance.y / 2),
                                  frontVertex.second.StartPos.z};
 
-            vertices.push_back({ distance, center });
+            glm::mat4 rotation = glm::toMat4(glm::quat({ 0.0f, glm::radians(180.0f), 0.0f }));
+            vertices.push_back({ distance, glm::translate(glm::mat4(1.0f), center) * rotation});
         }
 
         return vertices;

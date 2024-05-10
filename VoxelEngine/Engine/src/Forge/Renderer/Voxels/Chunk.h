@@ -9,8 +9,8 @@ namespace Forge
 
     struct QuadSpecs
     {
-        glm::vec3 Distance;
-        glm::vec3 Center;
+        glm::vec4 Distance;
+        glm::mat4 Center;
     };
 
     struct QuadSpace
