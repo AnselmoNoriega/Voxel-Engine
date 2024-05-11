@@ -9,8 +9,8 @@ namespace Forge
 
     struct QuadSpecs
     {
-        glm::vec4 Distance;
-        glm::mat4 Center;
+        glm::vec3 Distance;
+        glm::vec3 Center;
     };
 
     struct QuadSpace
@@ -21,7 +21,7 @@ namespace Forge
 
     struct QuadKey
     {
-        int StartPos;
+        float StartPos;
         glm::vec3 EndPos;
 
         bool operator<(const QuadKey& other) const

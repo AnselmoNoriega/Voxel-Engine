@@ -39,13 +39,13 @@ namespace Forge
         glm::vec3 currentPos = glm::vec3(0, ChunkHeights[0], 0);
         glm::vec3 frontLOffset = glm::vec3(-0.5f, 0.0f, -0.5f);
         glm::vec3 backROffset = glm::vec3(0.5f, 0.0f, 0.5f);
-        glm::vec3 topLOffset = glm::vec3(-0.5f, 0.0f, 0.0f);
-        glm::vec3 buttomROffset = glm::vec3(0.5f, 1.0f, 0.0f);
+        glm::vec3 topLOffset = glm::vec3(-0.5f, 0.0f, 0.5f);
+        glm::vec3 buttomROffset = glm::vec3(0.5f, 1.0f, 0.5f);
 
         QuadSpace topQuad = { currentPos + frontLOffset, currentPos + backROffset };
         std::shared_ptr<QuadSpace> frontQuad = nullptr;
-        //areaSize
-        for (int idx = 0; idx < 16; ++idx)
+        
+        for (int idx = 0; idx < 32; ++idx)
         {
             int linedIndex = (idx + 1);
             const uint32_t maxHeight = 40 + ChunkHeights[idx];
@@ -66,25 +66,24 @@ namespace Forge
                 }
 
                 //Ignore empty top side
-                if ((linedIndex > 15) && ChunkHeights[idx - 16] >= ChunkHeights[idx])
+                if ((linedIndex > 16) && ChunkHeights[idx - 16] >= ChunkHeights[idx])
                 {
                     mVoxels[voxelIndex].Colliders |= (1 << 0);
 
                     if (frontQuad)
                     {
-                        QuadKey key = { (int)frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x - 1, frontQuad->EndPos.y, frontQuad->EndPos.z) };
+                        QuadKey key = { frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x - 1, frontQuad->EndPos.y, frontQuad->EndPos.z) };
                         auto it = mRenderQuadsFront.find(key);
                         if (it != mRenderQuadsFront.end())
                         {
-                            it->second.EndPos = topQuad.EndPos;
-                            QuadKey newKey = { (int)frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x, frontQuad->EndPos.y, frontQuad->EndPos.z) };
+                            QuadKey newKey = { frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x, frontQuad->EndPos.y, frontQuad->EndPos.z) };
                             QuadSpace newQuad = { it->second.StartPos, frontQuad->EndPos };
                             mRenderQuadsFront.insert({ newKey, newQuad });
                             mRenderQuadsFront.erase(key);
                         }
                         else
                         {
-                            key = { (int)frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x, frontQuad->EndPos.y, frontQuad->EndPos.z) };
+                            key = { frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x, frontQuad->EndPos.y, frontQuad->EndPos.z) };
                             mRenderQuadsFront.insert({ key, *frontQuad });
                         }
                         frontQuad = nullptr;
@@ -111,23 +110,27 @@ namespace Forge
 
             if (frontQuad)
             {
-                QuadKey key = { (int)frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x - 1, frontQuad->EndPos.y, frontQuad->EndPos.z) };
+                QuadKey key = { frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x - 1, frontQuad->EndPos.y, frontQuad->EndPos.z) };
                 auto it = mRenderQuadsFront.find(key);
                 if (it != mRenderQuadsFront.end())
                 {
-                    QuadKey newKey = { (int)frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x, frontQuad->EndPos.y, frontQuad->EndPos.z) };
+                    QuadKey newKey = { frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x, frontQuad->EndPos.y, frontQuad->EndPos.z) };
                     QuadSpace newQuad = { frontQuad->StartPos, it->second.EndPos };
                     mRenderQuadsFront.insert({ newKey, newQuad });
                     mRenderQuadsFront.erase(key);
                 }
                 else
                 {
-                    key = { (int)frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x, frontQuad->EndPos.y, frontQuad->EndPos.z) };
+                    key = { frontQuad->StartPos.y, glm::vec3(frontQuad->EndPos.x, frontQuad->EndPos.y, frontQuad->EndPos.z) };
                     mRenderQuadsFront.insert({ key, *frontQuad });
                 }
                 frontQuad = nullptr;
             }
 
+            if (idx == 40)
+            {
+                idx = idx;
+            }
 
             //Ignore empty right side
             if ((linedIndex % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
@@ -136,18 +139,18 @@ namespace Forge
             }
             else if (idx > 15)
             {
-                QuadKey key = { (int)topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z - 1) };
+                QuadKey key = { topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z - 1) };
                 auto it = mRenderQuadsTop.find(key);
                 if (it != mRenderQuadsTop.end())
                 {
-                    QuadKey newKey = { (int)topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z) };
+                    QuadKey newKey = { topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z) };
                     QuadSpace newQuad = { it->second.StartPos, topQuad.EndPos };
                     mRenderQuadsTop.insert({ newKey, newQuad });
                     mRenderQuadsTop.erase(key);
                 }
                 else
                 {
-                    key = { (int)topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z) };
+                    key = { topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z) };
                     mRenderQuadsTop.insert({ key, topQuad });
                 }
 
@@ -161,7 +164,7 @@ namespace Forge
             }
             else
             {
-                QuadKey key = { (int)topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z) };
+                QuadKey key = { topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z) };
                 mRenderQuadsTop.insert({ key, topQuad });
                 if (idx < areaSize - 1)
                 {
@@ -180,17 +183,15 @@ namespace Forge
 
         for (auto& topVertex : mRenderQuadsTop)
         {
-            glm::vec4 distance = { topVertex.second.EndPos.x - topVertex.second.StartPos.x,
-                                   topVertex.second.EndPos.z - topVertex.second.StartPos.z,
+            glm::vec3 distance = { topVertex.second.EndPos.x - topVertex.second.StartPos.x,
                                    0.0f,
-                                   1.0f };
+                                   topVertex.second.EndPos.z - topVertex.second.StartPos.z };
 
             glm::vec3 center = { topVertex.second.StartPos.x + (distance.x / 2),
                                  topVertex.second.StartPos.y,
                                  topVertex.second.StartPos.z + (distance.z / 2) };
 
-            glm::mat4 rotation = glm::toMat4(glm::quat({glm::radians(270.0f), 0.0f, 0.0f}));
-            vertices.push_back({ distance, glm::translate(glm::mat4(1.0f), center) * rotation });
+            vertices.push_back({ distance, center });
         }
 
         return vertices;
@@ -202,17 +203,15 @@ namespace Forge
 
         for (auto& frontVertex : mRenderQuadsFront)
         {
-            glm::vec4 distance = { frontVertex.second.EndPos.x - frontVertex.second.StartPos.x,
+            glm::vec3 distance = { frontVertex.second.EndPos.x - frontVertex.second.StartPos.x,
                                    frontVertex.second.EndPos.y - frontVertex.second.StartPos.y,
-                                   0.0f, 
-                                   1.0f};
+                                   0.0f };
 
             glm::vec3 center = { frontVertex.second.StartPos.x + (distance.x / 2),
                                  frontVertex.second.StartPos.y + (distance.y / 2),
                                  frontVertex.second.StartPos.z};
 
-            glm::mat4 rotation = glm::toMat4(glm::quat({ 0.0f, glm::radians(180.0f), 0.0f }));
-            vertices.push_back({ distance, glm::translate(glm::mat4(1.0f), center) * rotation});
+            vertices.push_back({ distance, center });
         }
 
         return vertices;
