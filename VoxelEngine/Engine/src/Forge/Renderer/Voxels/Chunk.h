@@ -11,6 +11,7 @@ namespace Forge
     {
         glm::vec3 Distance;
         glm::vec3 Center;
+        glm::vec2 DistanceVec2;
     };
 
     struct QuadSpace

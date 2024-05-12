@@ -264,7 +264,7 @@ namespace Forge
         for (size_t i = 0; i < quadVertexCount; ++i)
         {
             sData.VertexBufferPtr->Position = specs.Center + (specs.Distance * sData.Vertex3DPositions[i]);
-            sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i] * glm::vec2(specs.Distance.x, specs.Distance.z);
+            sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i] * specs.DistanceVec2;
             sData.VertexBufferPtr->Color = color;
             sData.VertexBufferPtr->TexIndex = textureIndex;
             ++sData.VertexBufferPtr;

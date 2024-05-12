@@ -65,7 +65,7 @@ namespace Forge
 
             for (const auto& quad : mTopQuads)
             {
-                Renderer::DrawFace(quad, mTopTexture, { 0.1f, 0.8f, 0.1f, 1.0f });
+                Renderer::DrawFace(quad, mTopTexture, { 0.05f, 0.65f, 0.05f, 1.0f });
             }
             for (const auto& quad : mFrontQuads)
             {
@@ -73,11 +73,6 @@ namespace Forge
             }
 
             Renderer::DrawCube(GetTransform(), nullptr, { 0.0f, 0.0f, 0.0f, 1.0f });
-
-            /*for (const auto& quad : mTopQuads)
-            {
-                Renderer::DrawRectFaces(quad, { 0.1f, 0.8f, 0.1f, 1.0f });
-            }*/
 
             Renderer::EndScene();
         }

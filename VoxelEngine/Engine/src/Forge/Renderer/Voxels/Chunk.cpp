@@ -44,7 +44,7 @@ namespace Forge
 
         QuadSpace topQuad = { currentPos + frontLOffset, currentPos + backROffset };
         std::shared_ptr<QuadSpace> frontQuad = nullptr;
-        
+
         for (int idx = 0; idx < areaSize; ++idx)
         {
             int linedIndex = (idx + 1);
@@ -191,7 +191,7 @@ namespace Forge
                                  topVertex.second.StartPos.y,
                                  topVertex.second.StartPos.z + (distance.z / 2) };
 
-            vertices.push_back({ distance, center });
+            vertices.push_back({ distance, center, {distance.x, distance.z} });
         }
 
         return vertices;
@@ -209,9 +209,9 @@ namespace Forge
 
             glm::vec3 center = { frontVertex.second.EndPos.x + (distance.x / 2),
                                  frontVertex.second.StartPos.y + (distance.y / 2),
-                                 frontVertex.second.StartPos.z};
+                                 frontVertex.second.StartPos.z };
 
-            vertices.push_back({ distance, center });
+            vertices.push_back({ distance, center, {distance.x, distance.y} });
         }
 
         return vertices;
