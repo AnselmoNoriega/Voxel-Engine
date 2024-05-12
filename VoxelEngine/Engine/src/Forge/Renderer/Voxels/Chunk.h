@@ -53,13 +53,14 @@ namespace Forge
         std::vector<QuadSpecs> GetTopVertices();
         std::vector<QuadSpecs> GetFrontVertices();
         std::vector<QuadSpecs> GetBackVertices();
+        std::vector<QuadSpecs> GetRightVertices();
 
     private:
         QuadVector mRenderQuadsTop;
         QuadVector mRenderQuadsFront;
-        QuadVector mRenderQuadsRSide;
         QuadVector mRenderQuadsBack;
-        QuadVector mRenderQuadsLSide;
+        QuadVector mRenderQuadsRight;
+        QuadVector mRenderQuadsLeft;
         QuadVector mRenderQuadsBottom;
 
         std::vector<Voxel> mVoxels;
