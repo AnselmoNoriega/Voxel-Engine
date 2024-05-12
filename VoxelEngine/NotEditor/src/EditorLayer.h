@@ -33,5 +33,6 @@ namespace Forge
         Ref<Texture> mFrontTexture;
         std::vector<QuadSpecs> mTopQuads;
         std::vector<QuadSpecs> mFrontQuads;
+        std::vector<QuadSpecs> mBackQuads;
     };
 }

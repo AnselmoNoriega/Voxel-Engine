@@ -123,6 +123,54 @@ namespace Forge
                 }
             }
 
+            if ((idx < (areaSize - RowNum - 1)) && ChunkHeights[idx + 16] < ChunkHeights[idx])
+            {
+                int height = ChunkHeights[idx] - ChunkHeights[idx + 16];
+                float zValue = ((idx - (idx % 16)) / 16) + 0.5f;
+                glm::vec3 maxPos = glm::vec3((idx % 16) + 0.5f, ChunkHeights[idx], zValue);
+                glm::vec3 minPos = glm::vec3((idx % 16) - 0.5f, maxPos.y - height, zValue);
+
+                glm::vec3 maxKeyPos = glm::vec3((idx % 16) - 1.5f, ChunkHeights[idx], zValue);
+                QuadKey key = { minPos.y, maxKeyPos };
+                auto it = mRenderQuadsBack.find(key);
+                if (it != mRenderQuadsBack.end())
+                {
+                    QuadKey newKey = { minPos.y, maxPos };
+                    QuadSpace newQuad = { it->second.StartPos, maxPos };
+                    mRenderQuadsBack.insert({ newKey, newQuad });
+                    mRenderQuadsBack.erase(key);
+                }
+                else
+                {
+                    key = { minPos.y, maxPos };
+                    QuadSpace newFrontQuad = { minPos, maxPos };
+                    mRenderQuadsBack.insert({ key, newFrontQuad });
+                }
+            }
+            else if(idx >= (areaSize - RowNum))
+            {
+                float zValue = ((idx - (idx % 16)) / 16) + 0.5f;
+                glm::vec3 maxPos = glm::vec3((idx % 16) + 0.5f, ChunkHeights[idx], zValue);
+                glm::vec3 minPos = glm::vec3((idx % 16) - 0.5f, -40, zValue);
+
+                glm::vec3 maxKeyPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue);
+                QuadKey key = { minPos.y, maxKeyPos };
+                auto it = mRenderQuadsBack.find(key);
+                if (it != mRenderQuadsBack.end())
+                {
+                    QuadKey newKey = { minPos.y, maxPos };
+                    QuadSpace newQuad = { it->second.StartPos, maxPos };
+                    mRenderQuadsBack.insert({ newKey, newQuad });
+                    mRenderQuadsBack.erase(key);
+                }
+                else
+                {
+                    key = { minPos.y, maxPos };
+                    QuadSpace newFrontQuad = { minPos, maxPos };
+                    mRenderQuadsBack.insert({ key, newFrontQuad });
+                }
+            }
+
             if (idx == 40)
             {
                 idx = idx;
@@ -198,6 +246,26 @@ namespace Forge
         std::vector<QuadSpecs> vertices;
 
         for (auto& frontVertex : mRenderQuadsFront)
+        {
+            glm::vec3 distance = { frontVertex.second.StartPos.x - frontVertex.second.EndPos.x,
+                                   frontVertex.second.EndPos.y - frontVertex.second.StartPos.y,
+                                   0.0f };
+
+            glm::vec3 center = { frontVertex.second.EndPos.x + (distance.x / 2),
+                                 frontVertex.second.StartPos.y + (distance.y / 2),
+                                 frontVertex.second.StartPos.z };
+
+            vertices.push_back({ distance, center, {distance.x, distance.y} });
+        }
+
+        return vertices;
+    }
+
+    std::vector<QuadSpecs> Chunk::GetBackVertices()
+    {
+        std::vector<QuadSpecs> vertices;
+
+        for (auto& frontVertex : mRenderQuadsBack)
         {
             glm::vec3 distance = { frontVertex.second.StartPos.x - frontVertex.second.EndPos.x,
                                    frontVertex.second.EndPos.y - frontVertex.second.StartPos.y,

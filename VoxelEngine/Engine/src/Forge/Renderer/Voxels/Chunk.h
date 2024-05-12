@@ -52,6 +52,7 @@ namespace Forge
 
         std::vector<QuadSpecs> GetTopVertices();
         std::vector<QuadSpecs> GetFrontVertices();
+        std::vector<QuadSpecs> GetBackVertices();
 
     private:
         QuadVector mRenderQuadsTop;
