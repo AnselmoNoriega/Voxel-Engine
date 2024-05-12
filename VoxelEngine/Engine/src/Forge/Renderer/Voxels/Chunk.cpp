@@ -39,13 +39,13 @@ namespace Forge
         glm::vec3 currentPos = glm::vec3(0, ChunkHeights[0], 0);
         glm::vec3 frontLOffset = glm::vec3(-0.5f, 0.0f, -0.5f);
         glm::vec3 backROffset = glm::vec3(0.5f, 0.0f, 0.5f);
-        glm::vec3 topLOffset = glm::vec3(-0.5f, 0.0f, 0.5f);
-        glm::vec3 buttomROffset = glm::vec3(0.5f, 1.0f, 0.5f);
+        glm::vec3 topLOffset = glm::vec3(-0.5f, 0.0f, -0.5f);
+        glm::vec3 buttomROffset = glm::vec3(0.5f, -1.0f, -0.5f);
 
         QuadSpace topQuad = { currentPos + frontLOffset, currentPos + backROffset };
         std::shared_ptr<QuadSpace> frontQuad = nullptr;
         
-        for (int idx = 0; idx < 32; ++idx)
+        for (int idx = 0; idx < areaSize; ++idx)
         {
             int linedIndex = (idx + 1);
             const uint32_t maxHeight = 40 + ChunkHeights[idx];
@@ -66,7 +66,7 @@ namespace Forge
                 }
 
                 //Ignore empty top side
-                if ((linedIndex > 16) && ChunkHeights[idx - 16] >= ChunkHeights[idx])
+                if ((linedIndex > 16) && ChunkHeights[idx - 16] >= column - 40)
                 {
                     mVoxels[voxelIndex].Colliders |= (1 << 0);
 
@@ -203,11 +203,11 @@ namespace Forge
 
         for (auto& frontVertex : mRenderQuadsFront)
         {
-            glm::vec3 distance = { frontVertex.second.EndPos.x - frontVertex.second.StartPos.x,
+            glm::vec3 distance = { frontVertex.second.StartPos.x - frontVertex.second.EndPos.x,
                                    frontVertex.second.EndPos.y - frontVertex.second.StartPos.y,
                                    0.0f };
 
-            glm::vec3 center = { frontVertex.second.StartPos.x + (distance.x / 2),
+            glm::vec3 center = { frontVertex.second.EndPos.x + (distance.x / 2),
                                  frontVertex.second.StartPos.y + (distance.y / 2),
                                  frontVertex.second.StartPos.z};
 

@@ -30,6 +30,7 @@ namespace Forge
         Chunk mChunk;
 
         Ref<Texture> mTopTexture;
+        Ref<Texture> mFrontTexture;
         std::vector<QuadSpecs> mTopQuads;
         std::vector<QuadSpecs> mFrontQuads;
     };
