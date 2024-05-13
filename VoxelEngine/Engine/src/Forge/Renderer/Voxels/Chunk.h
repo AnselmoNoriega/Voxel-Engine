@@ -6,7 +6,6 @@
 
 namespace Forge
 {
-
     struct QuadSpecs
     {
         glm::vec3 Distance;
@@ -51,6 +50,7 @@ namespace Forge
         void GenerateChunk();
 
         std::vector<QuadSpecs> GetTopVertices();
+        std::vector<QuadSpecs> GetBottomVertices();
         std::vector<QuadSpecs> GetFrontVertices();
         std::vector<QuadSpecs> GetBackVertices();
         std::vector<QuadSpecs> GetRightVertices();

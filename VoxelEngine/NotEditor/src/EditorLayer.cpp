@@ -23,6 +23,7 @@ namespace Forge
         mChunk.GenerateChunk();
 
         mTopQuads = mChunk.GetTopVertices();
+        mBottomQuads = mChunk.GetBottomVertices();
         mFrontQuads = mChunk.GetFrontVertices();
         mBackQuads = mChunk.GetBackVertices();
         mRightQuads = mChunk.GetRightVertices();
@@ -69,6 +70,10 @@ namespace Forge
             for (const auto& quad : mTopQuads)
             {
                 Renderer::DrawFace(quad, mTopTexture, { 0.5f, 1.0f, 0.5f, 1.0f });
+            }
+            for (const auto& quad : mBottomQuads)
+            {
+                Renderer::DrawFace(quad, mTopTexture, { 0.4f, 0.4f, 0.4f, 1.0f });
             }
             for (const auto& quad : mFrontQuads)
             {

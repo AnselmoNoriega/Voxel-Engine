@@ -309,21 +309,47 @@ namespace Forge
                 }
             }
         }
+
+        glm::vec3 startDownPos = glm::vec3(0, -40, 0);
+        glm::vec3 endDownPos = glm::vec3(RowNum - 1, -40, RowNum - 1);
+        QuadSpace bottomQuad = { startDownPos + frontLOffset, endDownPos + backROffset };
+        QuadKey key = { bottomQuad.StartPos.x, glm::vec3(bottomQuad.EndPos.x, bottomQuad.EndPos.y, bottomQuad.EndPos.z) };
+        mRenderQuadsBottom.insert({ key, bottomQuad });
     }
 
     std::vector<QuadSpecs> Chunk::GetTopVertices()
     {
         std::vector<QuadSpecs> vertices;
 
-        for (auto& topVertex : mRenderQuadsTop)
+        for (auto& vertex : mRenderQuadsTop)
         {
-            glm::vec3 distance = { topVertex.second.EndPos.x - topVertex.second.StartPos.x,
+            glm::vec3 distance = { vertex.second.EndPos.x - vertex.second.StartPos.x,
                                    0.0f,
-                                   topVertex.second.EndPos.z - topVertex.second.StartPos.z };
+                                   vertex.second.EndPos.z - vertex.second.StartPos.z };
 
-            glm::vec3 center = { topVertex.second.StartPos.x + (distance.x / 2),
-                                 topVertex.second.StartPos.y,
-                                 topVertex.second.StartPos.z + (distance.z / 2) };
+            glm::vec3 center = { vertex.second.StartPos.x + (distance.x / 2),
+                                 vertex.second.StartPos.y,
+                                 vertex.second.StartPos.z + (distance.z / 2) };
+
+            vertices.push_back({ distance, center, {distance.x, distance.z} });
+        }
+
+        return vertices;
+    }
+
+    std::vector<QuadSpecs> Chunk::GetBottomVertices()
+    {
+        std::vector<QuadSpecs> vertices;
+
+        for (auto& vertex : mRenderQuadsBottom)
+        {
+            glm::vec3 distance = { vertex.second.StartPos.x - vertex.second.EndPos.x,
+                                   0.0f,
+                                   vertex.second.EndPos.z - vertex.second.StartPos.z };
+
+            glm::vec3 center = { vertex.second.EndPos.x + (distance.x / 2),
+                                 vertex.second.StartPos.y,
+                                 vertex.second.StartPos.z + (distance.z / 2) };
 
             vertices.push_back({ distance, center, {distance.x, distance.z} });
         }
@@ -335,15 +361,15 @@ namespace Forge
     {
         std::vector<QuadSpecs> vertices;
 
-        for (auto& frontVertex : mRenderQuadsFront)
+        for (auto& vertex : mRenderQuadsFront)
         {
-            glm::vec3 distance = { frontVertex.second.StartPos.x - frontVertex.second.EndPos.x,
-                                   frontVertex.second.EndPos.y - frontVertex.second.StartPos.y,
+            glm::vec3 distance = { vertex.second.StartPos.x - vertex.second.EndPos.x,
+                                   vertex.second.EndPos.y - vertex.second.StartPos.y,
                                    0.0f };
 
-            glm::vec3 center = { frontVertex.second.EndPos.x + (distance.x / 2),
-                                 frontVertex.second.StartPos.y + (distance.y / 2),
-                                 frontVertex.second.StartPos.z };
+            glm::vec3 center = { vertex.second.EndPos.x + (distance.x / 2),
+                                 vertex.second.StartPos.y + (distance.y / 2),
+                                 vertex.second.StartPos.z };
 
             vertices.push_back({ distance, center, {distance.x, distance.y} });
         }
@@ -355,15 +381,15 @@ namespace Forge
     {
         std::vector<QuadSpecs> vertices;
 
-        for (auto& frontVertex : mRenderQuadsBack)
+        for (auto& vertex : mRenderQuadsBack)
         {
-            glm::vec3 distance = { frontVertex.second.StartPos.x - frontVertex.second.EndPos.x,
-                                   frontVertex.second.EndPos.y - frontVertex.second.StartPos.y,
+            glm::vec3 distance = { vertex.second.StartPos.x - vertex.second.EndPos.x,
+                                   vertex.second.EndPos.y - vertex.second.StartPos.y,
                                    0.0f };
 
-            glm::vec3 center = { frontVertex.second.EndPos.x + (distance.x / 2),
-                                 frontVertex.second.StartPos.y + (distance.y / 2),
-                                 frontVertex.second.StartPos.z };
+            glm::vec3 center = { vertex.second.EndPos.x + (distance.x / 2),
+                                 vertex.second.StartPos.y + (distance.y / 2),
+                                 vertex.second.StartPos.z };
 
             vertices.push_back({ distance, center, {distance.x, distance.y} });
         }
@@ -375,15 +401,15 @@ namespace Forge
     {
         std::vector<QuadSpecs> vertices;
 
-        for (auto& frontVertex : mRenderQuadsRight)
+        for (auto& vertex : mRenderQuadsRight)
         {
             glm::vec3 distance = { 0,
-                                   frontVertex.second.EndPos.y - frontVertex.second.StartPos.y,
-                                   frontVertex.second.EndPos.z - frontVertex.second.StartPos.z };
+                                   vertex.second.EndPos.y - vertex.second.StartPos.y,
+                                   vertex.second.EndPos.z - vertex.second.StartPos.z };
 
-            glm::vec3 center = { frontVertex.second.EndPos.x,
-                                 frontVertex.second.StartPos.y + (distance.y / 2),
-                                 frontVertex.second.StartPos.z + (distance.z / 2) };
+            glm::vec3 center = { vertex.second.EndPos.x,
+                                 vertex.second.StartPos.y + (distance.y / 2),
+                                 vertex.second.StartPos.z + (distance.z / 2) };
 
             vertices.push_back({ distance, center, {distance.z, distance.y} });
         }
@@ -395,15 +421,15 @@ namespace Forge
     {
         std::vector<QuadSpecs> vertices;
 
-        for (auto& frontVertex : mRenderQuadsLeft)
+        for (auto& vertex : mRenderQuadsLeft)
         {
             glm::vec3 distance = { 0,
-                                   frontVertex.second.EndPos.y - frontVertex.second.StartPos.y,
-                                   frontVertex.second.EndPos.z - frontVertex.second.StartPos.z };
+                                   vertex.second.EndPos.y - vertex.second.StartPos.y,
+                                   vertex.second.EndPos.z - vertex.second.StartPos.z };
 
-            glm::vec3 center = { frontVertex.second.EndPos.x,
-                                 frontVertex.second.StartPos.y + (distance.y / 2),
-                                 frontVertex.second.StartPos.z + (distance.z / 2) };
+            glm::vec3 center = { vertex.second.EndPos.x,
+                                 vertex.second.StartPos.y + (distance.y / 2),
+                                 vertex.second.StartPos.z + (distance.z / 2) };
 
             vertices.push_back({ distance, center, {distance.z, distance.y} });
         }
