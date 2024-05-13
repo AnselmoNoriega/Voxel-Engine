@@ -6,6 +6,16 @@
 
 namespace Forge
 {
+    enum class QuadPosition
+    {
+        Top,
+        Bottom,
+        Front,
+        Back,
+        Left,
+        Right
+    };
+
     struct QuadSpecs
     {
         glm::vec3 Distance;
@@ -57,6 +67,10 @@ namespace Forge
         std::vector<QuadSpecs> GetLeftVertices();
 
     private:
+        void SaveVertices(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadPosition position);
+
+    private:
+        QuadVector mRenderQuads[6];
         QuadVector mRenderQuadsTop;
         QuadVector mRenderQuadsFront;
         QuadVector mRenderQuadsBack;
