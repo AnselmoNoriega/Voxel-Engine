@@ -337,7 +337,7 @@ namespace Forge
                                  frontVertex.second.StartPos.y + (distance.y / 2),
                                  frontVertex.second.StartPos.z + (distance.z / 2) };
 
-            vertices.push_back({ distance, center, {distance.y, distance.z} });
+            vertices.push_back({ distance, center, {distance.z, distance.y} });
         }
 
         return vertices;

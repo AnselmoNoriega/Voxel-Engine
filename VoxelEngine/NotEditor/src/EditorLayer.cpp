@@ -27,7 +27,7 @@ namespace Forge
         mBackQuads = mChunk.GetBackVertices();
         mRightQuads = mChunk.GetRightVertices();
         mTopTexture = Texture::Create("Assets/Textures/grass_block_top.png");
-        mFrontTexture = Texture::Create("Assets/Textures/grass_block_side.png");
+        mFrontTexture = Texture::Create("Assets/Textures/grass_block_bottom.png");
     }
 
     void EditorLayer::Detach()
@@ -67,22 +67,20 @@ namespace Forge
 
             for (const auto& quad : mTopQuads)
             {
-                Renderer::DrawFace(quad, mTopTexture, { 0.05f, 0.65f, 0.05f, 1.0f });
+                Renderer::DrawFace(quad, mTopTexture, { 0.5f, 1.0f, 0.5f, 1.0f });
             }
-            //for (const auto& quad : mFrontQuads)
-            //{
-            //    Renderer::DrawFace(quad, mFrontTexture, { 0.3f, 0.1f, 0.1f, 1.0f });
-            //}
-            //for (const auto& quad : mBackQuads)
-            //{
-            //    Renderer::DrawFace(quad, mFrontTexture, { 0.3f, 0.1f, 0.1f, 1.0f });
-            //}
+            for (const auto& quad : mFrontQuads)
+            {
+                Renderer::DrawFace(quad, mFrontTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
+            }
+            for (const auto& quad : mBackQuads)
+            {
+                Renderer::DrawFace(quad, mFrontTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
+            }
             for (const auto& quad : mRightQuads)
             {
-                Renderer::DrawFace(quad, mFrontTexture, { 0.3f, 0.1f, 0.1f, 1.0f });
+                Renderer::DrawRLFace(quad, mFrontTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
             }
-
-            Renderer::DrawCube(GetTransform(), nullptr, { 0.0f, 0.0f, 0.0f, 1.0f });
 
             Renderer::EndScene();
         }

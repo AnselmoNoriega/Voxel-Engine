@@ -21,11 +21,11 @@ namespace Forge
 
         static void Flush();
 
-        static void DrawCube(const glm::mat4& transform, const Ref<Texture>& texture, const glm::vec4& color);
         static void DrawFace(const QuadSpecs& specs, const Ref<Texture>& texture, const glm::vec4& color);
+        static void DrawRLFace(const QuadSpecs& specs, const Ref<Texture>& texture, const glm::vec4& color);
 
-        static void DrawRect(const glm::mat4& transform, const glm::vec4& color);
         static void DrawRectFaces(const QuadSpecs& specs, const glm::vec4& color);
+        static void DrawRLRectFaces(const QuadSpecs& specs, const glm::vec4& color);
 
         static void SetLineWidth(float width);
 

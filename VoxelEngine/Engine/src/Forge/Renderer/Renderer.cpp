@@ -59,20 +59,23 @@ namespace Forge
         std::array<Ref<Texture>, MaxTextureSlots> TextureSlots;
         uint32_t TextureSlotIndex = 1;
 
-        glm::vec4 VertexPositions[5] = { { -0.5, -0.5, 0.0, 1.0f },
-                                         {  0.5, -0.5, 0.0, 1.0f },
-                                         {  0.5,  0.5, 0.0, 1.0f },
-                                         { -0.5,  0.5, 0.0, 1.0f }, 
-                                         { -0.5, -0.5, 0.0, 1.0f } };
+        glm::vec3 VertexPositions[5] = { { -0.5,  0.5,  0.5 },
+                                         {  0.5,  0.5,  0.5 },
+                                         {  0.5, -0.5, -0.5 },
+                                         { -0.5, -0.5, -0.5 },
+                                         { -0.5,  0.5,  0.5 } };
 
-        glm::vec3 Vertex3DPositions[5] = { { -0.5,  0.5,  0.5 },
-                                           {  0.5,  0.5,  0.5 },
-                                           {  0.5, -0.5, -0.5 },
-                                           { -0.5, -0.5, -0.5 },
-                                           { -0.5,  0.5,  0.5 } };
+        glm::vec3 VertexRLPositions[5] = { { 0.0, -0.5,  0.5 },
+                                           { 0.0,  0.5,  0.5 },
+                                           { 0.0,  0.5, -0.5 },
+                                           { 0.0, -0.5, -0.5 },
+                                           { 0.0, -0.5,  0.5 } };
 
-        glm::vec2 TextureCoords[4] = { { 0.0f, 0.0f }, { 1.0f, 0.0f },
-                                       { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+        glm::vec2 TextureCoords[4] = { { 1.0f, 1.0f }, { 0.0f, 1.0f }, 
+                                       { 0.0f, 0.0f }, { 1.0f, 0.0f } };
+
+        glm::vec2 TextureRLCoords[4] = { { 0.0f, 0.0f }, { 0.0f, 1.0f }, 
+                                         { 1.0f, 1.0f }, { 1.0f, 0.0f }};
 
         Renderer::Statistics Stats;
 
@@ -223,32 +226,6 @@ namespace Forge
         StartBatch();
     }
 
-    void Renderer::DrawCube(const glm::mat4& transform, const Ref<Texture>& texture, const glm::vec4& color)
-    {
-        PROFILE_FUNCTION();
-
-        size_t quadVertexCount = 4;
-        float textureIndex = GetTextureIndex(texture);
-
-        if (sData.IndexCount >= RendererStorage::MaxIndices)
-        {
-            NextBatch();
-        }
-
-        for (size_t i = 0; i < quadVertexCount; ++i)
-        {
-            sData.VertexBufferPtr->Position = transform * sData.VertexPositions[i];
-            sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i];
-            sData.VertexBufferPtr->Color = color;
-            sData.VertexBufferPtr->TexIndex = textureIndex;
-            ++sData.VertexBufferPtr;
-        }
-
-        sData.IndexCount += 6;
-
-        ++sData.Stats.QuadCount;
-    }
-
     void Renderer::DrawFace(const QuadSpecs& specs, const Ref<Texture>& texture, const glm::vec4& color)
     {
         PROFILE_FUNCTION();
@@ -263,8 +240,34 @@ namespace Forge
 
         for (size_t i = 0; i < quadVertexCount; ++i)
         {
-            sData.VertexBufferPtr->Position = specs.Center + (specs.Distance * sData.Vertex3DPositions[i]);
+            sData.VertexBufferPtr->Position = specs.Center + (specs.Distance * sData.VertexPositions[i]);
             sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i] * specs.DistanceVec2;
+            sData.VertexBufferPtr->Color = color;
+            sData.VertexBufferPtr->TexIndex = textureIndex;
+            ++sData.VertexBufferPtr;
+        }
+
+        sData.IndexCount += 6;
+
+        ++sData.Stats.QuadCount;
+    }
+
+    void Renderer::DrawRLFace(const QuadSpecs& specs, const Ref<Texture>& texture, const glm::vec4& color)
+    {
+        PROFILE_FUNCTION();
+
+        size_t quadVertexCount = 4;
+        float textureIndex = GetTextureIndex(texture);
+
+        if (sData.IndexCount >= RendererStorage::MaxIndices)
+        {
+            NextBatch();
+        }
+
+        for (size_t i = 0; i < quadVertexCount; ++i)
+        {
+            sData.VertexBufferPtr->Position = specs.Center + (specs.Distance * sData.VertexRLPositions[i]);
+            sData.VertexBufferPtr->TexCoord = sData.TextureRLCoords[i] * specs.DistanceVec2;
             sData.VertexBufferPtr->Color = color;
             sData.VertexBufferPtr->TexIndex = textureIndex;
             ++sData.VertexBufferPtr;
@@ -288,26 +291,27 @@ namespace Forge
         sData.LineVertexCount += 2;
     }
 
-    void Renderer::DrawRect(const glm::mat4& transform, const glm::vec4& color)
+    void Renderer::DrawRectFaces(const QuadSpecs& specs, const glm::vec4& color)
     {
-        glm::vec3 lineVertices[4];
-        for (size_t i = 0; i < 4; i++)
+        glm::vec3 lineVertices[5];
+        for (size_t i = 0; i < 5; ++i)
         {
-            lineVertices[i] = transform * sData.VertexPositions[i];
+            lineVertices[i] = specs.Center + (specs.Distance * sData.VertexPositions[i]);
         }
 
         DrawLine(lineVertices[0], lineVertices[1], color);
         DrawLine(lineVertices[1], lineVertices[2], color);
         DrawLine(lineVertices[2], lineVertices[3], color);
         DrawLine(lineVertices[3], lineVertices[0], color);
+        DrawLine(lineVertices[4], lineVertices[2], color);
     }
 
-    void Renderer::DrawRectFaces(const QuadSpecs& specs, const glm::vec4& color)
+    void Renderer::DrawRLRectFaces(const QuadSpecs& specs, const glm::vec4& color)
     {
         glm::vec3 lineVertices[5];
         for (size_t i = 0; i < 5; ++i)
         {
-            lineVertices[i] = specs.Center + (specs.Distance * sData.Vertex3DPositions[i]);
+            lineVertices[i] = specs.Center + (specs.Distance * sData.VertexRLPositions[i]);
         }
 
         DrawLine(lineVertices[0], lineVertices[1], color);
