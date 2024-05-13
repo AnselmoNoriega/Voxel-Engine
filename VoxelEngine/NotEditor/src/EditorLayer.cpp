@@ -26,6 +26,7 @@ namespace Forge
         mFrontQuads = mChunk.GetFrontVertices();
         mBackQuads = mChunk.GetBackVertices();
         mRightQuads = mChunk.GetRightVertices();
+        mLeftQuads = mChunk.GetLeftVertices();
         mTopTexture = Texture::Create("Assets/Textures/grass_block_top.png");
         mFrontTexture = Texture::Create("Assets/Textures/grass_block_bottom.png");
     }
@@ -78,6 +79,10 @@ namespace Forge
                 Renderer::DrawFace(quad, mFrontTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
             }
             for (const auto& quad : mRightQuads)
+            {
+                Renderer::DrawRLFace(quad, mFrontTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
+            }
+            for (const auto& quad : mLeftQuads)
             {
                 Renderer::DrawRLFace(quad, mFrontTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
             }

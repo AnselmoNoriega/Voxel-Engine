@@ -35,5 +35,6 @@ namespace Forge
         std::vector<QuadSpecs> mFrontQuads;
         std::vector<QuadSpecs> mBackQuads;
         std::vector<QuadSpecs> mRightQuads;
+        std::vector<QuadSpecs> mLeftQuads;
     };
 }

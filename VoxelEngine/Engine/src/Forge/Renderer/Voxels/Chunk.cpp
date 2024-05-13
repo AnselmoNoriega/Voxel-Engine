@@ -52,12 +52,12 @@ namespace Forge
                 mVoxels[voxelIndex].Type = (uint8_t)VoxelType::Dirt;
 
                 //Ignore empty right side
-                if ((linedIndex % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] >= ChunkHeights[idx])
+                if ((linedIndex % 16 != 0 || idx == 0) && ChunkHeights[idx + 1] >= ChunkHeights[idx])
                 {
                     mVoxels[voxelIndex].Colliders |= (1 << 1);
                 }
                 //Ignore empty left side
-                if ((linedIndex % 16 != 0) && ChunkHeights[idx - 1] >= ChunkHeights[idx])
+                if ((linedIndex % 17 != 0) && ChunkHeights[idx - 1] >= ChunkHeights[idx])
                 {
                     mVoxels[voxelIndex].Colliders |= (1 << 3);
                 }
@@ -69,7 +69,7 @@ namespace Forge
                 }
 
                 //Ignore empty bottom side
-                if ((idx < areaSize - RowNum) && ChunkHeights[idx + 16] >= ChunkHeights[idx])
+                if ((idx < areaSize - RowNum - 1) && ChunkHeights[idx + 16] >= ChunkHeights[idx])
                 {
                     mVoxels[voxelIndex].Colliders |= (1 << 2);
                 }
@@ -219,7 +219,55 @@ namespace Forge
                 }
             }
 
-            if ((linedIndex % 15 != 0 || idx == 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
+            if (idx % 16 != 0 && ChunkHeights[idx - 1] < ChunkHeights[idx])
+            {
+                int height = ChunkHeights[idx] - ChunkHeights[idx - 1];
+                float zValue = ((idx - (idx % 16)) / 16);
+                glm::vec3 maxPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue + 0.5f);
+                glm::vec3 minPos = glm::vec3((idx % 16) - 0.5f, maxPos.y - height, zValue - 0.5f);
+
+                glm::vec3 maxKeyPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue - 0.5f);
+                QuadKey key = { minPos.y, maxKeyPos };
+                auto it = mRenderQuadsLeft.find(key);
+                if (it != mRenderQuadsLeft.end())
+                {
+                    QuadKey newKey = { minPos.y, maxPos };
+                    QuadSpace newQuad = { it->second.StartPos, maxPos };
+                    mRenderQuadsLeft.insert({ newKey, newQuad });
+                    mRenderQuadsLeft.erase(key);
+                }
+                else
+                {
+                    key = { minPos.y, maxPos };
+                    QuadSpace newFrontQuad = { minPos, maxPos };
+                    mRenderQuadsLeft.insert({ key, newFrontQuad });
+                }
+            }
+            else if(idx % 16 == 0)
+            {
+                float zValue = ((idx - (idx % 16)) / 16);
+                glm::vec3 maxPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue + 0.5f);
+                glm::vec3 minPos = glm::vec3((idx % 16) - 0.5f, -40, zValue - 0.5f);
+
+                glm::vec3 maxKeyPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue - 0.5f);
+                QuadKey key = { minPos.y, maxKeyPos };
+                auto it = mRenderQuadsLeft.find(key);
+                if (it != mRenderQuadsLeft.end())
+                {
+                    QuadKey newKey = { minPos.y, maxPos };
+                    QuadSpace newQuad = { it->second.StartPos, maxPos };
+                    mRenderQuadsLeft.insert({ newKey, newQuad });
+                    mRenderQuadsLeft.erase(key);
+                }
+                else
+                {
+                    key = { minPos.y, maxPos };
+                    QuadSpace newFrontQuad = { minPos, maxPos };
+                    mRenderQuadsLeft.insert({ key, newFrontQuad });
+                }
+            }
+
+            if ((linedIndex % 16 != 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
             {
                 ++topQuad.EndPos.x;
             }
@@ -328,6 +376,26 @@ namespace Forge
         std::vector<QuadSpecs> vertices;
 
         for (auto& frontVertex : mRenderQuadsRight)
+        {
+            glm::vec3 distance = { 0,
+                                   frontVertex.second.EndPos.y - frontVertex.second.StartPos.y,
+                                   frontVertex.second.EndPos.z - frontVertex.second.StartPos.z };
+
+            glm::vec3 center = { frontVertex.second.EndPos.x,
+                                 frontVertex.second.StartPos.y + (distance.y / 2),
+                                 frontVertex.second.StartPos.z + (distance.z / 2) };
+
+            vertices.push_back({ distance, center, {distance.z, distance.y} });
+        }
+
+        return vertices;
+    }
+
+    std::vector<QuadSpecs> Chunk::GetLeftVertices()
+    {
+        std::vector<QuadSpecs> vertices;
+
+        for (auto& frontVertex : mRenderQuadsLeft)
         {
             glm::vec3 distance = { 0,
                                    frontVertex.second.EndPos.y - frontVertex.second.StartPos.y,
