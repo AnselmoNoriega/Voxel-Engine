@@ -22,14 +22,16 @@ namespace Forge
 
         mChunk.GenerateChunk();
 
-        mTopQuads = mChunk.GetTopVertices();
-        mBottomQuads = mChunk.GetBottomVertices();
-        mFrontQuads = mChunk.GetFrontVertices();
-        mBackQuads = mChunk.GetBackVertices();
-        mRightQuads = mChunk.GetRightVertices();
-        mLeftQuads = mChunk.GetLeftVertices();
-        mTopTexture = Texture::Create("Assets/Textures/grass_block_top.png");
-        mFrontTexture = Texture::Create("Assets/Textures/grass_block_bottom.png");
+        for (size_t i = 0; i < 6; i++)
+        {
+            mQuads[i] = mChunk.GetVertices((QuadPosition)i);
+        }
+
+        mTextures[0] = Texture::Create("Assets/Textures/grass_block_top.png");
+        for (size_t i = 1; i < 6; i++)
+        {
+            mTextures[i] = Texture::Create("Assets/Textures/grass_block_bottom.png");
+        }
     }
 
     void EditorLayer::Detach()
@@ -67,29 +69,19 @@ namespace Forge
 
             Renderer::BeginScene(mCamera);
 
-            for (const auto& quad : mTopQuads)
+            for (uint8_t i = 0; i < 4; ++i)
             {
-                Renderer::DrawFace(quad, mTopTexture, { 0.5f, 1.0f, 0.5f, 1.0f });
+                for (const auto& quad : mQuads[i])
+                {
+                    Renderer::DrawFace(quad, mTextures[i], { 1.0f, 1.0f, 1.0f, 1.0f });
+                }
             }
-            for (const auto& quad : mBottomQuads)
+            for (uint8_t i = 4; i < 6; ++i)
             {
-                Renderer::DrawFace(quad, mTopTexture, { 0.4f, 0.4f, 0.4f, 1.0f });
-            }
-            for (const auto& quad : mFrontQuads)
-            {
-                Renderer::DrawFace(quad, mFrontTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
-            }
-            for (const auto& quad : mBackQuads)
-            {
-                Renderer::DrawFace(quad, mFrontTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
-            }
-            for (const auto& quad : mRightQuads)
-            {
-                Renderer::DrawRLFace(quad, mFrontTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
-            }
-            for (const auto& quad : mLeftQuads)
-            {
-                Renderer::DrawRLFace(quad, mFrontTexture, { 1.0f, 1.0f, 1.0f, 1.0f });
+                for (const auto& quad : mQuads[i])
+                {
+                    Renderer::DrawRLFace(quad, mTextures[i], { 1.0f, 1.0f, 1.0f, 1.0f });
+                }
             }
 
             Renderer::EndScene();

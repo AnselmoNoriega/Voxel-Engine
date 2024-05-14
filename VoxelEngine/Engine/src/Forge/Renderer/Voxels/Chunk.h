@@ -59,24 +59,13 @@ namespace Forge
     public:
         void GenerateChunk();
 
-        std::vector<QuadSpecs> GetTopVertices();
-        std::vector<QuadSpecs> GetBottomVertices();
-        std::vector<QuadSpecs> GetFrontVertices();
-        std::vector<QuadSpecs> GetBackVertices();
-        std::vector<QuadSpecs> GetRightVertices();
-        std::vector<QuadSpecs> GetLeftVertices();
+        std::vector<QuadSpecs> GetVertices(QuadPosition position);
 
     private:
         void SaveVertices(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadPosition position);
 
     private:
         QuadVector mRenderQuads[6];
-        QuadVector mRenderQuadsTop;
-        QuadVector mRenderQuadsFront;
-        QuadVector mRenderQuadsBack;
-        QuadVector mRenderQuadsRight;
-        QuadVector mRenderQuadsLeft;
-        QuadVector mRenderQuadsBottom;
 
         std::vector<Voxel> mVoxels;
     };
