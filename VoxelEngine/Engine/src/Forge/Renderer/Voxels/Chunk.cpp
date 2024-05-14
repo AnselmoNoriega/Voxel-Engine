@@ -7,9 +7,12 @@
 
 namespace Forge
 {
-    static const int ChunkSize = 16 * 256 * 16;
-    static const int ChunkArea = 16 * 16;
     static const int RowNum = 16;
+    static const int MaxHeight = 216;
+    static const int MinHeight = -40;
+    static const int ColumnHeight = MaxHeight - MinHeight;
+    static const int ChunkArea = RowNum * RowNum;
+    static const int ChunkSize = ChunkArea * ColumnHeight;
 
     static int ChunkHeights[ChunkArea] = {
          7,  6,  5,  7, -5,  6, -4, -4, -3,  1,  4,  6, -7,  3,  1,  0,
@@ -34,7 +37,6 @@ namespace Forge
     {
         mVoxels.clear();
         mVoxels.resize(ChunkSize);
-        const uint32_t areaSize = (RowNum * RowNum);
 
         glm::vec3 currentPos = glm::vec3(0, ChunkHeights[0], 0);
         glm::vec3 frontLOffset = glm::vec3(-0.5f, 0.0f, -0.5f);
@@ -42,128 +44,100 @@ namespace Forge
 
         QuadSpace topQuad = { currentPos + frontLOffset, currentPos + backROffset };
 
-        for (int idx = 0; idx < areaSize; ++idx)
+        for (int idx = 0; idx < ChunkArea; ++idx)
         {
             int linedIndex = (idx + 1);
-            const uint32_t maxHeight = 40 + ChunkHeights[idx];
-            for (int column = 0; column <= maxHeight; ++column)
+            for (int column = MinHeight; column <= ChunkHeights[idx]; ++column)
             {
-                const uint32_t voxelIndex = (idx * 256) + column;
+                const uint32_t voxelIndex = (idx * ColumnHeight) + column - MinHeight;
                 mVoxels[voxelIndex].Type = (uint8_t)VoxelType::Dirt;
 
                 //Ignore empty right side
-                if ((linedIndex % 16 != 0 || idx == 0) && ChunkHeights[idx + 1] >= ChunkHeights[idx])
+                if ((linedIndex % RowNum != 0 || idx == 0) && ChunkHeights[idx + 1] >= column)
                 {
-                    mVoxels[voxelIndex].Colliders |= (1 << 1);
+                    mVoxels[voxelIndex].Colliders |= (1 << (int)QuadPosition::Right);
                 }
+
                 //Ignore empty left side
-                if ((linedIndex % 17 != 0) && ChunkHeights[idx - 1] >= ChunkHeights[idx])
+                if (idx % RowNum != 0 && ChunkHeights[idx - 1] >= column)
                 {
-                    mVoxels[voxelIndex].Colliders |= (1 << 3);
+                    mVoxels[voxelIndex].Colliders |= (1 << (int)QuadPosition::Left);
                 }
 
                 //Ignore empty top side
-                if ((linedIndex > 16) && ChunkHeights[idx - 16] >= column - 40)
+                if ((linedIndex > RowNum) && ChunkHeights[idx - RowNum] >= column)
                 {
-                    mVoxels[voxelIndex].Colliders |= (1 << 0);
+                    mVoxels[voxelIndex].Colliders |= (1 << (int)QuadPosition::Front);
                 }
 
                 //Ignore empty bottom side
-                if ((idx < areaSize - RowNum - 1) && ChunkHeights[idx + 16] >= ChunkHeights[idx])
+                if ((idx < ChunkArea - RowNum) && ChunkHeights[idx + RowNum] >= column)
                 {
-                    mVoxels[voxelIndex].Colliders |= (1 << 2);
+                    mVoxels[voxelIndex].Colliders |= (1 << (int)QuadPosition::Back);
+                }
+
+                //Check top collision
+                if (column != ChunkHeights[idx])
+                {
+                    mVoxels[voxelIndex].Colliders |= (1 << (int)QuadPosition::Top);
+                }
+
+                //Check bottom collision
+                if (column != MinHeight)
+                {
+                    mVoxels[voxelIndex].Colliders |= (1 << (int)QuadPosition::Bottom);
                 }
             }
 
-            if (idx > 15 && ChunkHeights[idx - 16] < ChunkHeights[idx])
+            if (idx > 15 && ChunkHeights[idx - RowNum] < ChunkHeights[idx])
             {
-                int height = ChunkHeights[idx] - ChunkHeights[idx - 16];
-                float zValue = ((idx - (idx % 16)) / 16) - 0.5f;
-                glm::vec3 maxPos = glm::vec3((idx % 16) + 0.5f, ChunkHeights[idx], zValue);
-                glm::vec3 minPos = glm::vec3((idx % 16) - 0.5f, maxPos.y - height, zValue);
+                int height = ChunkHeights[idx] - ChunkHeights[idx - RowNum];
+                float zValue = ((idx - (idx % RowNum)) / RowNum) - 0.5f;
+                glm::vec3 maxPos = glm::vec3((idx % RowNum) + 0.5f, ChunkHeights[idx], zValue);
+                glm::vec3 minPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue);
 
-                glm::vec3 maxKeyPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue);
-                QuadKey key = { minPos.y, maxKeyPos };
-                SaveVertices(key, minPos, maxPos, QuadPosition::Front);
-            }
-            else if(idx < 16)
-            {
-                float zValue = ((idx - (idx % 16)) / 16) - 0.5f;
-                glm::vec3 maxPos = glm::vec3((idx % 16) + 0.5f, ChunkHeights[idx], zValue);
-                glm::vec3 minPos = glm::vec3((idx % 16) - 0.5f, -40, zValue);
-
-                glm::vec3 maxKeyPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue);
+                glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue);
                 QuadKey key = { minPos.y, maxKeyPos };
                 SaveVertices(key, minPos, maxPos, QuadPosition::Front);
             }
 
-            if ((idx < (areaSize - RowNum - 1)) && ChunkHeights[idx + 16] < ChunkHeights[idx])
+            if ((idx < (ChunkArea - RowNum)) && ChunkHeights[idx + RowNum] < ChunkHeights[idx])
             {
-                int height = ChunkHeights[idx] - ChunkHeights[idx + 16];
-                float zValue = ((idx - (idx % 16)) / 16) + 0.5f;
-                glm::vec3 maxPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue);
-                glm::vec3 minPos = glm::vec3((idx % 16) + 0.5f, maxPos.y - height, zValue);
+                int height = ChunkHeights[idx] - ChunkHeights[idx + RowNum];
+                float zValue = ((idx - (idx % RowNum)) / RowNum) + 0.5f;
+                glm::vec3 maxPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue);
+                glm::vec3 minPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue);
 
-                glm::vec3 minKeyPos = glm::vec3((idx % 16) - 0.5f, maxPos.y - height, zValue);
-                QuadKey key = { maxPos.y, minKeyPos };
-                SaveVertices(key, maxPos, minPos, QuadPosition::Back);
-            }
-            else if(idx >= (areaSize - RowNum))
-            {
-                float zValue = ((idx - (idx % 16)) / 16) + 0.5f;
-                glm::vec3 maxPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue);
-                glm::vec3 minPos = glm::vec3((idx % 16) + 0.5f, -40, zValue);
-
-                glm::vec3 minKeyPos = glm::vec3((idx % 16) - 0.5f, -40, zValue);
+                glm::vec3 minKeyPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue);
                 QuadKey key = { maxPos.y, minKeyPos };
                 SaveVertices(key, maxPos, minPos, QuadPosition::Back);
             }
 
-            if ((linedIndex % 16 != 0 || idx == 0) && ChunkHeights[idx + 1] < ChunkHeights[idx])
+            if ((linedIndex % RowNum != 0 || idx == 0) && ChunkHeights[idx + 1] < ChunkHeights[idx])
             {
                 int height = ChunkHeights[idx] - ChunkHeights[idx + 1];
-                float zValue = ((idx - (idx % 16)) / 16);
-                glm::vec3 maxPos = glm::vec3((idx % 16) + 0.5f, ChunkHeights[idx], zValue - 0.5f);
-                glm::vec3 minPos = glm::vec3((idx % 16) + 0.5f, maxPos.y - height, zValue + 0.5f);
+                float zValue = ((idx - (idx % RowNum)) / RowNum);
+                glm::vec3 maxPos = glm::vec3((idx % RowNum) + 0.5f, ChunkHeights[idx], zValue - 0.5f);
+                glm::vec3 minPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue + 0.5f);
 
-                glm::vec3 minKeyPos = glm::vec3((idx % 16) + 0.5f, maxPos.y - height, zValue - 1.5f);
-                QuadKey key = { maxPos.y, minKeyPos };
-                SaveVertices(key, maxPos, minPos, QuadPosition::Right);
-            }
-            else if(linedIndex % 16 == 0 && idx != 0)
-            {
-                float zValue = ((idx - (idx % 16)) / 16);
-                glm::vec3 maxPos = glm::vec3((idx % 16) + 0.5f, ChunkHeights[idx], zValue - 0.5f);
-                glm::vec3 minPos = glm::vec3((idx % 16) + 0.5f, -40, zValue + 0.5f);
-
-                glm::vec3 minKeyPos = glm::vec3((idx % 16) + 0.5f, -40, zValue - 1.5f);
+                glm::vec3 minKeyPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue - 1.5f);
                 QuadKey key = { maxPos.y, minKeyPos };
                 SaveVertices(key, maxPos, minPos, QuadPosition::Right);
             }
 
-            if (idx % 16 != 0 && ChunkHeights[idx - 1] < ChunkHeights[idx])
+            if (idx % RowNum != 0 && ChunkHeights[idx - 1] < ChunkHeights[idx])
             {
                 int height = ChunkHeights[idx] - ChunkHeights[idx - 1];
-                float zValue = ((idx - (idx % 16)) / 16);
-                glm::vec3 maxPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue + 0.5f);
-                glm::vec3 minPos = glm::vec3((idx % 16) - 0.5f, maxPos.y - height, zValue - 0.5f);
+                float zValue = ((idx - (idx % RowNum)) / RowNum);
+                glm::vec3 maxPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue + 0.5f);
+                glm::vec3 minPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue - 0.5f);
 
-                glm::vec3 maxKeyPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue - 0.5f);
-                QuadKey key = { minPos.y, maxKeyPos };
-                SaveVertices(key, minPos, maxPos, QuadPosition::Left);
-            }
-            else if(idx % 16 == 0)
-            {
-                float zValue = ((idx - (idx % 16)) / 16);
-                glm::vec3 maxPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue + 0.5f);
-                glm::vec3 minPos = glm::vec3((idx % 16) - 0.5f, -40, zValue - 0.5f);
-
-                glm::vec3 maxKeyPos = glm::vec3((idx % 16) - 0.5f, ChunkHeights[idx], zValue - 0.5f);
+                glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue - 0.5f);
                 QuadKey key = { minPos.y, maxKeyPos };
                 SaveVertices(key, minPos, maxPos, QuadPosition::Left);
             }
 
-            if ((linedIndex % 16 != 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
+            if ((linedIndex % RowNum != 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
             {
                 ++topQuad.EndPos.x;
             }
@@ -184,11 +158,11 @@ namespace Forge
                     mRenderQuads[(int)QuadPosition::Top].insert({ key, topQuad });
                 }
 
-                if (idx < areaSize - 1)
+                if (idx < ChunkArea - 1)
                 {
                     int nextBlock = idx + 1;
-                    int zValue = (nextBlock - (nextBlock % 16)) / 16;
-                    glm::vec3 newPos = glm::vec3(nextBlock % 16, ChunkHeights[nextBlock], zValue);
+                    int zValue = (nextBlock - (nextBlock % RowNum)) / RowNum;
+                    glm::vec3 newPos = glm::vec3(nextBlock % RowNum, ChunkHeights[nextBlock], zValue);
                     topQuad = { newPos + frontLOffset, newPos + backROffset };
                 }
             }
@@ -196,18 +170,18 @@ namespace Forge
             {
                 QuadKey key = { topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z) };
                 mRenderQuads[(int)QuadPosition::Top].insert({ key, topQuad });
-                if (idx < areaSize - 1)
+                if (idx < ChunkArea - 1)
                 {
                     int nextBlock = idx + 1;
-                    int zValue = (nextBlock - (nextBlock % 16)) / 16;
-                    glm::vec3 newPos = glm::vec3(nextBlock % 16, ChunkHeights[nextBlock], zValue);
+                    int zValue = (nextBlock - (nextBlock % RowNum)) / RowNum;
+                    glm::vec3 newPos = glm::vec3(nextBlock % RowNum, ChunkHeights[nextBlock], zValue);
                     topQuad = { newPos + frontLOffset, newPos + backROffset };
                 }
             }
         }
 
-        glm::vec3 startDownPos = glm::vec3(RowNum, -40, 0);
-        glm::vec3 endDownPos = glm::vec3(-1, -40, RowNum - 1);
+        glm::vec3 startDownPos = glm::vec3(RowNum, MinHeight, 0);
+        glm::vec3 endDownPos = glm::vec3(-1, MinHeight, RowNum - 1);
         QuadSpace bottomQuad = { startDownPos + frontLOffset, endDownPos + backROffset };
         QuadKey key = { bottomQuad.StartPos.x, glm::vec3(bottomQuad.EndPos.x, bottomQuad.EndPos.y, bottomQuad.EndPos.z) };
         mRenderQuads[(int)QuadPosition::Bottom].insert({ key, bottomQuad });
