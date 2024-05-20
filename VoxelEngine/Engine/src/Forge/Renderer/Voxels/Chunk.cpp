@@ -1,9 +1,7 @@
 #include "pch.h"
 #include "Chunk.h"
 
-#include <glm/gtc/matrix_transform.hpp>
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/quaternion.hpp>
+#include "Forge/Renderer/Renderer.h"
 
 namespace Forge
 {
@@ -37,6 +35,7 @@ namespace Forge
     {
         mVoxels.clear();
         mVoxels.resize(ChunkSize);
+        QuadVector renderQuads[6];
 
         glm::vec3 currentPos = glm::vec3(0, ChunkHeights[0], 0);
         glm::vec3 frontLOffset = glm::vec3(-0.5f, 0.0f, -0.5f);
@@ -98,7 +97,7 @@ namespace Forge
 
                 glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue);
                 QuadKey key = { minPos.y, maxKeyPos };
-                SaveVertices(key, minPos, maxPos, QuadPosition::Front);
+                SaveVertices(key, minPos, maxPos, renderQuads[(int)QuadPosition::Front]);
             }
 
             if ((idx < (ChunkArea - RowNum)) && ChunkHeights[idx + RowNum] < ChunkHeights[idx])
@@ -110,7 +109,7 @@ namespace Forge
 
                 glm::vec3 minKeyPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue);
                 QuadKey key = { maxPos.y, minKeyPos };
-                SaveVertices(key, maxPos, minPos, QuadPosition::Back);
+                SaveVertices(key, maxPos, minPos, renderQuads[(int)QuadPosition::Back]);
             }
 
             if ((linedIndex % RowNum != 0 || idx == 0) && ChunkHeights[idx + 1] < ChunkHeights[idx])
@@ -122,7 +121,7 @@ namespace Forge
 
                 glm::vec3 minKeyPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue - 1.5f);
                 QuadKey key = { maxPos.y, minKeyPos };
-                SaveVertices(key, maxPos, minPos, QuadPosition::Right);
+                SaveVertices(key, maxPos, minPos, renderQuads[(int)QuadPosition::Right]);
             }
 
             if (idx % RowNum != 0 && ChunkHeights[idx - 1] < ChunkHeights[idx])
@@ -134,7 +133,7 @@ namespace Forge
 
                 glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue - 0.5f);
                 QuadKey key = { minPos.y, maxKeyPos };
-                SaveVertices(key, minPos, maxPos, QuadPosition::Left);
+                SaveVertices(key, minPos, maxPos, renderQuads[(int)QuadPosition::Left]);
             }
 
             if ((linedIndex % RowNum != 0) && ChunkHeights[idx + 1] == ChunkHeights[idx])
@@ -144,18 +143,18 @@ namespace Forge
             else if (idx > 15)
             {
                 QuadKey key = { topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z - 1) };
-                auto it = mRenderQuads[(int)QuadPosition::Top].find(key);
-                if (it != mRenderQuads[(int)QuadPosition::Top].end())
+                auto it = renderQuads[(int)QuadPosition::Top].find(key);
+                if (it != renderQuads[(int)QuadPosition::Top].end())
                 {
                     QuadKey newKey = { topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z) };
                     QuadSpace newQuad = { it->second.StartPos, topQuad.EndPos };
-                    mRenderQuads[(int)QuadPosition::Top].insert({ newKey, newQuad });
-                    mRenderQuads[(int)QuadPosition::Top].erase(key);
+                    renderQuads[(int)QuadPosition::Top].insert({ newKey, newQuad });
+                    renderQuads[(int)QuadPosition::Top].erase(key);
                 }
                 else
                 {
                     key = { topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z) };
-                    mRenderQuads[(int)QuadPosition::Top].insert({ key, topQuad });
+                    renderQuads[(int)QuadPosition::Top].insert({ key, topQuad });
                 }
 
                 if (idx < ChunkArea - 1)
@@ -169,7 +168,7 @@ namespace Forge
             else
             {
                 QuadKey key = { topQuad.StartPos.x, glm::vec3(topQuad.EndPos.x, topQuad.EndPos.y, topQuad.EndPos.z) };
-                mRenderQuads[(int)QuadPosition::Top].insert({ key, topQuad });
+                renderQuads[(int)QuadPosition::Top].insert({ key, topQuad });
                 if (idx < ChunkArea - 1)
                 {
                     int nextBlock = idx + 1;
@@ -184,34 +183,36 @@ namespace Forge
         glm::vec3 endDownPos = glm::vec3(-1, MinHeight, RowNum - 1);
         QuadSpace bottomQuad = { startDownPos + frontLOffset, endDownPos + backROffset };
         QuadKey key = { bottomQuad.StartPos.x, glm::vec3(bottomQuad.EndPos.x, bottomQuad.EndPos.y, bottomQuad.EndPos.z) };
-        mRenderQuads[(int)QuadPosition::Bottom].insert({ key, bottomQuad });
+        renderQuads[(int)QuadPosition::Bottom].insert({ key, bottomQuad });
+
+        for (uint8_t i = 0; i < 6; ++i)
+        {
+            SetVertices(renderQuads[i], i);
+        }
     }
 
 
-    void Chunk::SaveVertices(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadPosition position)
+    void Chunk::SaveVertices(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadVector& quadVector)
     {
-        int idx = (int)position;
-        auto it = mRenderQuads[idx].find(key);
-        if (it != mRenderQuads[idx].end())
+        auto it = quadVector.find(key);
+        if (it != quadVector.end())
         {
             QuadKey newKey = { startPos.y, endPos };
             QuadSpace newQuad = { it->second.StartPos, endPos };
-            mRenderQuads[idx].insert({ newKey, newQuad });
-            mRenderQuads[idx].erase(key);
+            quadVector.insert({ newKey, newQuad });
+            quadVector.erase(key);
         }
         else
         {
             key = { startPos.y, endPos };
             QuadSpace newFrontQuad = { startPos, endPos };
-            mRenderQuads[idx].insert({ key, newFrontQuad });
+            quadVector.insert({ key, newFrontQuad });
         }
     }
 
-    std::vector<QuadSpecs> Chunk::GetVertices(QuadPosition position)
+    void Chunk::SetVertices(const QuadVector& quadVector, int idx)
     {
-        std::vector<QuadSpecs> vertices;
-
-        for (auto& vertex : mRenderQuads[(int)position])
+        for (auto& vertex : quadVector)
         {
             glm::vec3 distance = { vertex.second.EndPos.x - vertex.second.StartPos.x,
                                    vertex.second.EndPos.y - vertex.second.StartPos.y,
@@ -223,9 +224,25 @@ namespace Forge
 
             float with = distance.x ? distance.x : distance.z;
             float height = distance.y ? distance.y : distance.z;
-            vertices.push_back({ distance, center, { with, height } });
+            mQuadSpecs[idx].push_back({distance, center, {with, height}});
         }
+    }
 
-        return vertices;
+    void Chunk::Render()
+    {
+        for (uint8_t i = 0; i < 4; ++i)
+        {
+            for (const auto& quad : mQuadSpecs[i])
+            {
+                Renderer::DrawFace(quad, nullptr, { 1.0f, 1.0f, 1.0f, 1.0f });
+            }
+        }
+        for (uint8_t i = 4; i < 6; ++i)
+        {
+            for (const auto& quad : mQuadSpecs[i])
+            {
+                Renderer::DrawRLFace(quad, nullptr, { 1.0f, 1.0f, 1.0f, 1.0f });
+            }
+        }
     }
 }

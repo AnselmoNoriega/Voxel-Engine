@@ -28,8 +28,5 @@ namespace Forge
         EditorCamera mCamera;
 
         Chunk mChunk;
-
-        Ref<Texture> mTextures[6];
-        std::vector<QuadSpecs> mQuads[6];
     };
 }

@@ -59,13 +59,14 @@ namespace Forge
     public:
         void GenerateChunk();
 
-        std::vector<QuadSpecs> GetVertices(QuadPosition position);
+        void Render();
 
     private:
-        void SaveVertices(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadPosition position);
+        void SaveVertices(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadVector& quadVector);
+        void SetVertices(const QuadVector& quadVector, int idx);
 
     private:
-        QuadVector mRenderQuads[6];
+        std::vector<QuadSpecs> mQuadSpecs[6];
 
         std::vector<Voxel> mVoxels;
     };
