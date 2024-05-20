@@ -1,5 +1,7 @@
 #include "EditorLayer.h"
 
+#include "Forge/Renderer/Voxels/TextureManager.h"
+
 namespace Forge
 {
     EditorLayer::EditorLayer()
@@ -12,6 +14,7 @@ namespace Forge
         auto [width, height] = WindowInfo::GetWindowSize();
         mCamera = EditorCamera(30.0f, width, height, 0.1f, 1000.0f);
 
+        TextureManager::Initialize();
         mChunk.GenerateChunk();
     }
 

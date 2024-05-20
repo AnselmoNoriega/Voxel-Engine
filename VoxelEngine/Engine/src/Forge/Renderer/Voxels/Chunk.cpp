@@ -2,6 +2,7 @@
 #include "Chunk.h"
 
 #include "Forge/Renderer/Renderer.h"
+#include "TextureManager.h"
 
 namespace Forge
 {
@@ -224,24 +225,28 @@ namespace Forge
 
             float with = distance.x ? distance.x : distance.z;
             float height = distance.y ? distance.y : distance.z;
-            mQuadSpecs[idx].push_back({distance, center, {with, height}});
+            mQuadSpecs[idx].push_back({ distance, center, {with, height} });
         }
     }
 
     void Chunk::Render()
     {
+        Ref<Texture> texturePtr = nullptr;
+
         for (uint8_t i = 0; i < 4; ++i)
         {
             for (const auto& quad : mQuadSpecs[i])
             {
-                Renderer::DrawFace(quad, nullptr, { 1.0f, 1.0f, 1.0f, 1.0f });
+                texturePtr = TextureManager::GetTexture(quad, (QuadPosition)i);
+                Renderer::DrawFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
             }
         }
         for (uint8_t i = 4; i < 6; ++i)
         {
             for (const auto& quad : mQuadSpecs[i])
             {
-                Renderer::DrawRLFace(quad, nullptr, { 1.0f, 1.0f, 1.0f, 1.0f });
+                texturePtr = TextureManager::GetTexture(quad, QuadPosition::Back);
+                Renderer::DrawRLFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
             }
         }
     }

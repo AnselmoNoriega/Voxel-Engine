@@ -188,6 +188,7 @@
     <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLVertexArray.h" />
     <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLVertexBuffer.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\Forge\Renderer\Voxels\TextureManager.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_fixes.hpp" />
@@ -640,6 +641,7 @@
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLVertexArray.cpp" />
     <ClCompile Include="src\Platform\RendererAPI\OpenGL\GLVertexBuffer.cpp" />
     <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\Forge\Renderer\Voxels\TextureManager.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
