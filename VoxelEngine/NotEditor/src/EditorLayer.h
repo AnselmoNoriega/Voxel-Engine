@@ -27,6 +27,6 @@ namespace Forge
     private:
         EditorCamera mCamera;
 
-        Chunk mChunk;
+        std::map<int, Ref<Chunk>> mChunks;
     };
 }

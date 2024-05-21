@@ -57,16 +57,18 @@ namespace Forge
     class Chunk
     {
     public:
-        void GenerateChunk();
+        void GenerateChunk(Ref<Chunk>* neighborChunks);
 
         void Render();
 
     private:
         void SaveVertices(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadVector& quadVector);
         void SetVertices(const QuadVector& quadVector, int idx);
+        int GetPosition(uint16_t x, uint16_t y);
 
     private:
         std::vector<QuadSpecs> mQuadSpecs[6];
+        std::vector<QuadSpecs> mQuadSpecsSides[6];
 
         std::vector<Voxel> mVoxels;
     };

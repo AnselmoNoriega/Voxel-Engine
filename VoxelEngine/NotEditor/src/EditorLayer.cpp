@@ -15,7 +15,8 @@ namespace Forge
         mCamera = EditorCamera(30.0f, width, height, 0.1f, 1000.0f);
 
         TextureManager::Initialize();
-        mChunk.GenerateChunk();
+        mChunks.insert({ 0, CreateRef<Chunk>() });
+        mChunks[0]->GenerateChunk();
     }
 
     void EditorLayer::Detach()
@@ -44,7 +45,10 @@ namespace Forge
 
             Renderer::BeginScene(mCamera);
 
-            mChunk.Render();
+            for (auto& chunk : mChunks)
+            {
+                chunk.second->Render();
+            }
 
             Renderer::EndScene();
         }
