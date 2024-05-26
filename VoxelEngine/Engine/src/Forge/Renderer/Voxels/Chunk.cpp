@@ -32,12 +32,11 @@ namespace Forge
          3,  1, -6,  9,  3, -3, -2,  1,  0,  5,  3, -4,  5,  5, -1,  3
     };
 
-    void Chunk::GenerateChunk(Ref<Chunk>* neighborChunks)
+    void Chunk::GenerateChunk()
     {
         mVoxels.clear();
         mVoxels.resize(ChunkSize);
         QuadVector renderQuads[6];
-        QuadVector renderChunkSides[4];
 
         glm::vec3 currentPos = glm::vec3(0, ChunkHeights[0], 0);
         glm::vec3 frontLOffset = glm::vec3(-0.5f, 0.0f, -0.5f);
@@ -102,17 +101,6 @@ namespace Forge
                 QuadKey key = { minPos.y, maxKeyPos };
                 SaveVertices(key, minPos, maxPos, renderQuads[(int)QuadPosition::Front]);
             }
-            else if (auto& neighbor = neighborChunks[(int)QuadPosition::Front - 2]; neighbor && idx <= 15)
-            {
-                int height = ChunkHeights[idx] - neighbor->GetPosition(idx % RowNum, RowNum - 1);
-                float zValue = ((idx - (idx % RowNum)) / RowNum) - 0.5f;
-                glm::vec3 maxPos = glm::vec3((idx % RowNum) + 0.5f, ChunkHeights[idx], zValue);
-                glm::vec3 minPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue);
-
-                glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue);
-                QuadKey key = { minPos.y, maxKeyPos };
-                SaveVertices(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Front]);
-            }
 
             //Check back side
             if ((idx < (ChunkArea - RowNum)) && ChunkHeights[idx + RowNum] < ChunkHeights[idx])
@@ -125,10 +113,6 @@ namespace Forge
                 glm::vec3 minKeyPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue);
                 QuadKey key = { maxPos.y, minKeyPos };
                 SaveVertices(key, maxPos, minPos, renderQuads[(int)QuadPosition::Back]);
-            }
-            else if (neighborChunks[(int)QuadPosition::Back - 2] && idx >= (ChunkArea - RowNum))
-            {
-
             }
 
             //Check right side
@@ -143,10 +127,6 @@ namespace Forge
                 QuadKey key = { maxPos.y, minKeyPos };
                 SaveVertices(key, maxPos, minPos, renderQuads[(int)QuadPosition::Right]);
             }
-            else if (neighborChunks[(int)QuadPosition::Right - 2] && linedIndex % RowNum == 0 && idx != 0)
-            {
-
-            }
 
             //Check left side
             if (idx % RowNum != 0 && ChunkHeights[idx - 1] < ChunkHeights[idx])
@@ -159,10 +139,6 @@ namespace Forge
                 glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue - 0.5f);
                 QuadKey key = { minPos.y, maxKeyPos };
                 SaveVertices(key, minPos, maxPos, renderQuads[(int)QuadPosition::Left]);
-            }
-            else if (neighborChunks[(int)QuadPosition::Left - 2] && idx % RowNum == 0)
-            {
-
             }
 
             //Check top side
@@ -219,6 +195,43 @@ namespace Forge
         for (uint8_t i = 0; i < 6; ++i)
         {
             SetVertices(renderQuads[i], i);
+        }
+    }
+
+    void Chunk::ConnectWithNeighbor(Ref<Chunk>* neighborChunks)
+    {
+        QuadVector renderChunkSides[4];
+
+        for (int idx = 0; idx < ChunkArea; ++idx)
+        {
+            int linedIndex = (idx + 1);
+
+            if (auto& neighbor = neighborChunks[(int)QuadPosition::Front - 2]; neighbor && idx <= 15)
+            {
+                int height = ChunkHeights[idx] - neighbor->GetPosition(idx % RowNum, RowNum - 1);
+                float zValue = ((idx - (idx % RowNum)) / RowNum) - 0.5f;
+                glm::vec3 maxPos = glm::vec3((idx % RowNum) + 0.5f, ChunkHeights[idx], zValue);
+                glm::vec3 minPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue);
+
+                glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue);
+                QuadKey key = { minPos.y, maxKeyPos };
+                SaveVertices(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Front]);
+            }
+
+            if (neighborChunks[(int)QuadPosition::Back - 2] && idx >= (ChunkArea - RowNum))
+            {
+
+            }
+
+            if (neighborChunks[(int)QuadPosition::Right - 2] && linedIndex % RowNum == 0 && idx != 0)
+            {
+
+            }
+
+            if (neighborChunks[(int)QuadPosition::Left - 2] && idx % RowNum == 0)
+            {
+
+            }
         }
     }
 

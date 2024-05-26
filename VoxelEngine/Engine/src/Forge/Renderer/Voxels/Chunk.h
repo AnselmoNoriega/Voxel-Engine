@@ -57,7 +57,8 @@ namespace Forge
     class Chunk
     {
     public:
-        void GenerateChunk(Ref<Chunk>* neighborChunks);
+        void GenerateChunk();
+        void ConnectWithNeighbor(Ref<Chunk>* neighbors);
 
         void Render();
 
