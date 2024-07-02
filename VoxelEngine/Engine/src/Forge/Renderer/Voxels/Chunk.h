@@ -19,7 +19,7 @@ namespace Forge
     struct Vec2Int
     {
         int16_t x = 0;
-        int16_t y = 0;
+        int16_t z = 0;
     };
 
     struct QuadSpecs

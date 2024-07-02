@@ -16,7 +16,19 @@ namespace Forge
 
         TextureManager::Initialize();
         mChunks.insert({ 0, CreateRef<Chunk>() });
+        mChunks.insert({ 1, CreateRef<Chunk>() });
+        mChunks.insert({ 2, CreateRef<Chunk>() });
+        mChunks.insert({ 3, CreateRef<Chunk>() });
+        mChunks.insert({ 4, CreateRef<Chunk>() });
+
         mChunks[0]->GenerateChunk({0, 0});
+
+        mChunks[1]->GenerateChunk({0, 16});
+        mChunks[2]->GenerateChunk({0, -16});
+        mChunks[3]->GenerateChunk({16, 0});
+        mChunks[4]->GenerateChunk({-16, 0});
+
+        mChunks[0]->ConnectWithNeighbor(&mChunks[1]);
     }
 
     void EditorLayer::Detach()

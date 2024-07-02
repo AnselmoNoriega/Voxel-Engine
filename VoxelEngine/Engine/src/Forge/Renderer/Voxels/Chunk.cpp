@@ -292,9 +292,9 @@ namespace Forge
                                    vertex.second.EndPos.y - vertex.second.StartPos.y,
                                    vertex.second.EndPos.z - vertex.second.StartPos.z };
 
-            glm::vec3 center = { vertex.second.StartPos.x + (distance.x / 2),
+            glm::vec3 center = { mPosition.x + vertex.second.StartPos.x + (distance.x / 2),
                                  vertex.second.StartPos.y + (distance.y / 2),
-                                 vertex.second.StartPos.z + (distance.z / 2) };
+                                 mPosition.z + vertex.second.StartPos.z + (distance.z / 2) };
 
             float with = distance.x ? distance.x : distance.z;
             float height = distance.y ? distance.y : distance.z;
