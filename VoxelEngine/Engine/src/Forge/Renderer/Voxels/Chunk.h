@@ -16,6 +16,12 @@ namespace Forge
         Right
     };
 
+    struct Vec2Int
+    {
+        int16_t x = 0;
+        int16_t y = 0;
+    };
+
     struct QuadSpecs
     {
         glm::vec3 Distance;
@@ -57,7 +63,7 @@ namespace Forge
     class Chunk
     {
     public:
-        void GenerateChunk();
+        void GenerateChunk(Vec2Int position);
         void ConnectWithNeighbor(Ref<Chunk>* neighbors);
 
         void Render();
@@ -68,6 +74,8 @@ namespace Forge
         int GetPosition(uint16_t x, uint16_t y);
 
     private:
+        Vec2Int mPosition;
+
         std::vector<QuadSpecs> mQuadSpecs[6];
         std::vector<QuadSpecs> mQuadSpecsSides[6];
 

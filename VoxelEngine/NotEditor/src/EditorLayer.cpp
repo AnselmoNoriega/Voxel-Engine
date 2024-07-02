@@ -16,7 +16,7 @@ namespace Forge
 
         TextureManager::Initialize();
         mChunks.insert({ 0, CreateRef<Chunk>() });
-        mChunks[0]->GenerateChunk();
+        mChunks[0]->GenerateChunk({0, 0});
     }
 
     void EditorLayer::Detach()

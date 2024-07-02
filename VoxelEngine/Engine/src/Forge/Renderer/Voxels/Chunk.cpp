@@ -32,8 +32,10 @@ namespace Forge
          3,  1, -6,  9,  3, -3, -2,  1,  0,  5,  3, -4,  5,  5, -1,  3
     };
 
-    void Chunk::GenerateChunk()
+    void Chunk::GenerateChunk(Vec2Int position)
     {
+        mPosition = position;
+
         mVoxels.clear();
         mVoxels.resize(ChunkSize);
         QuadVector renderQuads[6];
@@ -215,23 +217,51 @@ namespace Forge
 
                 glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue);
                 QuadKey key = { minPos.y, maxKeyPos };
-                SaveVertices(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Front]);
+                SaveVertices(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Front - 2]);
             }
 
-            if (neighborChunks[(int)QuadPosition::Back - 2] && idx >= (ChunkArea - RowNum))
+            if (auto& neighbor = neighborChunks[(int)QuadPosition::Back - 2]; neighbor && idx >= (ChunkArea - RowNum))
             {
+                int height = ChunkHeights[idx] - neighbor->GetPosition(idx % RowNum, 0);
+                float zValue = ((idx - (idx % RowNum)) / RowNum) + 0.5f;
+                glm::vec3 maxPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue);
+                glm::vec3 minPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue);
 
+                glm::vec3 minKeyPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue);
+                QuadKey key = { maxPos.y, minKeyPos };
+                SaveVertices(key, maxPos, minPos, renderChunkSides[(int)QuadPosition::Back - 2]);
             }
 
-            if (neighborChunks[(int)QuadPosition::Right - 2] && linedIndex % RowNum == 0 && idx != 0)
+            if (auto& neighbor = neighborChunks[(int)QuadPosition::Right - 2]; neighbor && linedIndex % RowNum == 0 && idx != 0)
             {
+                int PositionY = (idx - (idx % RowNum)) / RowNum;
+                int height = ChunkHeights[idx] - neighbor->GetPosition(0, PositionY);
+                float zValue = ((idx - (idx % RowNum)) / RowNum);
+                glm::vec3 maxPos = glm::vec3((idx % RowNum) + 0.5f, ChunkHeights[idx], zValue - 0.5f);
+                glm::vec3 minPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue + 0.5f);
 
+                glm::vec3 minKeyPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue - 1.5f);
+                QuadKey key = { maxPos.y, minKeyPos };
+                SaveVertices(key, maxPos, minPos, renderChunkSides[(int)QuadPosition::Right - 2]);
             }
 
-            if (neighborChunks[(int)QuadPosition::Left - 2] && idx % RowNum == 0)
+            if (auto& neighbor = neighborChunks[(int)QuadPosition::Left - 2]; neighbor && idx % RowNum == 0)
             {
+                int PositionY = (idx - (idx % RowNum)) / RowNum;
+                int height = ChunkHeights[idx] - neighbor->GetPosition(RowNum - 1, PositionY);
+                float zValue = ((idx - (idx % RowNum)) / RowNum);
+                glm::vec3 maxPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue + 0.5f);
+                glm::vec3 minPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue - 0.5f);
 
+                glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, ChunkHeights[idx], zValue - 0.5f);
+                QuadKey key = { minPos.y, maxKeyPos };
+                SaveVertices(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Left - 2]);
             }
+        }
+
+        for (uint8_t i = 0; i < 4; ++i)
+        {
+            SetVertices(renderChunkSides[i], i + 2);
         }
     }
 
