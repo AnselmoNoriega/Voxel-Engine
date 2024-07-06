@@ -1465,6 +1465,7 @@
     <ClInclude Include="src\Forge\Renderer\Voxels\Voxel.h" />
     <ClInclude Include="src\Forge\Renderer\Voxels\Chunk.h" />
     <ClInclude Include="src\Forge\Renderer\Voxels\TextureManager.h" />
+    <ClInclude Include="src\Forge\Utils\Math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Forge\Core\Application.cpp">
@@ -1566,5 +1567,6 @@
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WinWindowInfo.cpp" />
     <ClCompile Include="src\Forge\Renderer\Voxels\Chunk.cpp" />
     <ClCompile Include="src\Forge\Renderer\Voxels\TextureManager.cpp" />
+    <ClCompile Include="src\Forge\Utils\Math.cpp" />
   </ItemGroup>
 </Project>

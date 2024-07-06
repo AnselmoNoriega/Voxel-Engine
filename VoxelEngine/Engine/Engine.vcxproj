@@ -177,6 +177,7 @@
     <ClInclude Include="src\Forge\Renderer\Renderer.h" />
     <ClInclude Include="src\Forge\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Forge\Renderer\Voxels\Voxel.h" />
+    <ClInclude Include="src\Forge\Utils\Math.h" />
     <ClInclude Include="src\Forge\Utils\PlatformUtils.h" />
     <ClInclude Include="src\Platform\OperatingSystem\Windows\WinWindow.h" />
     <ClInclude Include="src\Platform\RendererAPI\OpenGL\GLContext.h" />
@@ -628,6 +629,7 @@
     <ClCompile Include="src\Forge\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Forge\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Forge\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Forge\Utils\Math.cpp" />
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WinInputs.cpp" />
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WinWindow.cpp" />
     <ClCompile Include="src\Platform\OperatingSystem\Windows\WindowsUtils.cpp" />
