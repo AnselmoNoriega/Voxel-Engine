@@ -28,7 +28,7 @@ namespace Forge
         mChunks[3]->GenerateChunk({16, 0});
         mChunks[4]->GenerateChunk({-16, 0});
 
-        mChunks[0]->ConnectWithNeighbor(&mChunks[1]);
+        mChunks[0]->ConnectWithNeighbor({ mChunks[1], mChunks[2], mChunks[3], mChunks[4] });
     }
 
     void EditorLayer::Detach()

@@ -6,20 +6,18 @@ namespace Math
     class PerlinNoise
     {
     public:
-        static std::vector<std::vector<double>> GenerateHeightMap(int width, int height);
+        static void GenerateHeightMap(uint32_t seed, int width, int height, int* heightMap);
 
     private:
-        static double Noise(double x, double y);
-        static double Noise(double x, double y, uint32_t seed);
+        static double Noise(uint32_t seed, double x, double y);
 
-        static void GenerateRandomValues();
         static void GenerateRandomValues(uint32_t seed);
 
     private:
         static std::unique_ptr<PerlinNoise> sInstance;
         static std::once_flag sInitInstanceFlag;
 
-        static std::vector<int> RandomArray;
+        static std::vector<int> mRandomArray;
     };
 
     static double Fade(double t);

@@ -18,8 +18,8 @@ namespace Forge
 
     struct Vec2Int
     {
-        int16_t x = 0;
-        int16_t z = 0;
+        int32_t x = 0;
+        int32_t z = 0;
     };
 
     struct QuadSpecs
@@ -63,15 +63,17 @@ namespace Forge
     class Chunk
     {
     public:
+        ~Chunk();
+
         void GenerateChunk(Vec2Int position);
-        void ConnectWithNeighbor(Ref<Chunk>* neighbors);
+        void ConnectWithNeighbor(const std::array<Ref<Chunk>, 4>& neighborChunks);
 
         void Render();
 
     private:
         void SaveVertices(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadVector& quadVector);
         void SetVertices(const QuadVector& quadVector, int idx);
-        int GetPosition(uint16_t x, uint16_t y);
+        int GetPosition(uint16_t x, uint16_t y) const;
 
     private:
         Vec2Int mPosition;
@@ -80,5 +82,7 @@ namespace Forge
         std::vector<QuadSpecs> mQuadSpecsSides[6];
 
         std::vector<Voxel> mVoxels;
+
+        int* mChunkHeights = nullptr;
     };
 }
