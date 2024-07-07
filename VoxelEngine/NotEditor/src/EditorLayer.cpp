@@ -15,20 +15,17 @@ namespace Forge
         mCamera = EditorCamera(30.0f, width, height, 0.1f, 1000.0f);
 
         TextureManager::Initialize();
-        mChunks.insert({ 0, CreateRef<Chunk>() });
-        mChunks.insert({ 1, CreateRef<Chunk>() });
-        mChunks.insert({ 2, CreateRef<Chunk>() });
-        mChunks.insert({ 3, CreateRef<Chunk>() });
-        mChunks.insert({ 4, CreateRef<Chunk>() });
 
-        mChunks[0]->GenerateChunk({0, 0});
-
-        mChunks[1]->GenerateChunk({0, 16});
-        mChunks[2]->GenerateChunk({0, -16});
-        mChunks[3]->GenerateChunk({16, 0});
-        mChunks[4]->GenerateChunk({-16, 0});
-
-        mChunks[0]->ConnectWithNeighbor({ mChunks[2], mChunks[1], mChunks[4], mChunks[3] });
+        for (int x = -1; x < 2; ++x)
+        {
+            for (int z = -1; z < 2; ++z)
+            {
+                mChunks.insert({ { x, z }, CreateRef<Chunk>() });
+                auto& chunk = mChunks.at({ x, z });
+                chunk->GenerateChunk({ x, z });
+                chunk->ConnectWithNeighbor(mChunks);
+            }
+        }
     }
 
     void EditorLayer::Detach()

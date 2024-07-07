@@ -20,6 +20,20 @@ namespace Forge
     {
         int32_t x = 0;
         int32_t z = 0;
+
+        bool operator<(const Vec2Int& other) const
+        {
+            if (x == other.x)
+            {
+                return z < other.z;
+            }
+            return x < other.x;
+        }
+
+        Vec2Int operator* (int other) const
+        {
+            return {x * other, z * other };
+        }
     };
 
     struct QuadSpecs
@@ -66,7 +80,7 @@ namespace Forge
         ~Chunk();
 
         void GenerateChunk(Vec2Int position);
-        void ConnectWithNeighbor(const std::array<Ref<Chunk>, 4>& neighborChunks);
+        void ConnectWithNeighbor(const std::map<Vec2Int, Ref<Chunk>>& neighborChunks);
 
         void Render();
 
@@ -76,6 +90,7 @@ namespace Forge
         int GetPosition(uint16_t x, uint16_t y) const;
 
     private:
+        Vec2Int mCoord;
         Vec2Int mPosition;
 
         std::vector<QuadSpecs> mQuadSpecs[6];
