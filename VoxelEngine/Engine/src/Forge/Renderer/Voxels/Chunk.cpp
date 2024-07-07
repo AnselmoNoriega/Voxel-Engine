@@ -21,9 +21,9 @@ namespace Forge
 
         mChunkHeights = new int[ChunkArea];
         Math::PerlinNoise::GenerateHeightMap(mPosition.x, mPosition.z, RowNum, mChunkHeights);
-        for (int x = 0; x < RowNum; ++x)
+        for (int y = 0; y < RowNum; ++y)
         {
-            for (int y = 0; y < RowNum; ++y)
+            for (int x = 0; x < RowNum; ++x)
             {
                 std::cout << mChunkHeights[x + (y * RowNum)] << ", ";
             }
@@ -206,6 +206,8 @@ namespace Forge
 
             if (auto& neighbor = neighborChunks[(int)QuadPosition::Front - 2]; neighbor && idx <= 15)
             {
+                int t = mChunkHeights[idx];
+                int f = neighbor->GetPosition(idx % RowNum, RowNum - 1);
                 int height = mChunkHeights[idx] - neighbor->GetPosition(idx % RowNum, RowNum - 1);
                 float zValue = ((idx - (idx % RowNum)) / RowNum) - 0.5f;
                 glm::vec3 maxPos = glm::vec3((idx % RowNum) + 0.5f, mChunkHeights[idx], zValue);
@@ -297,7 +299,7 @@ namespace Forge
         }
     }
 
-    int Chunk::GetPosition(uint16_t x, uint16_t y) const 
+    int Chunk::GetPosition(uint16_t x, uint16_t y) const
     {
         return mChunkHeights[x + (y * RowNum)];
     }
