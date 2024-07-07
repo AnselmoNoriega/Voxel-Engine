@@ -6,10 +6,10 @@ namespace Math
     class PerlinNoise
     {
     public:
-        static void GenerateHeightMap(uint32_t seed, int width, int height, int* heightMap);
+        static void GenerateHeightMap(int xCoord, int yCoord, int size, int* heightMap);
 
     private:
-        static double Noise(uint32_t seed, double x, double y);
+        static double Noise(double x, double y);
 
         static void GenerateRandomValues(uint32_t seed);
 

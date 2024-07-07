@@ -19,9 +19,8 @@ namespace Forge
     {
         mPosition = position;
 
-        uint32_t seed = (mPosition.x << 16) | (mPosition.z & 0xFFFF);
         mChunkHeights = new int[ChunkArea];
-        Math::PerlinNoise::GenerateHeightMap(seed, RowNum, RowNum, mChunkHeights);
+        Math::PerlinNoise::GenerateHeightMap(mPosition.x, mPosition.z, RowNum, mChunkHeights);
         for (int x = 0; x < RowNum; ++x)
         {
             for (int y = 0; y < RowNum; ++y)

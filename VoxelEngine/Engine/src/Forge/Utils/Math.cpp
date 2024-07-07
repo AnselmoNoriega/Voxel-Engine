@@ -22,7 +22,7 @@ namespace Math
         mRandomArray.insert(mRandomArray.end(), mRandomArray.begin(), mRandomArray.end());
     }
 
-    double PerlinNoise::Noise(uint32_t seed, double x, double y)
+    double PerlinNoise::Noise(double x, double y)
     {
         int X = static_cast<int>(floor(x)) & 255;
         int Y = static_cast<int>(floor(y)) & 255;
@@ -34,10 +34,15 @@ namespace Math
         double v = Fade(y);
 
         std::call_once(sInitInstanceFlag,
-            [seed]()
+            []()
             {
                 sInstance.reset(new PerlinNoise());
-                sInstance->GenerateRandomValues(seed);
+
+                std::random_device rd;
+                std::mt19937 engine(rd());
+                std::uniform_int_distribution<int> dist(-255, 255);
+
+                sInstance->GenerateRandomValues(dist(engine));
             }
         );
 
@@ -50,21 +55,22 @@ namespace Math
         return (res + 1.0) / 2.0;
     }
 
-    void PerlinNoise::GenerateHeightMap(uint32_t seed, int width, int height, int* heightMap)
+    void PerlinNoise::GenerateHeightMap(int xCoord, int yCoord, int size, int* heightMap)
     {
         // Frequency affects the level of detail in the noise
-        double frequency = 5.0;
+        double frequency = 1.0;
         // Amplitude affects the range of height values
         // Desired height range
         double amplitude = 60.0;
         double midpointOffsetFromAmplitude = -20.0;
 
-        for (int x = 0; x < width; ++x)
+        for (int x = 0; x < size; ++x)
         {
-            for (int y = 0; y < height; ++y)
+            for (int y = 0; y < size; ++y)
             {
-                double noiseValue = Noise(seed, x * frequency / width, y * frequency / height);
-                heightMap[x + (y * width)] = static_cast<int>(((noiseValue + 1) / 2) * amplitude + midpointOffsetFromAmplitude);
+                double frequencyPerSize = frequency / size;
+                double noiseValue = Noise((x + xCoord) * frequencyPerSize, (y + yCoord) * frequencyPerSize);
+                heightMap[x + (y * size)] = static_cast<int>(((noiseValue + 1) / 2) * amplitude + midpointOffsetFromAmplitude);
             }
         }
     }
