@@ -16,16 +16,7 @@ namespace Forge
 
         TextureManager::Initialize();
 
-        for (int x = -1; x < 2; ++x)
-        {
-            for (int z = -1; z < 2; ++z)
-            {
-                mChunks.insert({ { x, z }, CreateRef<Chunk>() });
-                auto& chunk = mChunks.at({ x, z });
-                chunk->GenerateChunk({ x, z });
-                chunk->ConnectWithNeighbor(mChunks);
-            }
-        }
+        InitChunk(0, 0);
     }
 
     void EditorLayer::Detach()
@@ -81,5 +72,28 @@ namespace Forge
     bool EditorLayer::MouseButtonPressed(MouseButtonPressedEvent& e)
     {
         return false;
+    }
+
+    void EditorLayer::InitChunk(int posX, int posZ)
+    {
+        int magnitudFromStart = (posX * posX) + (posZ * posZ);
+        if (mMaxRenderDistanceSqrd < magnitudFromStart || mChunks.find({ posX, posZ }) != mChunks.end())
+        {
+            return;
+        }
+
+        mChunks.insert({ { posX, posZ }, CreateRef<Chunk>() });
+        auto& chunk = mChunks.at({ posX, posZ });
+        chunk->GenerateChunk({ posX, posZ });
+        chunk->ConnectWithNeighbor(mChunks);
+
+        //Front
+        InitChunk(posX, posZ - 1);
+        //Back
+        InitChunk(posX, posZ + 1);
+        //Right
+        InitChunk(posX + 1, posZ);
+        //Left
+        InitChunk(posX - 1, posZ);
     }
 }

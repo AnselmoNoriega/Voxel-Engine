@@ -22,16 +22,6 @@ namespace Forge
 
         mChunkHeights = new int[ChunkArea];
         Math::PerlinNoise::GenerateHeightMap(mPosition.x, mPosition.z, RowNum, mChunkHeights);
-        for (int y = 0; y < RowNum; ++y)
-        {
-            for (int x = 0; x < RowNum; ++x)
-            {
-                std::cout << mChunkHeights[x + (y * RowNum)] << ", ";
-            }
-
-            std::cout << std::endl;
-        }
-        std::cout << std::endl << std::endl;
 
         mVoxels.clear();
         mVoxels.resize(ChunkSize);

@@ -11,8 +11,8 @@ namespace Forge
     {
         std::array <Ref<Texture>, 3> texture = {
             Texture::Create("Assets/Textures/grass_block_top.png"),
-            Texture::Create("Assets/Textures/grass_block_bottom.png"),
-            Texture::Create("Assets/Textures/grass_block_bottom.png")
+            Texture::Create("Assets/Textures/grass_block_side.png"),
+            Texture::Create("Assets/Textures/grass_block_side.png")
         };
 
         mTextures.insert({(int)VoxelType::Dirt, texture});

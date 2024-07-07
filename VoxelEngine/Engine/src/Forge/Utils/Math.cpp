@@ -58,7 +58,7 @@ namespace Math
     void PerlinNoise::GenerateHeightMap(int xCoord, int yCoord, int size, int* heightMap)
     {
         // Frequency affects the level of detail in the noise
-        double frequency = 1.0;
+        double frequency = 0.5;
         // Amplitude affects the range of height values
         // Desired height range
         double amplitude = 60.0;
