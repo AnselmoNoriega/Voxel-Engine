@@ -1,5 +1,7 @@
 #include "EditorLayer.h"
 
+#include "imgui/imgui.h"
+
 #include "Forge/Renderer/Voxels/TextureManager.h"
 
 namespace Forge
@@ -61,7 +63,27 @@ namespace Forge
 
     void EditorLayer::ImGuiRender()
     {
-        //ImGui::DragFloat3("Position", &Translation.x, 0.01, -10.0f, 10.0f);
+        ImGui::Begin("Stats");
+
+        auto stats = Renderer::GetStats();
+        ImGui::Text("Renderer Stats:");
+        ImGui::Text("Draw Calls: %d", stats.DrawCalls);
+        ImGui::Text("Quads: %d", stats.QuadCount);
+        ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
+        ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+
+        ImGui::End();
+
+        ImGui::Begin("Debugging");
+
+            for (uint8_t i = 0; i < 6; ++i)
+            {
+                char label[20];
+                sprintf(label, "Side %d", i);
+                ImGui::Checkbox(label, &mChunks[{0, 0}]->SidesEnabled[i]);
+            }
+
+        ImGui::End();
     }
 
     bool EditorLayer::KeyPressed(KeyPressedEvent& e)
@@ -79,6 +101,7 @@ namespace Forge
         int magnitudFromStart = (posX * posX) + (posZ * posZ);
         if (mMaxRenderDistanceSqrd < magnitudFromStart || mChunks.find({ posX, posZ }) != mChunks.end())
         {
+            std::cout << "Could not find " << posX << " ~ " << posZ << std::endl;
             return;
         }
 

@@ -42,7 +42,7 @@ namespace Math
                 std::mt19937 engine(rd());
                 std::uniform_int_distribution<int> dist(-255, 255);
 
-                sInstance->GenerateRandomValues(dist(engine));
+                sInstance->GenerateRandomValues(1);
             }
         );
 

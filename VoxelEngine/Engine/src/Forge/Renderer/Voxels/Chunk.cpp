@@ -15,6 +15,8 @@ namespace Forge
     static const int ChunkArea = RowNum * RowNum;
     static const int ChunkSize = ChunkArea * ColumnHeight;
 
+    bool Chunk::SidesEnabled[6];
+
     void Chunk::GenerateChunk(Vec2Int position)
     {
         mCoord = position;
@@ -112,7 +114,7 @@ namespace Forge
                 glm::vec3 maxPos = glm::vec3((idx % RowNum) + 0.5f, mChunkHeights[idx], zValue - 0.5f);
                 glm::vec3 minPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue + 0.5f);
 
-                glm::vec3 minKeyPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue - 1.5f);
+                glm::vec3 minKeyPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue - 0.5f);
                 QuadKey key = { maxPos.y, minKeyPos };
                 SaveVertices(key, maxPos, minPos, renderQuads[(int)QuadPosition::Right]);
             }
@@ -189,7 +191,7 @@ namespace Forge
 
     void Chunk::ConnectWithNeighbor(const std::map<Vec2Int, Ref<Chunk>>& neighborChunks)
     {
-        QuadVector renderChunkSides[4];
+        QuadVector renderChunkSides[6];
         const auto& neighborFront = neighborChunks.find({ mCoord.x,mCoord.z - 1 });
         const auto& neighborBack = neighborChunks.find({ mCoord.x, mCoord.z + 1 });
         const auto& neighborLeft = neighborChunks.find({ mCoord.x - 1,mCoord.z });
@@ -206,10 +208,10 @@ namespace Forge
                     float zValue = ((idx - (idx % RowNum)) / RowNum) - 0.5f;
                     glm::vec3 maxPos = glm::vec3((idx % RowNum) + 0.5f, mChunkHeights[idx], zValue);
                     glm::vec3 minPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue);
-        
+
                     glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, mChunkHeights[idx], zValue);
                     QuadKey key = { minPos.y, maxKeyPos };
-                    SaveVertices(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Front - 2]);  
+                    SaveVertices(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Front]);
                 }
             }
         }
@@ -227,10 +229,10 @@ namespace Forge
                     float zValue = ((idx - (idx % RowNum)) / RowNum) + 0.5f;
                     glm::vec3 maxPos = glm::vec3((idx % RowNum) - 0.5f, mChunkHeights[idx], zValue);
                     glm::vec3 minPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue);
-        
+
                     glm::vec3 minKeyPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue);
                     QuadKey key = { maxPos.y, minKeyPos };
-                    SaveVertices(key, maxPos, minPos, renderChunkSides[(int)QuadPosition::Back - 2]);
+                    SaveVertices(key, maxPos, minPos, renderChunkSides[(int)QuadPosition::Back]);
                 }
             }
         }
@@ -247,10 +249,10 @@ namespace Forge
                     float zValue = ((idx - (idx % RowNum)) / RowNum);
                     glm::vec3 maxPos = glm::vec3((idx % RowNum) + 0.5f, mChunkHeights[idx], zValue - 0.5f);
                     glm::vec3 minPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue + 0.5f);
-        
-                    glm::vec3 minKeyPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue - 1.5f);
+
+                    glm::vec3 minKeyPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue - 0.5f);
                     QuadKey key = { maxPos.y, minKeyPos };
-                    SaveVertices(key, maxPos, minPos, renderChunkSides[(int)QuadPosition::Right - 2]);
+                    SaveVertices(key, maxPos, minPos, renderChunkSides[(int)QuadPosition::Left]);
                 }
             }
         }
@@ -267,17 +269,17 @@ namespace Forge
                     float zValue = ((idx - (idx % RowNum)) / RowNum);
                     glm::vec3 maxPos = glm::vec3((idx % RowNum) - 0.5f, mChunkHeights[idx], zValue + 0.5f);
                     glm::vec3 minPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue - 0.5f);
-        
+
                     glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, mChunkHeights[idx], zValue - 0.5f);
                     QuadKey key = { minPos.y, maxKeyPos };
-                    SaveVertices(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Left - 2]);
+                    SaveVertices(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Right]);
                 }
             }
         }
 
-        for (uint8_t i = 0; i < 4; ++i)
+        for (uint8_t i = 2; i < 6; ++i)
         {
-            SetVertices(renderChunkSides[i], i + 2);
+            SetVertices(renderChunkSides[i], i);
         }
     }
 
@@ -328,18 +330,24 @@ namespace Forge
 
         for (uint8_t i = 0; i < 4; ++i)
         {
-            for (const auto& quad : mQuadSpecs[i])
+            if (SidesEnabled[i])
             {
-                texturePtr = TextureManager::GetTexture(quad, (QuadPosition)i);
-                Renderer::DrawFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
+                for (const auto& quad : mQuadSpecs[i])
+                {
+                    texturePtr = TextureManager::GetTexture(quad, (QuadPosition)i);
+                    Renderer::DrawFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
+                }
             }
         }
         for (uint8_t i = 4; i < 6; ++i)
         {
-            for (const auto& quad : mQuadSpecs[i])
+            if (SidesEnabled[i])
             {
-                texturePtr = TextureManager::GetTexture(quad, QuadPosition::Back);
-                Renderer::DrawRLFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
+                for (const auto& quad : mQuadSpecs[i])
+                {
+                    texturePtr = TextureManager::GetTexture(quad, QuadPosition::Back);
+                    Renderer::DrawRLFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
+                }
             }
         }
     }

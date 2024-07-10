@@ -84,6 +84,8 @@ namespace Forge
 
         void Render();
 
+        static bool SidesEnabled[6];
+
     private:
         void SaveVertices(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadVector& quadVector);
         void SetVertices(const QuadVector& quadVector, int idx);
