@@ -15,8 +15,6 @@ namespace Forge
     static const int ChunkArea = RowNum * RowNum;
     static const int ChunkSize = ChunkArea * ColumnHeight;
 
-    bool Chunk::SidesEnabled[6];
-
     void Chunk::GenerateChunk(Vec2Int position)
     {
         mCoord = position;
@@ -324,30 +322,26 @@ namespace Forge
         return mChunkHeights[x + (y * RowNum)];
     }
 
-    void Chunk::Render()
+    void Chunk::SaveData()
     {
         Ref<Texture> texturePtr = nullptr;
 
         for (uint8_t i = 0; i < 4; ++i)
         {
-            if (SidesEnabled[i])
+            for (auto& quad : mQuadSpecs[i])
             {
-                for (const auto& quad : mQuadSpecs[i])
-                {
-                    texturePtr = TextureManager::GetTexture(quad, (QuadPosition)i);
-                    Renderer::DrawFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
-                }
+                quad.IsRightLeft = false;
+                texturePtr = TextureManager::GetTexture(quad, (QuadPosition)i);
+                Renderer::SaveFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
             }
         }
         for (uint8_t i = 4; i < 6; ++i)
         {
-            if (SidesEnabled[i])
+            for (auto& quad : mQuadSpecs[i])
             {
-                for (const auto& quad : mQuadSpecs[i])
-                {
-                    texturePtr = TextureManager::GetTexture(quad, QuadPosition::Back);
-                    Renderer::DrawRLFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
-                }
+                quad.IsRightLeft = true;
+                texturePtr = TextureManager::GetTexture(quad, QuadPosition::Back);
+                Renderer::SaveFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
             }
         }
     }

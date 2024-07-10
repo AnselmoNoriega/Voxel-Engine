@@ -41,6 +41,7 @@ namespace Forge
         glm::vec3 Distance;
         glm::vec3 Center;
         glm::vec2 DistanceVec2;
+        bool IsRightLeft;
     };
 
     struct QuadSpace
@@ -82,9 +83,7 @@ namespace Forge
         void GenerateChunk(Vec2Int position);
         void ConnectWithNeighbor(const std::map<Vec2Int, Ref<Chunk>>& neighborChunks);
 
-        void Render();
-
-        static bool SidesEnabled[6];
+        void SaveData();
 
     private:
         void SaveVertices(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadVector& quadVector);

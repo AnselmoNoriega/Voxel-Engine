@@ -19,6 +19,13 @@ namespace Forge
         TextureManager::Initialize();
 
         InitChunk(0, 0);
+
+        std::cout << "Finished" << std::endl;
+
+        for (auto& chunk : mChunks)
+        {
+            chunk.second->SaveData();
+        }
     }
 
     void EditorLayer::Detach()
@@ -29,7 +36,6 @@ namespace Forge
     {
         {
             PROFILE_SCOPE("Render Start");
-            Renderer::ResetStats();
 
             RenderCommand::SetClearColor({ 0.4f, 0.4f, 0.8f, 1 });
             RenderCommand::Clear();
@@ -45,14 +51,7 @@ namespace Forge
                 mCamera.SetViewportSize(width, height);
             }
 
-            Renderer::BeginScene(mCamera);
-
-            for (auto& chunk : mChunks)
-            {
-                chunk.second->Render();
-            }
-
-            Renderer::EndScene();
+            Renderer::RenderScene(mCamera);
         }
     }
 
@@ -73,17 +72,6 @@ namespace Forge
         ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
         ImGui::End();
-
-        ImGui::Begin("Debugging");
-
-            for (uint8_t i = 0; i < 6; ++i)
-            {
-                char label[20];
-                sprintf(label, "Side %d", i);
-                ImGui::Checkbox(label, &mChunks[{0, 0}]->SidesEnabled[i]);
-            }
-
-        ImGui::End();
     }
 
     bool EditorLayer::KeyPressed(KeyPressedEvent& e)
@@ -101,7 +89,6 @@ namespace Forge
         int magnitudFromStart = (posX * posX) + (posZ * posZ);
         if (mMaxRenderDistanceSqrd < magnitudFromStart || mChunks.find({ posX, posZ }) != mChunks.end())
         {
-            std::cout << "Could not find " << posX << " ~ " << posZ << std::endl;
             return;
         }
 
