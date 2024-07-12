@@ -94,9 +94,6 @@ namespace Forge
         Vec2Int mCoord;
         Vec2Int mPosition;
 
-        std::vector<QuadSpecs> mQuadSpecs[6];
-        std::vector<QuadSpecs> mQuadSpecsSides[6];
-
         std::vector<Voxel> mVoxels;
 
         int* mChunkHeights = nullptr;

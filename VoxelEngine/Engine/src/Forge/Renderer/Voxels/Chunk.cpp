@@ -313,7 +313,13 @@ namespace Forge
 
             float with = distance.x ? distance.x : distance.z;
             float height = distance.y ? distance.y : distance.z;
-            mQuadSpecs[idx].push_back({ distance, center, {with, height} });
+
+            bool isRLside = (idx >= 4);
+            QuadSpecs mQuadSpecs({ distance, center, {with, height}, isRLside });
+
+            Ref<Texture> texturePtr = nullptr;
+            texturePtr = TextureManager::GetTexture(mQuadSpecs, (QuadPosition)idx);
+            Renderer::SaveFace(mQuadSpecs, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
         }
     }
 
@@ -326,24 +332,24 @@ namespace Forge
     {
         Ref<Texture> texturePtr = nullptr;
 
-        for (uint8_t i = 0; i < 4; ++i)
-        {
-            for (auto& quad : mQuadSpecs[i])
-            {
-                quad.IsRightLeft = false;
-                texturePtr = TextureManager::GetTexture(quad, (QuadPosition)i);
-                Renderer::SaveFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
-            }
-        }
-        for (uint8_t i = 4; i < 6; ++i)
-        {
-            for (auto& quad : mQuadSpecs[i])
-            {
-                quad.IsRightLeft = true;
-                texturePtr = TextureManager::GetTexture(quad, QuadPosition::Back);
-                Renderer::SaveFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
-            }
-        }
+        //for (uint8_t i = 0; i < 4; ++i)
+        //{
+        //    for (auto& quad : mQuadSpecs[i])
+        //    {
+        //        quad.IsRightLeft = false;
+        //        texturePtr = TextureManager::GetTexture(quad, (QuadPosition)i);
+        //        Renderer::SaveFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
+        //    }
+        //}
+        //for (uint8_t i = 4; i < 6; ++i)
+        //{
+        //    for (auto& quad : mQuadSpecs[i])
+        //    {
+        //        quad.IsRightLeft = true;
+        //        texturePtr = TextureManager::GetTexture(quad, QuadPosition::Back);
+        //        Renderer::SaveFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
+        //    }
+        //}
     }
 
 

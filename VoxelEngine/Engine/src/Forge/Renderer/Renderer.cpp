@@ -179,16 +179,17 @@ namespace Forge
 
     void Renderer::DrawBatches()
     {
+        for (uint32_t i = 0; i < sData.TextureSlotIndex; i++)
+        {
+            sData.TextureSlots[i]->Bind(i);
+        }
+
+        sData.ObjShader->Bind();
+
         for (int index = 0; index < sData.VertexBuffersBase.size(); ++index)
         {
             sData.QuadVertexBuffer->SetData(sData.VertexBuffersBase[index], sData.VertexBuffersSize[index]);
 
-            for (uint32_t i = 0; i < sData.TextureSlotIndex; i++)
-            {
-                sData.TextureSlots[i]->Bind(i);
-            }
-
-            sData.ObjShader->Bind();
             RenderCommand::DrawIndexed(sData.QuadVertexArray, sData.IndexCount);
         }
 
@@ -213,7 +214,7 @@ namespace Forge
             sData.VertexBuffersBase.push_back(new QuadVertex[sData.MaxVertices]);
             sData.VertexBuffersSize.push_back(0);
             sData.VertexBuffersPtr = sData.VertexBuffersBase[sData.VertexBuffersBase.size() - 1];
-            
+
             sData.IndexCount = 0;
         }
 

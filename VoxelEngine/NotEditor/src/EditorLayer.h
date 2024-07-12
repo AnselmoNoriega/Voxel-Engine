@@ -31,6 +31,6 @@ namespace Forge
 
         std::map<Vec2Int, Ref<Chunk>> mChunks;
 
-        int mMaxRenderDistanceSqrd = 10 * 10;
+        int mMaxRenderDistanceSqrd = 6 * 6;
     };
 }

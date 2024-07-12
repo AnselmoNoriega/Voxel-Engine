@@ -19,13 +19,6 @@ namespace Forge
         TextureManager::Initialize();
 
         InitChunk(0, 0);
-
-        std::cout << "Finished" << std::endl;
-
-        for (auto& chunk : mChunks)
-        {
-            chunk.second->SaveData();
-        }
     }
 
     void EditorLayer::Detach()
