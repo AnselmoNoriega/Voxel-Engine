@@ -46,7 +46,7 @@ namespace Forge
         Ref<VertexBuffer> LineVertexBuffer;
         Ref<Shader> LineShader;
 
-        uint32_t IndexCount = 0;
+        std::vector<uint32_t> IndexesCount;
         std::vector<uint32_t> VertexBuffersSize;
         std::vector<QuadVertex*> VertexBuffersBase;
         QuadVertex* VertexBuffersPtr;
@@ -110,6 +110,7 @@ namespace Forge
             sData.QuadVertexArray->AddVertexBuffer(sData.QuadVertexBuffer);
             sData.VertexBuffersBase.push_back(new QuadVertex[sData.MaxVertices]);
             sData.VertexBuffersSize.push_back(0);
+            sData.IndexesCount.push_back(0);
             sData.VertexBuffersPtr = sData.VertexBuffersBase.back();
         }
         {
@@ -190,7 +191,7 @@ namespace Forge
         {
             sData.QuadVertexBuffer->SetData(sData.VertexBuffersBase[index], sData.VertexBuffersSize[index]);
 
-            RenderCommand::DrawIndexed(sData.QuadVertexArray, sData.IndexCount);
+            RenderCommand::DrawIndexed(sData.QuadVertexArray, sData.IndexesCount[index]);
         }
 
         if (sData.LineVertexCount)
@@ -207,15 +208,16 @@ namespace Forge
 
     void Renderer::SaveData()
     {
-        if (sData.IndexCount)
+        if (sData.IndexesCount.back())
         {
             ++sData.Stats.DrawCalls;
 
             sData.VertexBuffersBase.push_back(new QuadVertex[sData.MaxVertices]);
             sData.VertexBuffersSize.push_back(0);
+            sData.IndexesCount.push_back(0);
             sData.VertexBuffersPtr = sData.VertexBuffersBase.back();
 
-            sData.IndexCount = 0;
+            //sData.IndexCount = 0;
         }
 
         if (sData.LineVertexCount)
@@ -237,9 +239,8 @@ namespace Forge
         size_t quadVertexCount = 4;
         float textureIndex = GetTextureIndex(texture);
 
-        if (sData.IndexCount >= RendererStorage::MaxIndices)
+        if (sData.IndexesCount.back() >= RendererStorage::MaxIndices)
         {
-            return;
             SaveData();
         }
 
@@ -263,7 +264,7 @@ namespace Forge
         uint32_t index = sData.VertexBuffersBase.size() - 1;
         sData.VertexBuffersSize[index] = (uint32_t)((uint8_t*)sData.VertexBuffersPtr - (uint8_t*)sData.VertexBuffersBase.back());
 
-        sData.IndexCount += 6;
+        sData.IndexesCount.back() += 6;
 
         ++sData.Stats.QuadCount;
     }
