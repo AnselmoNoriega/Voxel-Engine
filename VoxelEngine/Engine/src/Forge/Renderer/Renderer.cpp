@@ -110,7 +110,7 @@ namespace Forge
             sData.QuadVertexArray->AddVertexBuffer(sData.QuadVertexBuffer);
             sData.VertexBuffersBase.push_back(new QuadVertex[sData.MaxVertices]);
             sData.VertexBuffersSize.push_back(0);
-            sData.VertexBuffersPtr = sData.VertexBuffersBase[0];
+            sData.VertexBuffersPtr = sData.VertexBuffersBase.back();
         }
         {
             sData.LineVertexArray = VertexArray::Create();
@@ -213,7 +213,7 @@ namespace Forge
 
             sData.VertexBuffersBase.push_back(new QuadVertex[sData.MaxVertices]);
             sData.VertexBuffersSize.push_back(0);
-            sData.VertexBuffersPtr = sData.VertexBuffersBase[sData.VertexBuffersBase.size() - 1];
+            sData.VertexBuffersPtr = sData.VertexBuffersBase.back();
 
             sData.IndexCount = 0;
         }
@@ -239,6 +239,7 @@ namespace Forge
 
         if (sData.IndexCount >= RendererStorage::MaxIndices)
         {
+            return;
             SaveData();
         }
 
@@ -260,7 +261,7 @@ namespace Forge
         }
 
         uint32_t index = sData.VertexBuffersBase.size() - 1;
-        sData.VertexBuffersSize[index] = ((uint32_t)((uint8_t*)sData.VertexBuffersPtr - (uint8_t*)sData.VertexBuffersBase[index]));
+        sData.VertexBuffersSize[index] = (uint32_t)((uint8_t*)sData.VertexBuffersPtr - (uint8_t*)sData.VertexBuffersBase.back());
 
         sData.IndexCount += 6;
 
