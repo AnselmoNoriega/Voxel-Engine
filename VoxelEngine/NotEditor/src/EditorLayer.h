@@ -24,13 +24,7 @@ namespace Forge
         bool KeyPressed(KeyPressedEvent& e);
         bool MouseButtonPressed(MouseButtonPressedEvent& e);
 
-        void InitChunk(int posX, int posZ);
-
     private:
         EditorCamera mCamera;
-
-        std::map<Vec2Int, Ref<Chunk>> mChunks;
-
-        int mMaxRenderDistanceSqrd = 16 * 16;
     };
 }
