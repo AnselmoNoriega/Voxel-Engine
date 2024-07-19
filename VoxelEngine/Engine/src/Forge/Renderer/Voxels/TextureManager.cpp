@@ -9,6 +9,7 @@ namespace Forge
 
     void TextureManager::Initialize()
     {
+        mTextures.clear();
         std::array <Ref<Texture>, 3> texture = {
             Texture::Create("Assets/Textures/grass_block_top.png"),
             Texture::Create("Assets/Textures/grass_block_side.png"),

@@ -3,7 +3,7 @@
 #include <Forge.h>
 
 #include "Forge/Renderer/Camera/EditorCamera.h"
-#include "Forge/Renderer/Voxels/Chunk.h"
+#include "Forge/Renderer/Voxels/World.h"
 
 namespace Forge
 {

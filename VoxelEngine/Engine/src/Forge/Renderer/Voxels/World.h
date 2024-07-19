@@ -6,15 +6,15 @@ namespace Forge
     class World
     {
     public:
-        World();
+        static void Initialize();
 
     private:
-        void InitChunk(int posX, int posZ);
+        static void InitChunk(int posX, int posZ);
 
     private:
-        std::map<Vec2Int, Ref<Chunk>> mChunks;
+        static std::map<Vec2Int, Ref<Chunk>> mChunks;
 
-        int mMaxRenderDistanceSqrd = 16 * 16;
+        static int mMaxRenderDistanceSqrd;
     };
 }
 
