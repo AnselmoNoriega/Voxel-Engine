@@ -607,6 +607,7 @@
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
+    <ClInclude Include="src\Forge\Renderer\Voxels\World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Forge\Renderer\Voxels\Chunk.cpp" />
@@ -645,6 +646,7 @@
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\Forge\Renderer\Voxels\TextureManager.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\Forge\Renderer\Voxels\World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
