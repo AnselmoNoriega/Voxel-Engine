@@ -5,6 +5,9 @@
 
 namespace Forge
 {
+    std::map<Vec2Int, Ref<Chunk>> World::mChunks;
+    std::unordered_set<Vec2Int, pair_hash> World::activeCells;
+
     int World::mMaxRenderDistanceSqrd = 16 * 16;
 
     void World::Initialize()
@@ -12,6 +15,40 @@ namespace Forge
         TextureManager::Initialize();
 
         InitChunk(0, 0);
+    }
+
+    void World::Update(int newX, int newZ)
+    {
+        std::unordered_set<Vec2Int, pair_hash> newActiveCells;
+        for (int x = newX - mMaxRenderDistanceSqrd; x <= newX + mMaxRenderDistanceSqrd; ++x)
+        {
+            for (int z = newZ - mMaxRenderDistanceSqrd; z <= newZ + mMaxRenderDistanceSqrd; ++z)
+            {
+                int magnitudFromStart = (x * x) + (z * z);
+                if (magnitudFromStart <= mMaxRenderDistanceSqrd)
+                {
+                    newActiveCells.insert({ x, z });
+                }
+            }
+        }
+
+        for (const auto& cell : activeCells)
+        {
+            if (newActiveCells.find(cell) == newActiveCells.end())
+            {
+                mChunks.erase(cell); // Remove chunks that are no longer within the render distance
+            }
+        }
+
+        activeCells = newActiveCells;
+
+        for (const auto& cell : activeCells)
+        {
+            if (mChunks.find(cell) == mChunks.end())
+            {
+                InitChunk(cell.x, cell.z); // Create new chunks within the render distance
+            }
+        }
     }
 
     void World::InitChunk(int posX, int posZ)
@@ -35,5 +72,7 @@ namespace Forge
         InitChunk(posX + 1, posZ);
         //Left
         InitChunk(posX - 1, posZ);
+
+        activeCells.insert({posX, posZ});
     }
 }
