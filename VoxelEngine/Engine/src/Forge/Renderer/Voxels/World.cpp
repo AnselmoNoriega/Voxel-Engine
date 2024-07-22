@@ -6,7 +6,8 @@
 namespace Forge
 {
     std::map<Vec2Int, Ref<Chunk>> World::mChunks;
-    std::unordered_set<Vec2Int, pair_hash> World::activeCells;
+    std::map<Vec2Int, Ref<Chunk>> World::mFarChunks;
+    std::unordered_set<Vec2Int, pair_hash> World::mActiveCells;
 
     int World::mMaxRenderDistanceSqrd = 16 * 16;
 
@@ -32,7 +33,7 @@ namespace Forge
             }
         }
 
-        for (const auto& cell : activeCells)
+        for (const auto& cell : mActiveCells)
         {
             if (newActiveCells.find(cell) == newActiveCells.end())
             {
@@ -40,9 +41,9 @@ namespace Forge
             }
         }
 
-        activeCells = newActiveCells;
+        mActiveCells = newActiveCells;
 
-        for (const auto& cell : activeCells)
+        for (const auto& cell : mActiveCells)
         {
             if (mChunks.find(cell) == mChunks.end())
             {
@@ -73,6 +74,6 @@ namespace Forge
         //Left
         InitChunk(posX - 1, posZ);
 
-        activeCells.insert({posX, posZ});
+        mActiveCells.insert({posX, posZ});
     }
 }
