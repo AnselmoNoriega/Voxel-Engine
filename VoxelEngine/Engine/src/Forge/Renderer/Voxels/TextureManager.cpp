@@ -19,7 +19,7 @@ namespace Forge
         mTextures.insert({(int)VoxelType::Dirt, texture});
     }
 
-    Ref<Texture> TextureManager::GetTexture(const QuadSpecs& specs, QuadPosition position)
+    Ref<Texture> TextureManager::GetTexture(QuadPosition position)
     {
         if (position == QuadPosition::Top)
         {

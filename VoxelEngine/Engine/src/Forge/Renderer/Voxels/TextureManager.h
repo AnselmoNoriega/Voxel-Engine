@@ -11,7 +11,7 @@ namespace Forge
     public:
         static void Initialize();
 
-        static Ref<Texture> GetTexture(const QuadSpecs& specs, QuadPosition position);
+        static Ref<Texture> GetTexture(QuadPosition position);
 
     private:
         static std::map<int, std::array<Ref<Texture>, 3>> mTextures;

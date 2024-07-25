@@ -35,11 +35,10 @@ namespace Forge
         };
 
         static Statistics GetStats();
+        static float GetTextureIndex(const Ref<Texture>& texture);
 
     private:
         static void DrawLine(const glm::vec3& p0, glm::vec3& p1, const glm::vec4& color);
-
-        static float GetTextureIndex(const Ref<Texture>& texture);
 
         static void SaveData();
 

@@ -36,14 +36,6 @@ namespace Forge
         }
     };
 
-    struct QuadSpecs
-    {
-        glm::vec3 Distance;
-        glm::vec3 Center;
-        glm::vec2 DistanceVec2;
-        bool IsRightLeft;
-    };
-
     struct QuadSpace
     {
         glm::vec3 StartPos;
@@ -83,17 +75,36 @@ namespace Forge
         void GenerateChunk(Vec2Int position);
         void ConnectWithNeighbor(const std::map<Vec2Int, Ref<Chunk>>& neighborChunks);
 
-        void SaveData();
+        void Render();
 
     private:
-        void SaveVertices(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadVector& quadVector);
-        void SetVertices(const QuadVector& quadVector, int idx);
+        void PushNewQuad(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadVector& quadVector);
+        void SaveQuads(const QuadVector& quadVector, int idx);
+
+        void CreateVertice(
+            const glm::vec3& distance, 
+            const glm::vec3& center, 
+            const glm::vec2& size, 
+            Ref<Texture> texture, 
+            bool isRightSide
+        );
+
         int GetPosition(uint16_t x, uint16_t y) const;
+
+    private:
+        struct QuadVertex
+        {
+            glm::vec3 Position = { 0.0f, 0.0f, 0.0f };
+            glm::vec2 TexCoord = { 0.0f, 0.0f };
+            glm::vec4 Color = { 0.0f, 0.0f, 0.0f, 0.0f };
+            float TexIndex = 0.0f;
+        };
 
     private:
         Vec2Int mCoord;
         Vec2Int mPosition;
 
+        std::vector<QuadVertex> mVertices;
         std::vector<Voxel> mVoxels;
 
         int* mChunkHeights = nullptr;

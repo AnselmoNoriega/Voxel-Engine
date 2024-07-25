@@ -60,24 +60,6 @@ namespace Forge
         std::array<Ref<Texture>, MaxTextureSlots> TextureSlots;
         uint32_t TextureSlotIndex = 1;
 
-        glm::vec3 VertexPositions[5] = { { -0.5,  0.5,  0.5 },
-                                         {  0.5,  0.5,  0.5 },
-                                         {  0.5, -0.5, -0.5 },
-                                         { -0.5, -0.5, -0.5 },
-                                         { -0.5,  0.5,  0.5 } };
-
-        glm::vec3 VertexRLPositions[5] = { { 0.0, -0.5,  0.5 },
-                                           { 0.0,  0.5,  0.5 },
-                                           { 0.0,  0.5, -0.5 },
-                                           { 0.0, -0.5, -0.5 },
-                                           { 0.0, -0.5,  0.5 } };
-
-        glm::vec2 TextureCoords[4] = { { 1.0f, 1.0f }, { 0.0f, 1.0f },
-                                       { 0.0f, 0.0f }, { 1.0f, 0.0f } };
-
-        glm::vec2 TextureRLCoords[4] = { { 0.0f, 0.0f }, { 0.0f, 1.0f },
-                                         { 1.0f, 1.0f }, { 1.0f, 0.0f } };
-
         Renderer::Statistics Stats;
 
 

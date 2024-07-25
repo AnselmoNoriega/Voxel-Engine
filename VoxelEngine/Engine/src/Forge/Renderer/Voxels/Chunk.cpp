@@ -8,12 +8,34 @@
 
 namespace Forge
 {
+#pragma region VertexPositions
+    static glm::vec3 VertexPositions[5] = { { -0.5,  0.5,  0.5 },
+                                            {  0.5,  0.5,  0.5 },
+                                            {  0.5, -0.5, -0.5 },
+                                            { -0.5, -0.5, -0.5 },
+                                            { -0.5,  0.5,  0.5 } };
+
+    static glm::vec3 VertexRLPositions[5] = { { 0.0, -0.5,  0.5 },
+                                              { 0.0,  0.5,  0.5 },
+                                              { 0.0,  0.5, -0.5 },
+                                              { 0.0, -0.5, -0.5 },
+                                              { 0.0, -0.5,  0.5 } };
+
+    static glm::vec2 TextureCoords[4] = { { 1.0f, 1.0f }, { 0.0f, 1.0f },
+                                          { 0.0f, 0.0f }, { 1.0f, 0.0f } };
+
+    static glm::vec2 TextureRLCoords[4] = { { 0.0f, 0.0f }, { 0.0f, 1.0f },
+                                            { 1.0f, 1.0f }, { 1.0f, 0.0f } };
+#pragma endregion
+
+#pragma region ChunkSize
     static const int RowNum = 16;
     static const int MaxHeight = 216;
     static const int MinHeight = -40;
     static const int ColumnHeight = MaxHeight - MinHeight;
     static const int ChunkArea = RowNum * RowNum;
     static const int ChunkSize = ChunkArea * ColumnHeight;
+#pragma endregion
 
     void Chunk::GenerateChunk(Vec2Int position)
     {
@@ -88,7 +110,7 @@ namespace Forge
 
                 glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, mChunkHeights[idx], zValue);
                 QuadKey key = { minPos.y, maxKeyPos };
-                SaveVertices(key, minPos, maxPos, renderQuads[(int)QuadPosition::Front]);
+                PushNewQuad(key, minPos, maxPos, renderQuads[(int)QuadPosition::Front]);
             }
 
             //Check back side
@@ -101,7 +123,7 @@ namespace Forge
 
                 glm::vec3 minKeyPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue);
                 QuadKey key = { maxPos.y, minKeyPos };
-                SaveVertices(key, maxPos, minPos, renderQuads[(int)QuadPosition::Back]);
+                PushNewQuad(key, maxPos, minPos, renderQuads[(int)QuadPosition::Back]);
             }
 
             //Check right side
@@ -114,7 +136,7 @@ namespace Forge
 
                 glm::vec3 minKeyPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue - 0.5f);
                 QuadKey key = { maxPos.y, minKeyPos };
-                SaveVertices(key, maxPos, minPos, renderQuads[(int)QuadPosition::Right]);
+                PushNewQuad(key, maxPos, minPos, renderQuads[(int)QuadPosition::Right]);
             }
 
             //Check left side
@@ -127,7 +149,7 @@ namespace Forge
 
                 glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, mChunkHeights[idx], zValue - 0.5f);
                 QuadKey key = { minPos.y, maxKeyPos };
-                SaveVertices(key, minPos, maxPos, renderQuads[(int)QuadPosition::Left]);
+                PushNewQuad(key, minPos, maxPos, renderQuads[(int)QuadPosition::Left]);
             }
 
             //Check top side
@@ -183,7 +205,7 @@ namespace Forge
 
         for (uint8_t i = 0; i < 6; ++i)
         {
-            SetVertices(renderQuads[i], i);
+            SaveQuads(renderQuads[i], i);
         }
     }
 
@@ -209,7 +231,7 @@ namespace Forge
 
                     glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, mChunkHeights[idx], zValue);
                     QuadKey key = { minPos.y, maxKeyPos };
-                    SaveVertices(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Front]);
+                    PushNewQuad(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Front]);
                 }
             }
         }
@@ -230,7 +252,7 @@ namespace Forge
 
                     glm::vec3 minKeyPos = glm::vec3((idx % RowNum) - 0.5f, maxPos.y - height, zValue);
                     QuadKey key = { maxPos.y, minKeyPos };
-                    SaveVertices(key, maxPos, minPos, renderChunkSides[(int)QuadPosition::Back]);
+                    PushNewQuad(key, maxPos, minPos, renderChunkSides[(int)QuadPosition::Back]);
                 }
             }
         }
@@ -250,7 +272,7 @@ namespace Forge
 
                     glm::vec3 minKeyPos = glm::vec3((idx % RowNum) + 0.5f, maxPos.y - height, zValue - 0.5f);
                     QuadKey key = { maxPos.y, minKeyPos };
-                    SaveVertices(key, maxPos, minPos, renderChunkSides[(int)QuadPosition::Left]);
+                    PushNewQuad(key, maxPos, minPos, renderChunkSides[(int)QuadPosition::Left]);
                 }
             }
         }
@@ -270,18 +292,22 @@ namespace Forge
 
                     glm::vec3 maxKeyPos = glm::vec3((idx % RowNum) - 0.5f, mChunkHeights[idx], zValue - 0.5f);
                     QuadKey key = { minPos.y, maxKeyPos };
-                    SaveVertices(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Right]);
+                    PushNewQuad(key, minPos, maxPos, renderChunkSides[(int)QuadPosition::Right]);
                 }
             }
         }
 
         for (uint8_t i = 2; i < 6; ++i)
         {
-            SetVertices(renderChunkSides[i], i);
+            SaveQuads(renderChunkSides[i], i);
         }
     }
 
-    void Chunk::SaveVertices(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadVector& quadVector)
+    void Chunk::Render()
+    {
+    }
+
+    void Chunk::PushNewQuad(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadVector& quadVector)
     {
         auto it = quadVector.find(key);
         if (it != quadVector.end())
@@ -299,8 +325,10 @@ namespace Forge
         }
     }
 
-    void Chunk::SetVertices(const QuadVector& quadVector, int idx)
+    void Chunk::SaveQuads(const QuadVector& quadVector, int idx)
     {
+        PROFILE_FUNCTION();
+
         for (auto& vertex : quadVector)
         {
             glm::vec3 distance = { vertex.second.EndPos.x - vertex.second.StartPos.x,
@@ -314,42 +342,47 @@ namespace Forge
             float with = distance.x ? distance.x : distance.z;
             float height = distance.y ? distance.y : distance.z;
 
-            bool isRLside = (idx >= 4);
-            QuadSpecs mQuadSpecs({ distance, center, {with, height}, isRLside });
-
             Ref<Texture> texturePtr = nullptr;
-            texturePtr = TextureManager::GetTexture(mQuadSpecs, (QuadPosition)idx);
-            Renderer::SaveFace(mQuadSpecs, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
+            texturePtr = TextureManager::GetTexture((QuadPosition)idx);
+            bool isRLside = (idx >= 4);
+
+            CreateVertice(distance, center, { with, height }, texturePtr, isRLside);
+        }
+    }
+
+    void Chunk::CreateVertice(
+        const glm::vec3& distance,
+        const glm::vec3& center,
+        const glm::vec2& size,
+        Ref<Texture> texture,
+        bool isRightSide
+    )
+    {
+        size_t quadVertexCount = 4;
+        float textureIndex = Renderer::GetTextureIndex(texture);
+
+        for (size_t i = 0; i < quadVertexCount; ++i)
+        {
+            mVertices.emplace_back();
+
+            if (isRightSide)
+            {
+                mVertices.back().Position = center + (distance * VertexRLPositions[i]);
+                mVertices.back().TexCoord = TextureRLCoords[i] * size;
+            }
+            else
+            {
+                mVertices.back().Position = center + (distance * VertexPositions[i]);
+                mVertices.back().TexCoord = TextureCoords[i] * size;
+            }
+            mVertices.back().Color = { 1.0f, 1.0f, 1.0f, 1.0f };
+            mVertices.back().TexIndex = textureIndex;
         }
     }
 
     int Chunk::GetPosition(uint16_t x, uint16_t y) const
     {
         return mChunkHeights[x + (y * RowNum)];
-    }
-
-    void Chunk::SaveData()
-    {
-        Ref<Texture> texturePtr = nullptr;
-
-        //for (uint8_t i = 0; i < 4; ++i)
-        //{
-        //    for (auto& quad : mQuadSpecs[i])
-        //    {
-        //        quad.IsRightLeft = false;
-        //        texturePtr = TextureManager::GetTexture(quad, (QuadPosition)i);
-        //        Renderer::SaveFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
-        //    }
-        //}
-        //for (uint8_t i = 4; i < 6; ++i)
-        //{
-        //    for (auto& quad : mQuadSpecs[i])
-        //    {
-        //        quad.IsRightLeft = true;
-        //        texturePtr = TextureManager::GetTexture(quad, QuadPosition::Back);
-        //        Renderer::SaveFace(quad, texturePtr, { 1.0f, 1.0f, 1.0f, 1.0f });
-        //    }
-        //}
     }
 
 
