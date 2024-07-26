@@ -305,6 +305,7 @@ namespace Forge
 
     void Chunk::Render()
     {
+        Renderer::DrawChunk(mVertices);
     }
 
     void Chunk::PushNewQuad(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadVector& quadVector)
