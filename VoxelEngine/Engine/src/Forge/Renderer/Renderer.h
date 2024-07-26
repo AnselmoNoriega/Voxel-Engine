@@ -22,9 +22,17 @@ namespace Forge
 
         static void Flush();
 
-        static void DrawChunk(const std::vector<QuadVertex>& vertices);
+        static void PackageChunk(
+            const glm::vec3& distance,
+            const glm::vec3& center,
+            const glm::vec2& size,
+            Ref<Texture> texture,
+            bool isRightSide,
+            std::vector<std::byte>& vertices
+        );
 
-        static void DrawRectChunk(const std::vector<QuadVertex>& vertices);
+        static void DrawChunk(const std::vector<std::byte>& vertices);
+        static void DrawRectChunk(const std::vector<std::byte>& vertices);
 
         static void SetLineWidth(float width);
 

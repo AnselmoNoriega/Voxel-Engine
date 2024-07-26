@@ -347,37 +347,7 @@ namespace Forge
             texturePtr = TextureManager::GetTexture((QuadPosition)idx);
             bool isRLside = (idx >= 4);
 
-            CreateVertice(distance, center, { with, height }, texturePtr, isRLside);
-        }
-    }
-
-    void Chunk::CreateVertice(
-        const glm::vec3& distance,
-        const glm::vec3& center,
-        const glm::vec2& size,
-        Ref<Texture> texture,
-        bool isRightSide
-    )
-    {
-        size_t quadVertexCount = 4;
-        float textureIndex = Renderer::GetTextureIndex(texture);
-
-        for (size_t i = 0; i < quadVertexCount; ++i)
-        {
-            mVertices.emplace_back();
-
-            if (isRightSide)
-            {
-                mVertices.back().Position = center + (distance * VertexRLPositions[i]);
-                mVertices.back().TexCoord = TextureRLCoords[i] * size;
-            }
-            else
-            {
-                mVertices.back().Position = center + (distance * VertexPositions[i]);
-                mVertices.back().TexCoord = TextureCoords[i] * size;
-            }
-            mVertices.back().Color = { 1.0f, 1.0f, 1.0f, 1.0f };
-            mVertices.back().TexIndex = textureIndex;
+            Renderer::PackageChunk(distance, center, { with, height }, texturePtr, isRLside, mVertices);
         }
     }
 

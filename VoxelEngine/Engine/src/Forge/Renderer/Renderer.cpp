@@ -57,7 +57,25 @@ namespace Forge
         float LineWidth = 2.0f;
 
         std::array<Ref<Texture>, MaxTextureSlots> TextureSlots;
-        uint32_t TextureSlotIndex = 1;
+        uint32_t TextureSlotIndex = 1; 
+        
+        glm::vec3 VertexPositions[5] = { { -0.5,  0.5,  0.5 },
+                                         {  0.5,  0.5,  0.5 },
+                                         {  0.5, -0.5, -0.5 },
+                                         { -0.5, -0.5, -0.5 },
+                                         { -0.5,  0.5,  0.5 } };
+
+        glm::vec3 VertexRLPositions[5] = { { 0.0, -0.5,  0.5 },
+                                           { 0.0,  0.5,  0.5 },
+                                           { 0.0,  0.5, -0.5 },
+                                           { 0.0, -0.5, -0.5 },
+                                           { 0.0, -0.5,  0.5 } };
+
+        glm::vec2 TextureCoords[4] = { { 1.0f, 1.0f }, { 0.0f, 1.0f },
+                                       { 0.0f, 0.0f }, { 1.0f, 0.0f } };
+
+        glm::vec2 TextureRLCoords[4] = { { 0.0f, 0.0f }, { 0.0f, 1.0f },
+                                         { 1.0f, 1.0f }, { 1.0f, 0.0f } };
 
         Renderer::Statistics Stats;
 
@@ -159,6 +177,25 @@ namespace Forge
         Flush();
     }
 
+    void Renderer::NextBatch()
+    {
+        Flush();
+        StartBatch();
+    }
+
+    void Renderer::StartBatch()
+    {
+        sData.Stats.QuadCount = 0;
+
+        sData.IndexCount = 0;
+        sData.VertexBufferPtr = sData.VertexBufferBase;
+
+        sData.LineVertexCount = 0;
+        sData.LineVertexBufferPtr = sData.LineVertexBufferBase;
+
+        sData.TextureSlotIndex = 1;
+    }
+
     void Renderer::Flush()
     {
         if (sData.IndexCount)
@@ -188,30 +225,16 @@ namespace Forge
         }
     }
 
-    void Renderer::StartBatch()
+    void Renderer::PackageChunk(
+        const glm::vec3& distance,
+        const glm::vec3& center,
+        const glm::vec2& size,
+        Ref<Texture> texture,
+        bool isRightSide,
+        std::vector<std::byte>& vertices
+    )
     {
-        sData.Stats.QuadCount = 0;
-
-        sData.IndexCount = 0;
-        sData.VertexBufferPtr = sData.VertexBufferBase;
-
-        sData.LineVertexCount = 0;
-        sData.LineVertexBufferPtr = sData.LineVertexBufferBase;
-
-        sData.TextureSlotIndex = 1;
-    }
-
-    void Renderer::NextBatch()
-    {
-        Flush();
-        StartBatch();
-    }
-
-    void Renderer::DrawChunk(const std::vector<QuadVertex>& vertices)
-    {
-        PROFILE_FUNCTION();
-
-        size_t quadVertexCount = 4;
+        uint8_t quadVertexCount = 4;
         float textureIndex = GetTextureIndex(texture);
 
         if (sData.IndexCount >= RendererStorage::MaxIndices)
@@ -219,44 +242,47 @@ namespace Forge
             NextBatch();
         }
 
-        for (size_t i = 0; i < quadVertexCount; ++i)
+        for (uint8_t i = 0; i < quadVertexCount; ++i)
         {
-            sData.VertexBufferPtr->Position = specs.Center + (specs.Distance * sData.VertexPositions[i]);
-            sData.VertexBufferPtr->TexCoord = sData.TextureCoords[i] * specs.DistanceVec2;
-            sData.VertexBufferPtr->Color = color;
-            sData.VertexBufferPtr->TexIndex = textureIndex;
-            ++sData.VertexBufferPtr;
+            QuadVertex vertex;
+
+            if (isRightSide)
+            {
+                vertex.Position = center + (distance * sData.VertexRLPositions[i]);
+                vertex.TexCoord = sData.TextureRLCoords[i] * size;
+            }
+            else
+            {
+                vertex.Position = center + (distance * sData.VertexPositions[i]);
+                vertex.TexCoord = sData.TextureCoords[i] * size;
+            }
+            vertex.Color = { 1.0f, 1.0f, 1.0f, 1.0f };
+            vertex.TexIndex = textureIndex;
+
+            const std::byte* rawData = reinterpret_cast<const std::byte*>(&vertex);
+            vertices.insert(vertices.end(), rawData, rawData + sizeof(QuadVertex));
         }
-
-        sData.IndexCount += 6;
-
-        ++sData.Stats.QuadCount;
     }
 
-    void Renderer::DrawRectChunk(const std::vector<QuadVertex>& vertices)
+    void Renderer::DrawChunk(const std::vector<std::byte>& vertices)
     {
         PROFILE_FUNCTION();
-
-        size_t quadVertexCount = 4;
-        float textureIndex = GetTextureIndex(texture);
-
-        if (sData.IndexCount >= RendererStorage::MaxIndices)
+        
+        size_t count = vertices.size() / sizeof(QuadVertex);
+        sData.IndexCount += uint32_t(count * 1.5f);
+        if (true)
         {
-            NextBatch();
+
         }
 
-        for (size_t i = 0; i < quadVertexCount; ++i)
-        {
-            sData.VertexBufferPtr->Position = specs.Center + (specs.Distance * sData.VertexRLPositions[i]);
-            sData.VertexBufferPtr->TexCoord = sData.TextureRLCoords[i] * specs.DistanceVec2;
-            sData.VertexBufferPtr->Color = color;
-            sData.VertexBufferPtr->TexIndex = textureIndex;
-            ++sData.VertexBufferPtr;
-        }
+        std::memcpy(sData.VertexBufferPtr, vertices.data(), vertices.size());
 
-        sData.IndexCount += 6;
+        sData.Stats.QuadCount += uint32_t(count * 0.25f);
+    }
 
-        ++sData.Stats.QuadCount;
+    void Renderer::DrawRectChunk(const std::vector<std::byte>& vertices)
+    {
+        std::memcpy(sData.VertexBufferPtr, vertices.data(), vertices.size());
     }
 
     void Renderer::DrawLine(const glm::vec3& p0, glm::vec3& p1, const glm::vec4& color)

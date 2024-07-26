@@ -81,14 +81,6 @@ namespace Forge
         void PushNewQuad(QuadKey& key, glm::vec3& startPos, glm::vec3 endPos, QuadVector& quadVector);
         void SaveQuads(const QuadVector& quadVector, int idx);
 
-        void CreateVertice(
-            const glm::vec3& distance, 
-            const glm::vec3& center, 
-            const glm::vec2& size, 
-            Ref<Texture> texture, 
-            bool isRightSide
-        );
-
         int GetPosition(uint16_t x, uint16_t y) const;
 
     private:
@@ -104,7 +96,7 @@ namespace Forge
         Vec2Int mCoord;
         Vec2Int mPosition;
 
-        std::vector<QuadVertex> mVertices;
+        std::vector<std::byte> mVertices;
         std::vector<Voxel> mVoxels;
 
         int* mChunkHeights = nullptr;
