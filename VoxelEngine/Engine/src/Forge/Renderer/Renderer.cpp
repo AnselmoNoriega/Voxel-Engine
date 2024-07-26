@@ -150,14 +150,17 @@ namespace Forge
         }
     }
 
-    void Renderer::RenderScene(const EditorCamera& camera)
+    void Renderer::BeginRender(const EditorCamera& camera)
     {
         PROFILE_FUNCTION();
 
         sData.CameraBuffer.ViewProjection = camera.GetViewProjection();
         sData.CameraUniformBuffer->SetData(&sData.CameraBuffer, sizeof(RendererStorage::CameraData));
+    }
 
-        DrawBatches();
+    void Renderer::EndRender()
+    {
+
     }
 
     void Renderer::DrawBatches()
@@ -214,34 +217,11 @@ namespace Forge
         }
     }
 
-    void Renderer::SaveFace(const QuadSpecs& specs, const Ref<Texture>& texture, const glm::vec4& color)
+    void Renderer::DrawChunk(const std::vector<QuadVertex>& quads)
     {
         PROFILE_FUNCTION();
 
-        size_t quadVertexCount = 4;
-        float textureIndex = GetTextureIndex(texture);
-
-        if (sData.IndexesCount.back() >= RendererStorage::MaxIndices)
-        {
-            SaveData();
-        }
-
-        for (size_t i = 0; i < quadVertexCount; ++i)
-        {
-            if (specs.IsRightLeft)
-            {
-                sData.VertexBuffersPtr->Position = specs.Center + (specs.Distance * sData.VertexRLPositions[i]);
-                sData.VertexBuffersPtr->TexCoord = sData.TextureRLCoords[i] * specs.DistanceVec2;
-            }
-            else
-            {
-                sData.VertexBuffersPtr->Position = specs.Center + (specs.Distance * sData.VertexPositions[i]);
-                sData.VertexBuffersPtr->TexCoord = sData.TextureCoords[i] * specs.DistanceVec2;
-            }
-            sData.VertexBuffersPtr->Color = color;
-            sData.VertexBuffersPtr->TexIndex = textureIndex;
-            ++sData.VertexBuffersPtr;
-        }
+        /////////////
 
         uint32_t index = sData.VertexBuffersBase.size() - 1;
         sData.VertexBuffersSize[index] = (uint32_t)((uint8_t*)sData.VertexBuffersPtr - (uint8_t*)sData.VertexBuffersBase.back());
