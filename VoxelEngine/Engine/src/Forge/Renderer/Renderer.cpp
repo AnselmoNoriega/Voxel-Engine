@@ -57,8 +57,8 @@ namespace Forge
         float LineWidth = 2.0f;
 
         std::array<Ref<Texture>, MaxTextureSlots> TextureSlots;
-        uint32_t TextureSlotIndex = 1; 
-        
+        uint32_t TextureSlotIndex = 1;
+
         glm::vec3 VertexPositions[5] = { { -0.5,  0.5,  0.5 },
                                          {  0.5,  0.5,  0.5 },
                                          {  0.5, -0.5, -0.5 },
@@ -237,11 +237,6 @@ namespace Forge
         uint8_t quadVertexCount = 4;
         float textureIndex = GetTextureIndex(texture);
 
-        if (sData.IndexCount >= RendererStorage::MaxIndices)
-        {
-            NextBatch();
-        }
-
         for (uint8_t i = 0; i < quadVertexCount; ++i)
         {
             QuadVertex vertex;
@@ -267,17 +262,33 @@ namespace Forge
     void Renderer::DrawChunk(const std::vector<std::byte>& vertices)
     {
         PROFILE_FUNCTION();
-        
-        size_t count = vertices.size() / sizeof(QuadVertex);
-        sData.IndexCount += uint32_t(count * 1.5f);
-        if (true)
+
+        uint32_t count = uint32_t(vertices.size() / sizeof(QuadVertex));
+        uint32_t indices = count * 1.5f;
+
+        if ((indices + sData.IndexCount) > RendererStorage::MaxIndices) 
         {
-
+            uint32_t extraIndices = (indices + sData.IndexCount) - RendererStorage::MaxIndices;
+            uint32_t extraBytes = (extraIndices / 1.5f) * sizeof(QuadVertex);
+            uint32_t copyBytes = vertices.size() - extraBytes;
+            
+            std::memcpy(sData.VertexBufferPtr, vertices.data(), copyBytes);
+            
+            NextBatch();
+            
+            std::memcpy(sData.VertexBufferPtr, vertices.data() + copyBytes, extraBytes);
+            sData.VertexBufferPtr += extraBytes / sizeof(QuadVertex);
+            
+            sData.IndexCount += extraIndices;
+            sData.Stats.QuadCount += uint32_t(extraIndices / 1.5f);
         }
-
-        std::memcpy(sData.VertexBufferPtr, vertices.data(), vertices.size());
-
-        sData.Stats.QuadCount += uint32_t(count * 0.25f);
+        else 
+        {
+            sData.IndexCount += indices;
+            std::memcpy(sData.VertexBufferPtr, vertices.data(), vertices.size());
+            sData.VertexBufferPtr += count;
+            sData.Stats.QuadCount += uint32_t(count / 1.5f);
+        }
     }
 
     void Renderer::DrawRectChunk(const std::vector<std::byte>& vertices)
@@ -317,10 +328,7 @@ namespace Forge
 
         if (textureIndex == 0.0f)
         {
-            if (sData.TextureSlotIndex >= RendererStorage::MaxTextureSlots)
-            {
-                NextBatch();
-            }
+            ASSERT(sData.TextureSlotIndex <= RendererStorage::MaxTextureSlots, "Too many textures");
 
             textureIndex = (float)sData.TextureSlotIndex;
             sData.TextureSlots[sData.TextureSlotIndex] = texture;

@@ -15,6 +15,8 @@ namespace Forge
     {
         auto [width, height] = WindowInfo::GetWindowSize();
         mCamera = EditorCamera(30.0f, width, height, 0.1f, 1000.0f);
+
+        mWorld.Initialize();
     }
 
     void EditorLayer::Detach()
@@ -40,8 +42,11 @@ namespace Forge
                 mCamera.SetViewportSize(width, height);
             }
 
-            Renderer::RenderScene(mCamera);
         }
+
+        Renderer::BeginScene(mCamera);
+        mWorld.Render();
+        Renderer::EndScene();
     }
 
     void EditorLayer::OnEvent(Event& myEvent)

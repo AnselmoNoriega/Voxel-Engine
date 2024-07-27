@@ -26,5 +26,7 @@ namespace Forge
 
     private:
         EditorCamera mCamera;
+
+        World mWorld;
     };
 }

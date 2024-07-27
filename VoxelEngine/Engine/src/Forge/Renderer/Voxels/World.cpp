@@ -7,7 +7,7 @@ namespace Forge
 {
     std::map<Vec2Int, Ref<Chunk>> World::mChunks;
     std::map<Vec2Int, Ref<Chunk>> World::mFarChunks;
-    std::unordered_set<Vec2Int, pair_hash> World::mActiveCells;
+    //std::unordered_set<Vec2Int, pair_hash> World::mActiveCells;
 
     int World::mMaxRenderDistanceSqrd = 16 * 16;
 
@@ -20,35 +20,43 @@ namespace Forge
 
     void World::Update(int newX, int newZ)
     {
-        std::unordered_set<Vec2Int, pair_hash> newActiveCells;
-        for (int x = newX - mMaxRenderDistanceSqrd; x <= newX + mMaxRenderDistanceSqrd; ++x)
-        {
-            for (int z = newZ - mMaxRenderDistanceSqrd; z <= newZ + mMaxRenderDistanceSqrd; ++z)
-            {
-                int magnitudFromStart = (x * x) + (z * z);
-                if (magnitudFromStart <= mMaxRenderDistanceSqrd)
-                {
-                    newActiveCells.insert({ x, z });
-                }
-            }
-        }
+        //std::unordered_set<Vec2Int, pair_hash> newActiveCells;
+        //for (int x = newX - mMaxRenderDistanceSqrd; x <= newX + mMaxRenderDistanceSqrd; ++x)
+        //{
+        //    for (int z = newZ - mMaxRenderDistanceSqrd; z <= newZ + mMaxRenderDistanceSqrd; ++z)
+        //    {
+        //        int magnitudFromStart = (x * x) + (z * z);
+        //        if (magnitudFromStart <= mMaxRenderDistanceSqrd)
+        //        {
+        //            newActiveCells.insert({ x, z });
+        //        }
+        //    }
+        //}
 
-        for (const auto& cell : mActiveCells)
-        {
-            if (newActiveCells.find(cell) == newActiveCells.end())
-            {
-                mChunks.erase(cell); // Remove chunks that are no longer within the render distance
-            }
-        }
+        //for (const auto& cell : mActiveCells)
+        //{
+        //    if (newActiveCells.find(cell) == newActiveCells.end())
+        //    {
+        //        mChunks.erase(cell); // Remove chunks that are no longer within the render distance
+        //    }
+        //}
 
-        mActiveCells = newActiveCells;
+        //mActiveCells = newActiveCells;
 
-        for (const auto& cell : mActiveCells)
+        //for (const auto& cell : mActiveCells)
+        //{
+        //    if (mChunks.find(cell) == mChunks.end())
+        //    {
+        //        InitChunk(cell.x, cell.z); // Create new chunks within the render distance
+        //    }
+        //}
+    }
+
+    void World::Render()
+    {
+        for (auto& [key, chunk] : mChunks)
         {
-            if (mChunks.find(cell) == mChunks.end())
-            {
-                InitChunk(cell.x, cell.z); // Create new chunks within the render distance
-            }
+            chunk->Render();
         }
     }
 
@@ -74,6 +82,6 @@ namespace Forge
         //Left
         InitChunk(posX - 1, posZ);
 
-        mActiveCells.insert({posX, posZ});
+        //mActiveCells.insert({posX, posZ});
     }
 }
