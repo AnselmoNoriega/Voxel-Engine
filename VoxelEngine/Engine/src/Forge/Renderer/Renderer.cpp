@@ -192,8 +192,6 @@ namespace Forge
 
         sData.LineVertexCount = 0;
         sData.LineVertexBufferPtr = sData.LineVertexBufferBase;
-
-        sData.TextureSlotIndex = 1;
     }
 
     void Renderer::Flush()

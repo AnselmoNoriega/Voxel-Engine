@@ -25,6 +25,8 @@ namespace Forge
 
     void EditorLayer::Update(float deltaTime)
     {
+        Renderer::ResetStats();
+
         {
             PROFILE_SCOPE("Render Start");
 
