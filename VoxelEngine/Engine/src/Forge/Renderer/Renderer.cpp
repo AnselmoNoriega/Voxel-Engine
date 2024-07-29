@@ -271,6 +271,9 @@ namespace Forge
             uint32_t copyBytes = vertices.size() - extraBytes;
             
             std::memcpy(sData.VertexBufferPtr, vertices.data(), copyBytes);
+            sData.VertexBufferPtr += copyBytes / sizeof(QuadVertex);
+
+            sData.IndexCount += indices - extraIndices;
             
             NextBatch();
             
