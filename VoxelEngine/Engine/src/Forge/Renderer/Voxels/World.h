@@ -16,19 +16,9 @@ namespace Forge
 
     private:
         static std::map<Vec2Int, Ref<Chunk>> mChunks;
-        static std::map<Vec2Int, Ref<Chunk>> mFarChunks;
-        //static std::unordered_set<Vec2Int, pair_hash> mActiveCells;
+        //TODO static std::map<Vec2Int, Ref<Chunk>> mFarChunks;
 
         static int mMaxRenderDistanceSqrd;
     };
-
-    //struct pair_hash 
-    //{
-    //    template <class T1, class T2>
-    //    std::size_t operator() (const std::pair<T1, T2>& pair) const 
-    //    {
-    //        return std::hash<T1>()(pair.first) ^ std::hash<T2>()(pair.second);
-    //    }
-    //};
 }
 

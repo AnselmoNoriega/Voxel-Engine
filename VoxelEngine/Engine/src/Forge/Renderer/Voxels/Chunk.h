@@ -34,6 +34,11 @@ namespace Forge
         {
             return {x * other, z * other };
         }
+        
+        bool operator==(const Vec2Int& other) const 
+        {
+            return x == other.x && z == other.z;
+        }
     };
 
     struct QuadSpace
