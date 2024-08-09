@@ -294,7 +294,7 @@ namespace Forge
 
     void Renderer::DrawRectChunk(const std::vector<std::byte>& vertices)
     {
-        std::memcpy(sData.VertexBufferPtr, vertices.data(), vertices.size());
+        std::memmove(sData.VertexBufferPtr, vertices.data(), vertices.size());
     }
 
     void Renderer::DrawLine(const glm::vec3& p0, glm::vec3& p1, const glm::vec4& color)

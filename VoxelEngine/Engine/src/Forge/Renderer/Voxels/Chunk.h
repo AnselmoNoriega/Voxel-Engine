@@ -23,6 +23,14 @@ namespace Forge
 
         bool operator<(const Vec2Int& other) const
         {
+            float myMagnitudSqrt = (x * x) + (z * z);
+            float otherMagnitudSqrt = (other.x * other.x) + (other.z * other.z);
+
+            if (myMagnitudSqrt != otherMagnitudSqrt)
+            {
+                return myMagnitudSqrt < otherMagnitudSqrt;
+            }
+
             if (x == other.x)
             {
                 return z < other.z;
