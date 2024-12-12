@@ -17,7 +17,7 @@
 #include "Forge/Core/Core.h"
 #include "Forge/Core/Log.h"
 
-#include "Forge/Debug/Instrumentor.h"
+#include "Forge/Utils/Instrumentor.h"
 
 #ifdef  ENGINE_PLATFORM_WINDOWS
 #include <Windows.h>
